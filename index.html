@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>zenithyshop - Welcome to my shop</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Itim&family=Mitr:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'pjl-pink': '#FF85CD',
+                        'pjl-pink-light': '#FFEBF5',
+                        'pjl-purple': '#391A6E',
+                        'pjl-blue': '#5FD2D0',
+                        'pjl-blue-light': '#E0FCFB',
+                        'pjl-yellow': '#FFF2A3',
+                    },
+                    fontFamily: {
+                        'sans': ['Mitr', 'sans-serif'],
+                        'eng': ['Fredoka', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'sticker': '0 4px 14px 0 rgba(255, 133, 205, 0.39)',
+                        'card': '0 10px 25px -5px rgba(57, 26, 110, 0.1), 0 8px 10px -6px rgba(57, 26, 110, 0.1)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body, p, span, div, li, a, button, h1, h2, h3, h4, h5, h6, input, textarea { font-family: 'Mitr', sans-serif; }
+        .font-eng { font-family: 'Fredoka', 'Mitr', sans-serif !important; }
+        .font-promo { font-family: 'Itim', 'Mitr', cursive !important; }
+        body { background-color: #f8fafc; background-image: linear-gradient(transparent 95%, #e2e8f0 95%); background-size: 100% 30px; color: #391A6E; }
+        .title-sticker { color: #FF85CD; text-shadow: -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 4px 4px 0px rgba(255, 133, 205, 0.3); letter-spacing: 1px; }
+        .section-card { background-color: rgba(255, 255, 255, 0.95); border: 3px dashed #FF85CD; border-radius: 24px; position: relative; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .cute-list { list-style: none; padding-left: 0; }
+        .cute-list li { position: relative; padding-left: 1.5rem; margin-bottom: 0.5rem; }
+        .cute-list li::before { content: ""; position: absolute; left: 0; top: 0.5rem; width: 8px; height: 8px; background-color: #5FD2D0; border-radius: 50%; }
+        .cute-list.pink-dots li::before { background-color: #FF85CD; }
+        .floating { animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
+    </style>
+</head>
+<body class="min-h-screen py-8 px-4 sm:px-6 relative overflow-x-hidden">
+    <main class="max-w-3xl mx-auto space-y-8">
+        <header class="text-center relative">
+            <h1 class="font-eng text-5xl md:text-6xl font-bold title-sticker mb-2 relative z-10">zenithyshop</h1>
+            <p class="font-eng text-pjl-purple text-xl bg-pjl-yellow inline-block px-4 py-1 rounded-full font-medium border-2 border-dashed border-pjl-pink mb-4">Open 09:00 - 23:00 น.</p>
+            <div class="mt-4 bg-white/80 backdrop-blur-sm rounded-2xl p-4 shadow-sm inline-block mx-auto border border-pjl-pink-light">
+                <p class="text-pjl-purple font-medium text-lg leading-relaxed">
+                    zenithy รับทำเว็บไซต์ร้าน / เติมเกม identity v<br>
+                    ทำป้ายต่าง ๆ เริ่มต้น 50.-
+                </p>
+            </div>
+        </header>
+
+        <section class="section-card p-6 md:p-8 shadow-card">
+            <h2 class="font-eng text-2xl md:text-3xl text-pjl-blue font-bold text-center mb-6">Services</h2>
+            <div class="bg-pjl-blue-light rounded-xl p-5 border border-pjl-blue">
+                <ul class="cute-list grid grid-cols-1 md:grid-cols-2 gap-2">
+                    <li>ทำเว็บไซต์ร้าน เริ่มต้น 129.- (เทมเพลต 50+ แบบ)</li>
+                    <li>ทำป้ายเริ่มต้น 50.- (บรีฟสีได้)</li>
+                    <li>เติมเกม Identity V</li>
+                </ul>
+                <div class="mt-4 bg-white rounded-lg p-3 text-sm text-center border border-dashed border-pjl-blue text-pjl-purple">
+                    <span class="font-bold">หมายเหตุ:</span> เว็บรันคิว 4-8 ชม. / ป้าย 1-2 วัน
+                </div>
+            </div>
+        </section>
+
+        <section class="section-card p-6 md:p-8 shadow-card text-center">
+            <h2 class="font-eng text-2xl md:text-3xl text-pjl-pink font-bold mb-6">Portfolio & Links</h2>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="https://drive.google.com/drive/mobile/folders/1fj024BhkgC1ctJeiwyZUG3USteSdzWzr" class="bg-pjl-yellow text-pjl-purple font-bold py-3 px-6 rounded-full shadow-md border-2 border-yellow-300">เทมเพลตเว็บ</a>
+                <a href="https://drive.google.com/drive/folders/1_XMpP9EC2Yqq2-6cYfRn0fy8i9Q6cvoi" class="bg-pjl-blue text-white font-bold py-3 px-6 rounded-full shadow-md border-2 border-blue-300">ตัวอย่างงานป้าย</a>
+                <a href="https://m.facebook.com/story.php?story_fbid=pfbid0VoVRA4MbGu79CbqBREGD8jcxavv6HzJ2F9jcyvVCUrLxEPSRoFtNQNA44yM83zs9l&id=61586611223621" class="bg-pjl-pink-light text-pjl-purple font-bold py-3 px-6 rounded-full shadow-md border-2 border-pjl-pink">เรทเติมเกม</a>
+            </div>
+        </section>
+
+        <section class="section-card p-6 shadow-card bg-[#fffcf5]">
+            <h2 class="font-eng text-xl text-red-400 font-bold mb-4">📍 กฎของร้าน 📍</h2>
+            <ul class="cute-list text-sm text-red-500">
+                <li>โอนเงินแล้วไม่คืนเงินทุกกรณี</li>
+                <li>แจ้งไอดีผิด ทางร้านไม่รับผิดชอบทุกกรณี</li>
+                <li>ผ่อนชำระส่งยอดไม่ครบไม่ต่อเนื่อง ยึดยอดทันที</li>
+                <li>งานป้ายยกเลิกไม่คืนเงินทุกกรณี</li>
+                <li>แก้งานหลังส่ง (เว็บ/ป้าย) คิดจุดละ 20.-</li>
+                <li>งดเร่งงาน</li>
+            </ul>
+        </section>
+
+        <section class="pb-12 pt-6 text-center">
+            <h2 class="font-eng text-xl text-pjl-purple font-bold mb-4">Contact</h2>
+            <div class="flex justify-center gap-6">
+                <a href="https://www.facebook.com/profile.php?id=61554192600355" target="_blank" class="w-16 h-16 bg-pjl-pink rounded-full flex items-center justify-center text-white shadow-sm">FB</a>
+                <a href="https://line.me/ti/p/LfBtdhlrVa" target="_blank" class="w-16 h-16 bg-pjl-blue rounded-full flex items-center justify-center text-white shadow-sm">Line</a>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
