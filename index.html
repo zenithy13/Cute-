@@ -8,7 +8,7 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
    
-    <!-- Google Fonts -->
+    <!-- Google Fonts: Mitr & Space Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -58,6 +58,11 @@
         .ticket-cutout-left, .ticket-cutout-right { position: absolute; top: 50%; transform: translateY(-50%); width: 30px; height: 30px; background-color: #f1f8fc; background-image: radial-gradient(#86cbea 1.2px, transparent 1.2px); background-size: 24px 24px; border-radius: 50%; z-index: 10; }
         .ticket-cutout-left { left: -15px; } .ticket-cutout-right { right: -15px; }
         .dashed-divider { border-top: 3px dashed #86cbea; position: relative; }
+        .stamp { position: absolute; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; z-index: 0; opacity: 0.6; pointer-events: none; }
+        .stamp-p1 { border: 4px solid #86cbea; color: #86cbea; width: 100px; height: 100px; transform: rotate(-15deg); }
+        .stamp-p1::before { content: '\f0fb'; font-family: 'Font Awesome 6 Free'; font-weight: 900; font-size: 40px; }
+        .stamp-p2 { border: 4px solid #fcf096; color: #eab308; width: 120px; height: 120px; transform: rotate(25deg); background: transparent; border-radius: 10px; display: flex; flex-direction: column; line-height: 1.2; }
+        .stamp-p3 { border: 3px solid #2755ab; color: #2755ab; width: 140px; height: 60px; border-radius: 5px; transform: rotate(-5deg); font-size: 14px; text-align: center; }
         .barcode { height: 40px; width: 100%; background: repeating-linear-gradient(90deg, #86cbea, #86cbea 2px, transparent 2px, transparent 5px, #fcf096 5px, #fcf096 8px, transparent 8px, transparent 11px, #2755ab 11px, #2755ab 13px, transparent 13px, transparent 16px); }
         .data-label { font-size: 0.7rem; color: #86cbea; text-transform: uppercase; font-weight: 700; letter-spacing: 1px; }
         .data-value { font-family: 'Space Mono', monospace; font-size: 1.1rem; color: #2755ab; font-weight: 700; }
@@ -66,88 +71,79 @@
 </head>
 <body class="font-sans antialiased min-h-screen relative text-blue-deep">
     <div id="floating-emojis" class="floating-container"></div>
-    <!-- SPLASH SCREEN -->
     <div id="splash-screen" class="fixed inset-0 flex flex-col items-center justify-center">
         <div class="cloud cloud-1"></div><div class="cloud cloud-2"></div>
         <div class="relative z-10 flex flex-col items-center">
             <div class="w-32 h-32 bg-white rounded-3xl shadow-xl flex items-center justify-center mb-6 border-4 border-[#eef7fc] overflow-hidden">
-                <img src="IMG_0545.jpeg" alt="Logo" class="w-full h-full object-cover">
+                <img src="IMG_0545.jpeg" alt="Shop Logo" class="w-full h-full object-cover">
             </div>
-            <h1 class="text-white text-4xl font-bold tracking-wider mb-2 drop-shadow-md">Zenithyshop</h1>
+            <h1 class="text-white text-4xl md:text-5xl font-bold tracking-wider mb-2 drop-shadow-md">Zenithyshop</h1>
             <button onclick="enterShop()" class="pulse-btn w-20 h-20 bg-white/50 backdrop-blur-md border border-white rounded-full flex items-center justify-center cursor-pointer hover:bg-white/70 transition shadow-lg group">
                 <i class="fa-solid fa-play text-blue-deep text-3xl ml-2"></i>
             </button>
         </div>
     </div>
-    
-    <!-- MAIN CONTENT -->
     <div id="main-content" class="py-10 px-4 w-full flex justify-center">
         <div class="w-full max-w-3xl bg-ticket-bg rounded-3xl shadow-2xl overflow-hidden relative border-2 border-blue-100">
-            <!-- HEADER -->
             <div class="bg-blue-main p-6 flex items-center justify-between text-white relative overflow-hidden">
                 <div class="flex items-center gap-4 relative z-10">
                     <div class="w-14 h-14 bg-white rounded-full flex items-center justify-center overflow-hidden border-2 border-yellow-main">
                         <img src="IMG_0545.jpeg" alt="Logo" class="w-full h-full object-cover">
                     </div>
                     <div>
-                        <h2 class="text-2xl font-bold tracking-widest uppercase">Zenithyshop</h2>
+                        <h2 class="text-2xl font-bold tracking-widest uppercase">Zenithy</h2>
                         <p class="font-mono text-xl text-yellow-main">SHOP SERVICE</p>
                     </div>
                 </div>
             </div>
-
-            <!-- SECTION 1 -->
             <div class="p-8 relative bg-white">
                 <div class="text-center mb-8">
-                    <h3 class="text-2xl font-bold text-blue-deep mb-2">Zenithyshop รับทำเว็บไซต์</h3>
-                    <p class="text-blue-main text-sm font-medium">สำหรับร้านปล่อยเช่า / ร้านทำป้าย / ร้านเติมเกม Identity V</p>
-                    <div class="mt-4 p-3 bg-yellow-soft border border-yellow-main rounded-xl text-yellow-deep font-bold">
-                        โปรโมชั่น: รอบทดลอง 99.- (รับ 0/3) <br> <span class="text-blue-deep text-xs font-normal">หมดรอบนี้ราคาปกติ 129.-</span>
-                    </div>
+                    <h3 class="text-2xl font-bold text-blue-deep mb-2">Zenithyshop รับทำเว็บครบวงจร</h3>
+                    <p class="text-blue-main text-sm font-medium">รับทำเว็บไซต์ / เติมเกม Identity V / ทำป้ายทุกชนิด</p>
+                    <p class="text-blue-deep font-bold mt-2">⏰ Open 09:00 - 23:00 น.</p>
                 </div>
-
                 <div class="bg-blue-soft p-5 rounded-2xl border-2 border-blue-main">
-                    <h4 class="font-bold text-blue-deep mb-3"><i class="fa-solid fa-circle-question mr-2"></i> เว็บไซต์ทำอะไรได้บ้าง?</h4>
-                    <ul class="space-y-2 text-blue-deep text-sm">
-                        <li>• รวมลิงก์ผลงานป้าย/ไอดีปล่อยเช่า/เช็คคิวในเว็บเดียว</li>
-                        <li>• ใส่เรทราคาทำป้าย/ดันไอดี/อื่น ๆ</li>
-                        <li>• ใส่ช่องทางติดต่อ Line / Facebook / IG</li>
-                        <li>• เว็บบัญชี (คัดลอกเลขบัญชี/ใส่รูปสแกน)</li>
+                    <h4 class="font-bold text-blue-deep mb-3"><i class="fa-solid fa-palette mr-2"></i> เว็บไซต์ร้าน</h4>
+                    <ul class="text-sm text-blue-deep space-y-2">
+                        <li>• เริ่มต้น 129.- (เทมเพลต 50+ แบบ)</li>
+                        <li>• มีทั้งแนวน่ารัก พาสเทล และแนวมืด</li>
+                        <li>• รองาน 4-8 ชั่วโมง (รันตามคิว)</li>
                     </ul>
                 </div>
             </div>
-
             <div class="dashed-divider"><div class="ticket-cutout-left"></div><div class="ticket-cutout-right"></div></div>
-
-            <!-- SECTION 2 -->
             <div class="p-8 relative bg-white">
                 <div class="grid md:grid-cols-2 gap-8">
                     <div>
-                        <h4 class="font-bold text-blue-deep mb-4"><i class="fa-solid fa-link mr-2"></i> ตัวอย่างงาน</h4>
-                        <div class="space-y-3">
-                            <a href="https://drive.google.com/drive/mobile/folders/1fj024BhkgC1ctJeiwyZUG3USteSdzWzr" target="_blank" class="block w-full text-center py-3 bg-blue-main text-white rounded-xl shadow-sm hover:bg-blue-deep transition">ดูเทมเพลต (50+ แบบ)</a>
-                            <a href="https://drive.google.com/drive/folders/16FFEJUwVLDIjmbSZEPM3x_SkLzVkl4CO" target="_blank" class="block w-full text-center py-3 bg-yellow-main text-blue-deep rounded-xl shadow-sm hover:bg-yellow-deep transition">ตัวอย่างงานจริง</a>
+                        <h4 class="font-bold text-blue-deep mb-4">งานป้าย</h4>
+                        <div class="space-y-3 text-xs text-blue-deep">
+                            <p>• <b>ป้ายเติมเกม/ส่งของขวัญ:</b> 1-10 (59.-), 11-20 (69.-), 21-25 (79.-), 26-35 (89.-)</p>
+                            <p>• <b>ป้ายเครดิต:</b> 1 ตัว 50.- (+ตัวละ 5.-)</p>
+                            <p>• <b>ป้ายไอดี/บัญชี:</b> 69-79.-</p>
+                            <p>• <b>ป้ายเช่าไอดี:</b> หัวป้าย 59.- (สกินเยอะมีเรทพิเศษ)</p>
                         </div>
                     </div>
                     <div>
-                        <h4 class="font-bold text-blue-deep mb-4"><i class="fa-solid fa-headset mr-2"></i> ช่องทางติดต่อ</h4>
-                        <div class="space-y-3">
-                            <a href="https://lin.ee/qihwQGM" target="_blank" class="flex items-center p-3 bg-blue-soft text-blue-deep rounded-2xl hover:bg-yellow-soft transition border-2 border-blue-main shadow-sm">
-                                <i class="fa-brands fa-line text-3xl mr-4 ml-2 text-blue-main"></i>
-                                <div><p class="font-bold text-sm">LINE Official</p><p class="text-xs opacity-80">คลิกเพื่อแอดไลน์</p></div>
-                            </a>
-                            <a href="https://www.facebook.com/share/1F6mR4ccY8/?mibextid=wwXIfr" target="_blank" class="flex items-center p-3 bg-yellow-soft text-blue-deep rounded-2xl hover:bg-blue-soft transition border-2 border-yellow-main shadow-sm">
-                                <i class="fa-brands fa-facebook text-3xl mr-4 ml-2 text-yellow-deep"></i>
-                                <div><p class="font-bold text-sm">Facebook Page</p><p class="text-xs opacity-80">คลิกเพื่อไปที่เพจ</p></div>
-                            </a>
+                        <h4 class="font-bold text-blue-deep mb-4">ติดต่อ / ข้อมูลเพิ่ม</h4>
+                        <div class="space-y-2">
+                            <a href="https://drive.google.com/drive/folders/1_XMpP9EC2Yqq2-6cYfRn0fy8i9Q6cvoi" target="_blank" class="block text-blue-deep underline">ตัวอย่างงานป้าย</a>
+                            <a href="https://m.facebook.com/story.php?story_fbid=pfbid0VoVRA4MbGu79CbqBREGD8jcxavv6HzJ2F9jcyvVCUrLxEPSRoFtNQNA44yM83zs9l&id=61586611223621" target="_blank" class="block text-blue-deep underline">เรทเติมกระดุม</a>
+                            <a href="https://drive.google.com/drive/mobile/folders/1fj024BhkgC1ctJeiwyZUG3USteSdzWzr" target="_blank" class="block text-blue-deep underline">เทมเพลตเว็บไซต์</a>
                         </div>
                     </div>
                 </div>
-                <p class="text-center mt-8 text-xs text-blue-main font-bold italic">📍 รับประกันเว็บ 1 เดือน แจ้งปัญหาได้ตลอดค่ะ</p>
+                <div class="mt-8 bg-yellow-soft p-4 rounded-xl border border-yellow-main text-xs text-blue-deep">
+                    <p class="font-bold mb-2">📍 กฎของร้าน</p>
+                    • ไม่คืนเงินทุกกรณี / ยกเลิกงานป้ายไม่คืนเงิน <br>
+                    • แก้ไขข้อมูลเว็บจุดละ 20.- / แก้งานป้ายหลังส่ง 20.-
+                </div>
+            </div>
+            <div class="p-8 bg-blue-soft text-center">
+                <a href="https://www.facebook.com/profile.php?id=61554192600355" target="_blank" class="block mb-4 text-blue-deep font-bold"><i class="fa-brands fa-facebook"></i> Facebook: Zenithyshop</a>
+                <a href="https://lin.ee/qihwQGM"><img src="https://scdn.line-apps.com/n/line_add_friends/btn/th.png" alt="เพิ่มเพื่อน" class="mx-auto" border="0"></a>
             </div>
         </div>
     </div>
-
     <script>
         function createFloatingSVGs() {
             const container = document.getElementById('floating-emojis');
