@@ -10,35 +10,34 @@
     
     <style>
         :root {
-            --notebook-bg: #fffbf7; /* สีหน้ากระดาษขาวนวล */
-            --soft-blue: #d4ebf2; /* สีฟ้าพาสเทลแบบอ่อนมากๆ ฟุ้งๆ */
-            --glow-blue: rgba(212, 235, 242, 0.6);
-            --cute-brown: #7c5d52; /* สีน้ำตาลนมอุ่นๆ สำหรับตัวหนังสือ */
-            --light-brown: #ba9b91; /* สีน้ำตาลอ่อนแนวเอิร์ธโทน */
-            --pastel-pink: #fbe3e5; /* สีชมพูบลัชออนฟุ้งๆ */
-            --pastel-yellow: #fff9db; /* สีเหลืองนวล */
+            --notebook-bg: #fffdfb; /* สีหน้ากระดาษขาวนวลละมุนตา */
+            --soft-blue: #e6f5f9; /* สีฟ้าพาสเทลแบบอ่อนโยนที่สุด */
+            --glow-color: rgba(230, 245, 249, 0.95); /* แสงฟุ้งสีฟ้าพาสเทล */
+            --glow-pink: rgba(253, 230, 233, 0.9); /* แสงฟุ้งสีชมพู */
+            --cute-brown: #7c5d52; /* สีน้ำตาลสำหรับตัวหนังสือ */
+            --light-brown: #cfb9b2; /* สีน้ำตาลอ่อนโทนดินสอไม้ */
+            --pastel-pink: #fde6e9; /* สีชมพูแก้มเด็ก */
+            --pastel-yellow: #fffade; /* สีเหลืองครีมนม */
             --white: #ffffff;
         }
 
         /* --- Animations --- */
-        @keyframes dashMove {
+        @keyframes borderDashMove {
             to {
-                stroke-dashoffset: -20;
-                /* อนิเมชันสำหรับเส้นประวิ่ง */
-                background-position: 20px 0;
+                background-position: 30px 0, 100% 30px, 30px 100%, 0 30px;
             }
         }
 
-        @keyframes floatGlow {
-            0% { transform: translateY(0px); filter: drop-shadow(0 5px 10px var(--glow-blue)); }
-            50% { transform: translateY(-8px); filter: drop-shadow(0 15px 20px rgba(212, 235, 242, 0.9)); }
-            100% { transform: translateY(0px); filter: drop-shadow(0 5px 10px var(--glow-blue)); }
+        @keyframes ultraGlow {
+            0% { filter: drop-shadow(0 0 15px var(--glow-color)) drop-shadow(0 0 5px var(--glow-pink)); }
+            50% { filter: drop-shadow(0 0 30px var(--glow-color)) drop-shadow(0 0 15px var(--glow-pink)); }
+            100% { filter: drop-shadow(0 0 15px var(--glow-color)) drop-shadow(0 0 5px var(--glow-pink)); }
         }
 
-        @keyframes drift {
-            0% { transform: translate(0, 0) rotate(0deg); opacity: 0.4; }
-            50% { transform: translate(10px, -10px) rotate(5deg); opacity: 0.7; }
-            100% { transform: translate(0, 0) rotate(0deg); opacity: 0.4; }
+        @keyframes floatScrapbook {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-6px) rotate(3deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
         }
 
         * {
@@ -50,70 +49,101 @@
         }
 
         body {
-            /* พื้นหลังเป็นสีกระดาษสมุดโน้ต ซ้อนด้วยเส้นบรรทัดจางๆ แนวขวาง */
-            background-color: #f7ede2; 
-            background-image: linear-gradient(rgba(186, 155, 145, 0.08) 1px, transparent 1px);
-            background-size: 100% 24px;
-            padding: 30px 15px 60px;
+            background-color: #f6efe9; 
+            /* ลายเส้นบรรทัดจางๆ อารมณ์สมุดเขียนบันทึก */
+            background-image: linear-gradient(rgba(124, 93, 82, 0.05) 1px, transparent 1px);
+            background-size: 100% 26px;
+            padding: 40px 15px 80px;
             position: relative;
             overflow-x: hidden;
         }
 
-        /* --- ของตกแต่งสไตล์สมุดสแครปบุ๊ก ฟุ้งๆ --- */
-        .notebook-decor {
+        /* --- ของตกแต่งรอบๆ แนวสมุดสแครปบุ๊ก (Scrapbook Decor) --- */
+        .sticker {
             position: absolute;
-            font-size: 2rem;
+            font-size: 2.2rem;
             user-select: none;
             pointer-events: none;
-            animation: drift 6s ease-in-out infinite;
-            filter: drop-shadow(0 0 8px rgba(255,255,255,0.8));
+            animation: floatScrapbook 5s ease-in-out infinite;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.05));
+            z-index: 10;
         }
-        .decor-1 { top: 2%; left: 3%; animation-delay: 0s; }
-        .decor-2 { top: 8%; right: 4%; animation-delay: 1s; }
-        .decor-3 { top: 35%; left: 2%; font-size: 1.5rem; animation-delay: 2s; }
-        .decor-4 { top: 60%; right: 3%; font-size: 1.8rem; animation-delay: 1.5s; }
-        .decor-5 { bottom: 10%; left: 4%; animation-delay: 3s; }
+        .st-bear { top: -15px; left: -10px; font-size: 2.5rem; transform: rotate(-10deg); }
+        .st-cloud { top: 120px; right: -15px; font-size: 2.8rem; }
+        .st-flower { top: 350px; left: -20px; transform: rotate(15deg); }
+        .st-heart { bottom: 200px; right: -15px; font-size: 1.8rem; }
+        .st-star { bottom: -15px; left: 30px; font-size: 2rem; }
+        .st-pencil { top: 550px; left: -15px; font-size: 1.8rem; transform: rotate(-20deg); }
 
-        /* --- ตัวเล่มสมุดโน้ต (Notebook Cover Container) --- */
-        .notebook-page {
-            max-width: 580px;
+        /* --- กรอบตัวเล่มสมุดโน้ตหลัก (และเส้นประที่ขยับแค่ตรงนี้) --- */
+        .notebook-container {
+            max-width: 550px;
             margin: 0 auto;
-            background-color: var(--notebook-bg);
-            border-radius: 30px;
-            padding: 35px 25px;
-            box-shadow: 0 15px 40px rgba(124, 93, 82, 0.12), 
-                        inset 0 0 20px rgba(255, 255, 255, 0.6);
-            border: 4px solid var(--white);
             position: relative;
+            padding: 6px; /* เว้นช่องให้เห็นเส้นประวิ่ง */
+            
+            /* สร้างเส้นประวิ่งรอบกรอบใหญ่ด้วยเทคนิคไล่สี */
+            background-image: 
+                linear-gradient(to right, var(--cute-brown) 60%, transparent 40%), 
+                linear-gradient(to bottom, var(--cute-brown) 60%, transparent 40%), 
+                linear-gradient(to right, var(--cute-brown) 60%, transparent 40%), 
+                linear-gradient(to bottom, var(--cute-brown) 60%, transparent 40%);
+            background-position: 0 0, 100% 0, 0 100%, 0 0;
+            background-size: 20px 3px, 3px 20px, 20px 3px, 3px 20px;
+            background-repeat: repeat-x, repeat-y, repeat-x, repeat-y;
+            animation: borderDashMove 0.8s linear infinite;
+            border-radius: 36px;
         }
 
-        /* แกนกลางสมุด/รอยพับ */
+        /* หน้ากระดาษด้านในสมุด */
+        .notebook-page {
+            background-color: var(--notebook-bg);
+            border-radius: 32px;
+            padding: 35px 22px;
+            box-shadow: inset 0 0 25px rgba(253, 230, 233, 0.4), 0 10px 30px rgba(124, 93, 82, 0.08);
+            border: 3px solid var(--white);
+        }
+
+        /* ห่วงสมุดสปริงด้านข้างจางๆ */
         .notebook-page::before {
-            content: "";
+            content: "☁️ ☁️ ☁️ ☁️ ☁️";
             position: absolute;
-            top: 0;
-            bottom: 0;
             left: 20px;
-            width: 2px;
-            background: rgba(1ba, 195, 145, 0.15);
+            top: -18px;
+            font-size: 0.8rem;
+            opacity: 0.25;
+            letter-spacing: 5px;
         }
 
-        /* --- Header สไตล์ป้ายสติกเกอร์แปะสมุด --- */
+        /* --- Header สไตล์ป้ายสติกเกอร์บวมฟุ้ง --- */
         header {
             text-align: center;
-            padding: 30px 15px;
+            padding: 35px 15px;
             background-color: var(--soft-blue);
-            border-radius: 24px;
-            box-shadow: 0 10px 25px var(--glow-blue);
+            border-radius: 26px;
             border: 3px solid var(--white);
             position: relative;
-            animation: floatGlow 5s ease-in-out infinite;
+            /* อนิเมชันความฟุ้งแบบพิเศษ Ultra Glow */
+            animation: ultraGlow 4s ease-in-out infinite;
             margin-bottom: 30px;
         }
 
+        /* เทปวาชิแปะหัวท้าย Header */
+        header::before {
+            content: "";
+            position: absolute;
+            top: -8px;
+            left: 35%;
+            width: 30%;
+            height: 16px;
+            background-color: rgba(255, 250, 222, 0.8);
+            border: 1px dashed rgba(124, 93, 82, 0.15);
+            transform: rotate(-1deg);
+        }
+
         .logo-container {
-            width: 110px;
-            height: 110px;
+            width: 105px;
+            height: 105px;
             margin: 0 auto 15px;
             background-color: var(--white);
             border-radius: 50%;
@@ -122,7 +152,7 @@
             justify-content: center;
             overflow: hidden;
             border: 4px solid var(--white);
-            box-shadow: 0 8px 20px rgba(124, 93, 82, 0.08);
+            box-shadow: 0 5px 15px rgba(124, 93, 82, 0.05);
         }
 
         .logo-container img {
@@ -133,53 +163,47 @@
 
         header h1 {
             font-size: 2.3rem;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             font-weight: 600;
             text-shadow: 2px 2px 0px var(--white);
         }
 
         .tagline {
             font-size: 0.95rem;
-            background-color: rgba(255, 255, 255, 0.85);
+            background-color: rgba(255, 255, 255, 0.9);
             padding: 10px 18px;
             border-radius: 20px;
             display: inline-block;
             max-width: 95%;
-            line-height: 1.5;
-            box-shadow: inset 0 0 10px rgba(255,255,255,0.5);
-            border: 1px solid rgba(124, 93, 82, 0.1);
+            line-height: 1.6;
+            border: 1px solid rgba(124, 93, 82, 0.08);
         }
 
-        /* --- Status Bar & Queue Button --- */
+        /* --- Status Bar & Queue Button (เปลี่ยนเป็นเส้นประนิ่ง) --- */
         .status-container {
             background-color: var(--white);
             border-radius: 24px;
             padding: 25px;
             margin-bottom: 25px;
             text-align: center;
-            box-shadow: 0 8px 25px rgba(124, 93, 82, 0.03);
-            /* เพิ่มเส้นประวิ่งรอบกล่อง */
-            background-image: linear-gradient(to right, var(--light-brown) 50%, transparent 50%), linear-gradient(to bottom, var(--light-brown) 50%, transparent 50%), linear-gradient(to right, var(--light-brown) 50%, transparent 50%), linear-gradient(to bottom, var(--light-brown) 50%, transparent 50%);
-            background-position: 0 0, 100% 0, 0 100%, 0 0;
-            background-size: 15px 2px, 2px 15px, 15px 2px, 2px 15px;
-            background-repeat: repeat-x, repeat-y, repeat-x, repeat-y;
-            animation: dashMove 0.8s linear infinite;
+            border: 2px dashed var(--light-brown); /* เส้นประนิ่งตามสั่ง */
+            box-shadow: 0 8px 20px rgba(0,0,0,0.01);
         }
 
         .price-tag {
-            font-size: 1.8rem;
+            font-size: 1.7rem;
             font-weight: 700;
             color: var(--cute-brown);
             margin-bottom: 12px;
             display: inline-block;
             background-color: var(--pastel-yellow);
-            padding: 2px 18px;
+            padding: 2px 16px;
             border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            transform: rotate(-1deg);
         }
 
         .status-bar {
-            background-color: #f5f5f5;
+            background-color: #f7f7f7;
             border-radius: 20px;
             height: 24px;
             position: relative;
@@ -190,10 +214,9 @@
 
         .status-fill {
             background-color: var(--pastel-pink);
-            width: 0%; /* คิวคงเดิมตามข้อมูล 0/3 */
+            width: 0%; /* 0/3 */
             height: 100%;
             border-radius: 20px;
-            box-shadow: inset 0 0 8px rgba(255,255,255,0.5);
         }
 
         .status-text {
@@ -215,19 +238,18 @@
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(124, 93, 82, 0.15);
-            border: 2px solid transparent;
+            box-shadow: 0 4px 12px rgba(124, 93, 82, 0.15);
         }
         .queue-btn * { color: var(--white); }
         .queue-btn:hover {
-            background-color: var(--white);
+            transform: translateY(-2px);
+            background-color: var(--soft-blue);
             color: var(--cute-brown);
-            border-color: var(--cute-brown);
-            box-shadow: 0 5px 15px var(--glow-blue);
+            box-shadow: 0 10px 20px var(--glow-color);
         }
         .queue-btn:hover * { color: var(--cute-brown); }
 
-        /* --- Badges (ปุ่มตารางสไตล์สมุดจด) --- */
+        /* --- Badges ปุ่มกรอบเส้นประธรรมดา --- */
         .badges-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -241,60 +263,56 @@
             padding: 20px 12px;
             text-align: center;
             text-decoration: none;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.02);
+            border: 2px dashed var(--light-brown); /* เส้นประนิ่ง */
             transition: all 0.3s ease;
-            /* เส้นประวิ่งได้รอบปุ่มวงกลมรี */
-            background-image: linear-gradient(to right, var(--soft-blue) 50%, transparent 50%), linear-gradient(to bottom, var(--soft-blue) 50%, transparent 50%), linear-gradient(to right, var(--soft-blue) 50%, transparent 50%), linear-gradient(to bottom, var(--soft-blue) 50%, transparent 50%);
-            background-position: 0 0, 100% 0, 0 100%, 0 0;
-            background-size: 12px 2px, 2px 12px, 12px 2px, 2px 12px;
-            background-repeat: repeat-x, repeat-y, repeat-x, repeat-y;
-            animation: dashMove 1.2s linear infinite;
         }
 
         .badge-item:hover {
-            transform: translateY(-4px);
-            background-color: #fafcfe;
-            box-shadow: 0 10px 20px var(--glow-blue);
+            transform: translateY(-3px);
+            background-color: #fffdfb;
+            border-color: var(--cute-brown);
+            box-shadow: 0 8px 20px var(--glow-color);
         }
 
         .badge-icon {
             font-size: 2rem;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
         }
 
         .badge-title {
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             font-weight: 500;
+            line-height: 1.4;
         }
 
-        /* --- Content Card (กระดาษโน้ตแผ่นเล็กแผ่นน้อย) --- */
+        /* --- Content Card (กระดาษโน้ต Memo แปะเทปตกแต่ง) --- */
         .card {
             background-color: var(--white);
             border-radius: 24px;
             padding: 25px;
             margin-bottom: 25px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.02);
-            border: 1px solid rgba(186, 155, 145, 0.2);
+            border: 1px solid rgba(186, 155, 145, 0.15);
             position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.01);
         }
 
-        /* ตกแต่งเทปกระดาษแปะหัวมุม (Washi Tape Effect) */
+        /* แปะเทปวาชิสไตล์สมุดโน้ตตรงมุมกล่อง */
         .card::before {
             content: "";
             position: absolute;
-            top: -10px;
-            left: 30px;
-            width: 70px;
-            height: 20px;
-            background-color: rgba(251, 227, 229, 0.7); /* เทปสีชมพูจางๆ */
-            transform: rotate(-3deg);
-            border-left: 2px dashed rgba(0,0,0,0.05);
-            border-right: 2px dashed rgba(0,0,0,0.05);
+            top: -8px;
+            right: 25px;
+            width: 65px;
+            height: 18px;
+            background-color: rgba(230, 245, 249, 0.8); /* เทปสีฟ้าใส */
+            transform: rotate(4deg);
+            border-left: 2px dashed rgba(0,0,0,0.03);
+            border-right: 2px dashed rgba(0,0,0,0.03);
         }
 
         .card h2 {
             font-size: 1.2rem;
-            margin-bottom: 15px;
+            margin-bottom: 16px;
             border-bottom: 2px dashed var(--soft-blue);
             padding-bottom: 8px;
             display: flex;
@@ -308,14 +326,14 @@
 
         .features-list li {
             position: relative;
-            padding-left: 25px;
+            padding-left: 26px;
             margin-bottom: 12px;
             font-size: 0.9rem;
-            line-height: 1.5;
+            line-height: 1.6;
         }
 
         .features-list li::before {
-            content: "✏️";
+            content: "🌸"; /* เปลี่ยนไอคอนหน้าลิสต์เพิ่มความคิวท์ */
             position: absolute;
             left: 2px;
             top: 1px;
@@ -334,102 +352,111 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            padding: 12px;
+            padding: 13px;
             border-radius: 18px;
             text-decoration: none;
             font-weight: 500;
             color: var(--white);
             transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
         }
         .contact-btn * { color: var(--white); }
 
-        .btn-facebook { background-color: #a4b7dd; } /* พาสเทลฟ้าหม่นถนอมสายตา */
-        .btn-facebook:hover { background-color: #8fa5cf; transform: scale(1.01); }
+        .btn-facebook { background-color: #a7badc; } 
+        .btn-facebook:hover { background-color: #92a7cc; }
         
-        .btn-line { background-color: #b3dfc5; } /* พาสเทลเขียวละมุน */
-        .btn-line:hover { background-color: #9eccb0; transform: scale(1.01); }
+        .btn-line { background-color: #bce2ca; } 
+        .btn-line:hover { background-color: #a3d4b3; }
 
-        /* --- Warranty Text (สติกเกอร์คำเตือน/รับประกัน) --- */
+        /* --- Warranty Text (สติกเกอร์คำเตือนจดบันทึก) --- */
         .warranty {
             text-align: center;
             font-size: 0.85rem;
             background-color: var(--pastel-yellow);
-            border: 2px dashed rgba(124, 93, 82, 0.2);
-            padding: 10px;
-            border-radius: 15px;
-            margin-top: 18px;
+            border: 2px dashed rgba(124, 93, 82, 0.15);
+            padding: 12px;
+            border-radius: 16px;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
 
-    <div class="notebook-decor decor-1">☁️</div>
-    <div class="notebook-decor decor-2">🌸</div>
-    <div class="notebook-decor decor-3">✨</div>
-    <div class="notebook-decor decor-4">🧸</div>
-    <div class="notebook-decor decor-5">🕊️</div>
+    <!-- สติกเกอร์ตกแต่งแนวสมุด Scrapbook ลอยรอบตัวเล่ม -->
+    <div class="notebook-container">
+        <div class="sticker st-bear">🧸</div>
+        <div class="sticker st-cloud">☁️</div>
+        <div class="sticker st-flower">🌷</div>
+        <div class="sticker st-heart">🎀</div>
+        <div class="sticker st-pencil">✏️</div>
+        <div class="sticker st-star">✨</div>
 
-    <div class="notebook-page">
+        <!-- หน้ากระดาษสมุดโน้ตด้านใน -->
+        <div class="notebook-page">
 
-        <header>
-            <div class="logo-container">
-                <img src="IMG_0545.jpeg" alt="zenithyshop Logo">
-            </div>
-            <h1>zenithyshop</h1>
-            <div class="tagline">
-                zenity รับทำเว็บไซต์ร้านค้าสำหรับร้านปล่อยเช่า/ร้านทำป้าย/ร้านเติมเกม identity v  * รอบทดลอง *
-            </div>
-        </header>
+            <!-- ส่วนหัวเว็บฟุ้งๆ ชวนฝัน แปะเทปตกแต่ง -->
+            <header>
+                <div class="logo-container">
+                    <img src="IMG_0545.jpeg" alt="zenithyshop Logo">
+                </div>
+                <h1>zenithyshop</h1>
+                <div class="tagline">
+                    zenity รับทำเว็บไซต์ร้านค้าสำหรับร้านปล่อยเช่า/ร้านทำป้าย/ร้านเติมเกม identity v  * รอบทดลอง *
+                </div>
+            </header>
 
-        <div class="status-container">
-            <div class="price-tag">Price 99.-</div>
-            <div class="status-bar">
-                <div class="status-fill"></div>
-                <div class="status-text">รับ 0/3  💕</div>
-            </div>
-            <a href="https://drive.google.com/drive/folders/16FFEJUwVLDIjmbSZEPM3x_SkLzVkl4CO" class="queue-btn" target="_blank">
-                คลิกเพื่อเช็คคิวงาน 🗓️
-            </a>
-        </div>
-
-        <div class="badges-grid">
-            <a href="https://drive.google.com/drive/mobile/folders/1fj024BhkgC1ctJeiwyZUG3USteSdzWzr" class="badge-item" target="_blank">
-                <div class="badge-icon">*️⃣</div>
-                <div class="badge-title">เทมเพลต 50+ แบบ 🔥</div>
-            </a>
-            <a href="https://drive.google.com/drive/folders/16FFEJUwVLDIjmbSZEPM3x_SkLzVkl4CO" class="badge-item" target="_blank">
-                <div class="badge-icon">📍</div>
-                <div class="badge-title">ตัวอย่างงาน website</div>
-            </a>
-        </div>
-
-        <div class="card">
-            <h2>เว็บไซต์ทำอะไรได้บ้าง ❔⬇️</h2>
-            <ul class="features-list">
-                <li>สามารถใส่รวมลิงก์ผลงานป้าย/ลิงก์โพสต์รวมไอดีปล่อยเช่า/ลิงก์เช็คคิวต่างๆ ไว้ในเว็บไซต์เดียว !</li>
-                <li>ใส่เรทราคาทำป้าย/เรทดันไอดี/ อื่น ๆ</li>
-                <li>ใส่ลิงก์ช่องทางการติดต่อ ได้ทั้ง Line / Facebook / Instagram / อื่นๆ</li>
-                <li>เว็บบัญชี (สามารถคัดลอกเลขบัญชีได้) และใส่รูปสำหรับแสกนได้เช่นกัน</li>
-            </ul>
-        </div>
-
-        <div class="card">
-            <h2>📱 ช่องทางติดต่อ</h2>
-            <div class="contact-buttons">
-                <a href="https://www.facebook.com/profile.php?id=61554192600355" class="contact-btn btn-facebook" target="_blank">
-                    Facebook
-                </a>
-                <a href="https://line.me/ti/p/LfBtdhlrVa" class="contact-btn btn-line" target="_blank">
-                    Line
+            <!-- กล่องแสดงราคาและแถบคิวงาน (กรอบนี้เปลี่ยนเป็นเส้นประนิ่งๆ แล้ว) -->
+            <div class="status-container">
+                <div class="price-tag">Price 99.-</div>
+                <div class="status-bar">
+                    <div class="status-fill"></div>
+                    <div class="status-text">รับ 0/3  💕</div>
+                </div>
+                <a href="https://drive.google.com/drive/folders/16FFEJUwVLDIjmbSZEPM3x_SkLzVkl4CO" class="queue-btn" target="_blank">
+                    คลิกเพื่อเช็คคิวงาน 🗓️
                 </a>
             </div>
-            
-            <div class="warranty">
-                📍มีรับประกันเว็บ 1 เดือน เว็บมีปัญหาแจ้งได้ตลอดค่ะ
-            </div>
-        </div>
 
+            <!-- ปุ่มเทมเพลตและตัวอย่างงาน -->
+            <div class="badges-grid">
+                <a href="https://drive.google.com/drive/mobile/folders/1fj024BhkgC1ctJeiwyZUG3USteSdzWzr" class="badge-item" target="_blank">
+                    <div class="badge-icon">*️⃣</div>
+                    <div class="badge-title">เทมเพลต 50+ แบบ 🔥</div>
+                </a>
+                <a href="https://drive.google.com/drive/folders/16FFEJUwVLDIjmbSZEPM3x_SkLzVkl4CO" class="badge-item" target="_blank">
+                    <div class="badge-icon">📍</div>
+                    <div class="badge-title">ตัวอย่างงาน website</div>
+                </a>
+            </div>
+
+            <!-- การ์ดฟังก์ชันเว็บ (กระดาษโน้ตแปะเทปตกแต่ง) -->
+            <div class="card">
+                <h2>เว็บไซต์ทำอะไรได้บ้าง ❔⬇️</h2>
+                <ul class="features-list">
+                    <li>สามารถใส่รวมลิงก์ผลงานป้าย/ลิงก์โพสต์รวมไอดีปล่อยเช่า/ลิงก์เช็คคิวต่างๆ ไว้ในเว็บไซต์เดียว !</li>
+                    <li>ใส่เรทราคาทำป้าย/เรทดันไอดี/ อื่น ๆ</li>
+                    <li>ใส่ลิงก์ช่องทางการติดต่อ ได้ทั้ง Line / Facebook / Instagram / อื่นๆ</li>
+                    <li>เว็บบัญชี (สามารถคัดลอกเลขบัญชีได้) และใส่รูปสำหรับแสกนได้เช่นกัน</li>
+                </ul>
+            </div>
+
+            <!-- ส่วนติดต่อและรับประกัน -->
+            <div class="card">
+                <h2>📱 ช่องทางติดต่อ</h2>
+                <div class="contact-buttons">
+                    <a href="https://www.facebook.com/profile.php?id=61554192600355" class="contact-btn btn-facebook" target="_blank">
+                        Facebook
+                    </a>
+                    <a href="https://line.me/ti/p/LfBtdhlrVa" class="contact-btn btn-line" target="_blank">
+                        Line
+                    </a>
+                </div>
+                
+                <div class="warranty">
+                    📍มีรับประกันเว็บ 1 เดือน เว็บมีปัญหาแจ้งได้ตลอดค่ะ
+                </div>
+            </div>
+
+        </div>
     </div>
 
 </body>
