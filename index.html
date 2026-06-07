@@ -3,170 +3,328 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zenithyshop | Web Design & Full Service</title>
-   
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-   
-    <!-- Google Fonts: Mitr & Space Mono -->
+    <title>zenithyshop</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-   
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Mitr', 'sans-serif'],
-                        mono: ['Space Mono', 'monospace'],
-                    },
-                    colors: {
-                        'blue-main': '#86cbea',
-                        'blue-soft': '#eef7fc',
-                        'blue-deep': '#2755ab',
-                        'yellow-main': '#fcf096',
-                        'yellow-soft': '#fffce8',
-                        'yellow-deep': '#eab308',
-                        'ticket-bg': '#ffffff',
-                    }
-                }
-            }
-        }
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500&family=Prompt:wght@400;500;600&display=swap" rel="stylesheet">
+    
     <style>
-        body { background-color: #f1f8fc; background-image: radial-gradient(#86cbea 1.2px, transparent 1.2px); background-size: 24px 24px; overflow-x: hidden; }
-        .floating-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
-        .svg-float { position: absolute; opacity: 0; animation: float-around infinite linear; animation-fill-mode: both; }
-        .svg-float svg { width: 100%; height: 100%; filter: drop-shadow(0px 2px 4px rgba(134, 203, 234, 0.4)); }
-        @keyframes float-around { 0% { transform: translateY(110vh) rotate(0deg); opacity: 0; } 10% { opacity: 0.5; } 90% { opacity: 0.5; } 100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; } }
-        #splash-screen { background: linear-gradient(180deg, #eef7fc 0%, #86cbea 100%); transition: opacity 0.8s ease-out, visibility 0.8s ease-out; z-index: 60; }
-        .cloud { position: absolute; background: rgba(255, 255, 255, 0.95); border-radius: 50px; }
-        .cloud::before, .cloud::after { content: ''; position: absolute; background: rgba(255, 255, 255, 0.95); border-radius: 50%; }
-        .cloud-1 { top: 15%; left: 10%; width: 60px; height: 20px; animation: cloud-float 6s ease-in-out infinite; }
-        .cloud-1::before { width: 30px; height: 30px; top: -15px; left: 10px; }
-        .cloud-1::after { width: 20px; height: 20px; top: -10px; left: 35px; }
-        .cloud-2 { top: 40%; left: 80%; width: 80px; height: 25px; animation: cloud-float 8s ease-in-out infinite reverse; }
-        .cloud-2::before { width: 40px; height: 40px; top: -20px; left: 15px; }
-        .cloud-2::after { width: 30px; height: 30px; top: -10px; left: 45px; }
-        @keyframes cloud-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-        .pulse-btn { animation: pulse-ring 2.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite; }
-        @keyframes pulse-ring { 0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(134, 203, 234, 0.6); } 70% { transform: scale(1); box-shadow: 0 0 0 15px rgba(134, 203, 234, 0); } 100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(134, 203, 234, 0); } }
-        #main-content { display: none; opacity: 0; transition: opacity 1s ease-in; position: relative; z-index: 10; }
-        .ticket-cutout-left, .ticket-cutout-right { position: absolute; top: 50%; transform: translateY(-50%); width: 30px; height: 30px; background-color: #f1f8fc; background-image: radial-gradient(#86cbea 1.2px, transparent 1.2px); background-size: 24px 24px; border-radius: 50%; z-index: 10; }
-        .ticket-cutout-left { left: -15px; } .ticket-cutout-right { right: -15px; }
-        .dashed-divider { border-top: 3px dashed #86cbea; position: relative; }
-        .stamp { position: absolute; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; z-index: 0; opacity: 0.6; pointer-events: none; }
-        .stamp-p1 { border: 4px solid #86cbea; color: #86cbea; width: 100px; height: 100px; transform: rotate(-15deg); }
-        .stamp-p1::before { content: '\f0fb'; font-family: 'Font Awesome 6 Free'; font-weight: 900; font-size: 40px; }
-        .stamp-p2 { border: 4px solid #fcf096; color: #eab308; width: 120px; height: 120px; transform: rotate(25deg); background: transparent; border-radius: 10px; display: flex; flex-direction: column; line-height: 1.2; }
-        .stamp-p3 { border: 3px solid #2755ab; color: #2755ab; width: 140px; height: 60px; border-radius: 5px; transform: rotate(-5deg); font-size: 14px; text-align: center; }
-        .barcode { height: 40px; width: 100%; background: repeating-linear-gradient(90deg, #86cbea, #86cbea 2px, transparent 2px, transparent 5px, #fcf096 5px, #fcf096 8px, transparent 8px, transparent 11px, #2755ab 11px, #2755ab 13px, transparent 13px, transparent 16px); }
-        .data-label { font-size: 0.7rem; color: #86cbea; text-transform: uppercase; font-weight: 700; letter-spacing: 1px; }
-        .data-value { font-family: 'Space Mono', monospace; font-size: 1.1rem; color: #2755ab; font-weight: 700; }
-        ::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: #f1f8fc; } ::-webkit-scrollbar-thumb { background: #86cbea; border-radius: 4px; }
+        :root {
+            --bg-color: #f4eae1; /* สีครีม/น้ำตาลอ่อนมาก */
+            --primary-blue: #aed9e0; /* สีฟ้าอ่อนพาสเทล */
+            --secondary-blue: #b8e1dd; /* สีฟ้าอมเขียวอ่อน */
+            --dark-brown: #5d4037; /* สีน้ำตาลเข้มสำหรับตัวหนังสือ */
+            --light-brown: #8d6e63; /* สีน้ำตาลอ่อน */
+            --white: #ffffff;
+            --accent-pink: #ffb7b2; /* สีชมพู溫柔 */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Mitr', 'Prompt', sans-serif;
+            color: var(--dark-brown);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            line-height: 1.6;
+            padding-bottom: 50px;
+        }
+
+        /* --- Header Section --- */
+        header {
+            background-color: var(--primary-blue);
+            text-align: center;
+            padding: 40px 20px;
+            border-bottom: 5px rounded var(--white);
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .logo-container {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 15px;
+            background-color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 4px solid var(--white);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .logo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            font-weight: 500;
+            color: var(--dark-brown);
+            text-shadow: 1px 1px 0px var(--white);
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            background-color: rgba(255, 255, 255, 0.6);
+            padding: 8px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            max-width: 90%;
+        }
+
+        /* --- Container --- */
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        /* --- Status Bar & Queue Button --- */
+        .status-container {
+            background-color: var(--white);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 25px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border: 2px solid var(--primary-blue);
+        }
+
+        .price-tag {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--light-brown);
+            margin-bottom: 10px;
+        }
+
+        .status-bar {
+            background-color: #eee;
+            border-radius: 15px;
+            height: 25px;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .status-fill {
+            background-color: var(--accent-pink);
+            width: 0%; /* 0/3 ตามข้อมูล */
+            height: 100%;
+            border-radius: 15px;
+            transition: width 0.5s ease;
+        }
+
+        .status-text {
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+            line-height: 25px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .queue-btn {
+            display: inline-block;
+            background-color: var(--light-brown);
+            color: var(--white);
+            padding: 10px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: transform 0.2s, background-color 0.2s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .queue-btn * { color: var(--white); }
+        .queue-btn:hover {
+            transform: scale(1.05);
+            background-color: var(--dark-brown);
+        }
+
+        /* --- Badges (ปุ่มวงกลม) --- */
+        .badges-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .badge-item {
+            background-color: var(--white);
+            border-radius: 20px;
+            padding: 20px 15px;
+            text-align: center;
+            text-decoration: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border: 2px solid var(--primary-blue);
+            transition: transform 0.2s;
+        }
+
+        .badge-item:hover {
+            transform: translateY(-3px);
+        }
+
+        .badge-icon {
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+
+        .badge-title {
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        /* --- Content Card --- */
+        .card {
+            background-color: var(--white);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border: 2px solid var(--primary-blue);
+        }
+
+        .card h2 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            border-bottom: 2px dashed var(--primary-blue);
+            padding-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .features-list {
+            list-style: none;
+        }
+
+        .features-list li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+        }
+
+        .features-list li::before {
+            content: "⁃";
+            position: absolute;
+            left: 5px;
+            top: 0;
+            font-weight: bold;
+            color: var(--light-brown);
+        }
+
+        /* --- Contact Links --- */
+        .contact-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .contact-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px;
+            border-radius: 15px;
+            text-decoration: none;
+            font-weight: 500;
+            color: var(--white);
+            transition: background-color 0.2s;
+        }
+        .contact-btn * { color: var(--white); }
+
+        .btn-facebook { background-color: #4267B2; }
+        .btn-facebook:hover { background-color: #365899; }
+        
+        .btn-line { background-color: #06C755; }
+        .btn-line:hover { background-color: #05b04b; }
+
+        /* --- Warranty Text --- */
+        .warranty {
+            text-align: center;
+            font-size: 0.9rem;
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            padding: 10px;
+            border-radius: 15px;
+            margin-top: 15px;
+        }
     </style>
 </head>
-<body class="font-sans antialiased min-h-screen relative text-blue-deep">
-    <div id="floating-emojis" class="floating-container"></div>
-    <div id="splash-screen" class="fixed inset-0 flex flex-col items-center justify-center">
-        <div class="cloud cloud-1"></div><div class="cloud cloud-2"></div>
-        <div class="relative z-10 flex flex-col items-center">
-            <div class="w-32 h-32 bg-white rounded-3xl shadow-xl flex items-center justify-center mb-6 border-4 border-[#eef7fc] overflow-hidden">
-                <img src="IMG_0545.jpeg" alt="Shop Logo" class="w-full h-full object-cover">
-            </div>
-            <h1 class="text-white text-4xl md:text-5xl font-bold tracking-wider mb-2 drop-shadow-md">Zenithyshop</h1>
-            <button onclick="enterShop()" class="pulse-btn w-20 h-20 bg-white/50 backdrop-blur-md border border-white rounded-full flex items-center justify-center cursor-pointer hover:bg-white/70 transition shadow-lg group">
-                <i class="fa-solid fa-play text-blue-deep text-3xl ml-2"></i>
-            </button>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <img src="IMG_0545.jpeg" alt="zenithyshop Logo">
         </div>
-    </div>
-    <div id="main-content" class="py-10 px-4 w-full flex justify-center">
-        <div class="w-full max-w-3xl bg-ticket-bg rounded-3xl shadow-2xl overflow-hidden relative border-2 border-blue-100">
-            <div class="bg-blue-main p-6 flex items-center justify-between text-white relative overflow-hidden">
-                <div class="flex items-center gap-4 relative z-10">
-                    <div class="w-14 h-14 bg-white rounded-full flex items-center justify-center overflow-hidden border-2 border-yellow-main">
-                        <img src="IMG_0545.jpeg" alt="Logo" class="w-full h-full object-cover">
-                    </div>
-                    <div>
-                        <h2 class="text-2xl font-bold tracking-widest uppercase">Zenithy</h2>
-                        <p class="font-mono text-xl text-yellow-main">SHOP SERVICE</p>
-                    </div>
-                </div>
+        <h1>zenithyshop</h1>
+        <div class="tagline">
+            zenity รับทำเว็บไซต์ร้านค้าสำหรับร้านปล่อยเช่า/ร้านทำป้าย/ร้านเติมเกม identity v  * รอบทดลอง *
+        </div>
+    </header>
+
+    <div class="container">
+
+        <div class="status-container">
+            <div class="price-tag">Price 99.-</div>
+            <div class="status-bar">
+                <div class="status-fill"></div>
+                <div class="status-text">รับ 0/3  💕</div>
             </div>
-            <div class="p-8 relative bg-white">
-                <div class="text-center mb-8">
-                    <h3 class="text-2xl font-bold text-blue-deep mb-2">Zenithyshop รับทำเว็บครบวงจร</h3>
-                    <p class="text-blue-main text-sm font-medium">รับทำเว็บไซต์ / เติมเกม Identity V / ทำป้ายทุกชนิด</p>
-                    <p class="text-blue-deep font-bold mt-2">⏰ Open 09:00 - 23:00 น.</p>
-                </div>
-                <div class="bg-blue-soft p-5 rounded-2xl border-2 border-blue-main">
-                    <h4 class="font-bold text-blue-deep mb-3"><i class="fa-solid fa-palette mr-2"></i> เว็บไซต์ร้าน</h4>
-                    <ul class="text-sm text-blue-deep space-y-2">
-                        <li>• เริ่มต้น 129.- (เทมเพลต 50+ แบบ)</li>
-                        <li>• มีทั้งแนวน่ารัก พาสเทล และแนวมืด</li>
-                        <li>• รองาน 4-8 ชั่วโมง (รันตามคิว)</li>
-                    </ul>
-                </div>
+            <a href="https://drive.google.com/drive/folders/16FFEJUwVLDIjmbSZEPM3x_SkLzVkl4CO" class="queue-btn" target="_blank">
+                คลิกเพื่อเช็คคิวงาน 🗓️
+            </a>
+        </div>
+
+        <div class="badges-grid">
+            <a href="https://drive.google.com/drive/mobile/folders/1fj024BhkgC1ctJeiwyZUG3USteSdzWzr" class="badge-item" target="_blank">
+                <div class="badge-icon">*️⃣</div>
+                <div class="badge-title">เทมเพลต 50+ แบบ 🔥</div>
+            </a>
+            <a href="https://drive.google.com/drive/folders/16FFEJUwVLDIjmbSZEPM3x_SkLzVkl4CO" class="badge-item" target="_blank">
+                <div class="badge-icon">📍</div>
+                <div class="badge-title">ตัวอย่างงาน website</div>
+            </a>
+        </div>
+
+        <div class="card">
+            <h2>เว็บไซต์ทำอะไรได้บ้าง ❔⬇️</h2>
+            <ul class="features-list">
+                <li>สามารถใส่รวมลิงก์ผลงานป้าย/ลิงก์โพสต์รวมไอดีปล่อยเช่า/ลิงก์เช็คคิวต่างๆ ไว้ในเว็บไซต์เดียว !</li>
+                <li>ใส่เรทราคาทำป้าย/เรทดันไอดี/ อื่น ๆ</li>
+                <li>ใส่ลิงก์ช่องทางการติดต่อ ได้ทั้ง Line / Facebook / Instagram / อื่นๆ</li>
+                <li>เว็บบัญชี (สามารถคัดลอกเลขบัญชีได้) และใส่รูปสำหรับแสกนได้เช่นกัน</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>📱 ช่องทางติดต่อ</h2>
+            <div class="contact-buttons">
+                <a href="https://www.facebook.com/profile.php?id=61554192600355" class="contact-btn btn-facebook" target="_blank">
+                    Facebook
+                </a>
+                <a href="https://line.me/ti/p/LfBtdhlrVa" class="contact-btn btn-line" target="_blank">
+                    Line
+                </a>
             </div>
-            <div class="dashed-divider"><div class="ticket-cutout-left"></div><div class="ticket-cutout-right"></div></div>
-            <div class="p-8 relative bg-white">
-                <div class="grid md:grid-cols-2 gap-8">
-                    <div>
-                        <h4 class="font-bold text-blue-deep mb-4">งานป้าย</h4>
-                        <div class="space-y-3 text-xs text-blue-deep">
-                            <p>• <b>ป้ายเติมเกม/ส่งของขวัญ:</b> 1-10 (59.-), 11-20 (69.-), 21-25 (79.-), 26-35 (89.-)</p>
-                            <p>• <b>ป้ายเครดิต:</b> 1 ตัว 50.- (+ตัวละ 5.-)</p>
-                            <p>• <b>ป้ายไอดี/บัญชี:</b> 69-79.-</p>
-                            <p>• <b>ป้ายเช่าไอดี:</b> หัวป้าย 59.- (สกินเยอะมีเรทพิเศษ)</p>
-                        </div>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-blue-deep mb-4">ติดต่อ / ข้อมูลเพิ่ม</h4>
-                        <div class="space-y-2">
-                            <a href="https://drive.google.com/drive/folders/1_XMpP9EC2Yqq2-6cYfRn0fy8i9Q6cvoi" target="_blank" class="block text-blue-deep underline">ตัวอย่างงานป้าย</a>
-                            <a href="https://m.facebook.com/story.php?story_fbid=pfbid0VoVRA4MbGu79CbqBREGD8jcxavv6HzJ2F9jcyvVCUrLxEPSRoFtNQNA44yM83zs9l&id=61586611223621" target="_blank" class="block text-blue-deep underline">เรทเติมกระดุม</a>
-                            <a href="https://drive.google.com/drive/mobile/folders/1fj024BhkgC1ctJeiwyZUG3USteSdzWzr" target="_blank" class="block text-blue-deep underline">เทมเพลตเว็บไซต์</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="mt-8 bg-yellow-soft p-4 rounded-xl border border-yellow-main text-xs text-blue-deep">
-                    <p class="font-bold mb-2">📍 กฎของร้าน</p>
-                    • ไม่คืนเงินทุกกรณี / ยกเลิกงานป้ายไม่คืนเงิน <br>
-                    • แก้ไขข้อมูลเว็บจุดละ 20.- / แก้งานป้ายหลังส่ง 20.-
-                </div>
-            </div>
-            <div class="p-8 bg-blue-soft text-center">
-                <a href="https://www.facebook.com/profile.php?id=61554192600355" target="_blank" class="block mb-4 text-blue-deep font-bold"><i class="fa-brands fa-facebook"></i> Facebook: Zenithyshop</a>
-                <a href="https://lin.ee/qihwQGM"><img src="https://scdn.line-apps.com/n/line_add_friends/btn/th.png" alt="เพิ่มเพื่อน" class="mx-auto" border="0"></a>
+            
+            <div class="warranty">
+                📍มีรับประกันเว็บ 1 เดือน เว็บมีปัญหาแจ้งได้ตลอดค่ะ
             </div>
         </div>
+
     </div>
-    <script>
-        function createFloatingSVGs() {
-            const container = document.getElementById('floating-emojis');
-            const svgs = ['<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>','<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9L12 2Z"/></svg>','<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="8"/></svg>'];
-            const pastelColors = ['#86cbea', '#2755ab', '#ffffff', '#fcf096'];
-            for (let i = 0; i < 15; i++) {
-                const span = document.createElement('span');
-                span.className = 'svg-float';
-                span.innerHTML = svgs[Math.floor(Math.random() * svgs.length)];
-                span.style.color = pastelColors[Math.floor(Math.random() * pastelColors.length)];
-                span.style.left = Math.random() * 100 + 'vw';
-                span.style.animationDuration = (Math.random() * 10 + 10) + 's';
-                span.style.width = (Math.random() * 20 + 10) + 'px';
-                container.appendChild(span);
-            }
-        }
-        function enterShop() {
-            const splash = document.getElementById('splash-screen');
-            const main = document.getElementById('main-content');
-            splash.style.opacity = '0';
-            setTimeout(() => { splash.style.display = 'none'; main.style.display = 'flex'; main.style.opacity = '1'; }, 800);
-        }
-        window.onload = createFloatingSVGs;
-    </script>
+
 </body>
 </html>
