@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>zenithyshop 📖✨</title>
+    <title>zenithyshop</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Mitr:wght@300;400;500&display=swap" rel="stylesheet">
@@ -12,38 +12,38 @@
         :root {
             --notebook-bg: #fffdfc;
             --soft-blue: #e8f7fa;
-            --glow-color: rgba(232, 247, 250, 0.95);
-            --glow-pink: rgba(254, 235, 238, 0.95);
+            --glow-color: rgba(232, 247, 250, 0.85);
+            --glow-pink: rgba(254, 235, 238, 0.85);
             --cute-brown: #76584e;
             --light-brown: #d7c4be;
             --pastel-pink: #fdebee;
             --pastel-yellow: #fffce3;
             --white: #ffffff;
-            --line-green: #e1f5fe; /* สีพื้นหลังกล่องไลน์พาสเทล */
-            --fb-blue: #edf2fa; /* สีพื้นหลังกล่องเฟสพาสเทล */
+            --line-green: #e1f5fe;
+            --fb-blue: #edf2fa;
         }
 
-        /* --- Animations --- */
+        /* --- Animations & Glow Effects --- */
         @keyframes dashMove {
             to { background-position: 20px 0, 100% 20px, 20px 100%, 0 20px; }
         }
 
-        @keyframes ultraGlow {
-            0% { filter: drop-shadow(0 0 15px var(--glow-color)) drop-shadow(0 0 5px var(--glow-pink)); }
-            50% { filter: drop-shadow(0 0 25px var(--glow-color)) drop-shadow(0 0 12px var(--glow-pink)); transform: translateY(-2px); }
-            100% { filter: drop-shadow(0 0 15px var(--glow-color)) drop-shadow(0 0 5px var(--glow-pink)); }
+        @keyframes softGlow {
+            0% { filter: drop-shadow(0 0 15px var(--glow-color)) drop-shadow(0 0 8px var(--glow-pink)); }
+            50% { filter: drop-shadow(0 0 25px var(--glow-color)) drop-shadow(0 0 15px var(--glow-pink)); transform: translateY(-1px); }
+            100% { filter: drop-shadow(0 0 15px var(--glow-color)) drop-shadow(0 0 8px var(--glow-pink)); }
         }
 
-        @keyframes floatCute {
-            0% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-5px) rotate(3deg); }
-            100% { transform: translateY(0px) rotate(0deg); }
+        @keyframes floatStar {
+            0% { transform: translateY(0px) rotate(0deg); opacity: 0.8; }
+            50% { transform: translateY(-8px) rotate(15deg); opacity: 1; }
+            100% { transform: translateY(0px) rotate(0deg); opacity: 0.8; }
         }
 
         @keyframes wiggle {
             0%, 100% { transform: rotate(0deg); }
-            25% { transform: rotate(-8deg) scale(1.2); }
-            75% { transform: rotate(8deg) scale(1.2); }
+            25% { transform: rotate(-8deg) scale(1.15); }
+            75% { transform: rotate(8deg) scale(1.15); }
         }
 
         * {
@@ -57,37 +57,37 @@
         body {
             background-color: #f5ede6; 
             background-image: 
-                linear-gradient(rgba(118, 88, 78, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(118, 88, 78, 0.03) 1px, transparent 1px);
+                linear-gradient(rgba(118, 88, 78, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(118, 88, 78, 0.02) 1px, transparent 1px);
             background-size: 20px 20px;
-            padding: 40px 15px 80px;
+            padding: 80px 15px 80px;
             position: relative;
             overflow-x: hidden;
         }
 
-        /* --- ดาวเวกเตอร์มินิมอลไม่มีลายขอบ (CSS Stars) --- */
+        /* --- ดาวมินิมอลเวกเตอร์เนื้อเนียน (CSS Stars) โปรยหนาแน่นขึ้น --- */
         .vector-star {
             position: absolute;
             width: 0;
             height: 0;
-            border-right: 15px solid transparent;
-            border-bottom: 10px solid var(--pastel-yellow);
-            border-left: 15px solid transparent;
+            border-right: 12px solid transparent;
+            border-bottom: 8px solid var(--pastel-yellow);
+            border-left: 12px solid transparent;
             transform: rotate(35deg);
             cursor: pointer;
-            animation: floatCute 4s ease-in-out infinite;
-            filter: drop-shadow(0 2px 4px rgba(118, 88, 78, 0.1));
-            z-index: 5;
+            animation: floatStar 4s ease-in-out infinite;
+            filter: drop-shadow(0 0 8px rgba(255, 252, 227, 0.8));
+            z-index: 1;
         }
         .vector-star:before {
-            border-bottom: 10px solid var(--pastel-yellow);
-            border-left: 5px solid transparent;
-            border-right: 5px solid transparent;
+            border-bottom: 8px solid var(--pastel-yellow);
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
             position: absolute;
             height: 0;
             width: 0;
-            top: -7px;
-            left: -11px;
+            top: -6px;
+            left: -9px;
             display: block;
             content: '';
             transform: rotate(-35deg);
@@ -96,99 +96,103 @@
             position: absolute;
             display: block;
             top: 0;
-            left: -15px;
+            left: -12px;
             width: 0;
             height: 0;
-            border-right: 15px solid transparent;
-            border-bottom: 10px solid var(--pastel-yellow);
-            border-left: 15px solid transparent;
+            border-right: 12px solid transparent;
+            border-bottom: 8px solid var(--pastel-yellow);
+            border-left: 12px solid transparent;
             transform: rotate(-70deg);
             content: '';
         }
         .vector-star:hover { animation: wiggle 0.4s ease-in-out infinite; }
         
-        /* สลับสีดาวให้เป็นชมพูพาสเทลเพื่อความนุ่มฟู */
-        .star-pink, .star-pink:before, .star-pink:after { border-bottom-color: var(--pastel-pink) !important; }
-        .star-blue, .star-blue:before, .star-blue:after { border-bottom-color: var(--soft-blue) !important; }
+        .star-pink, .star-pink:before, .star-pink:after { border-bottom-color: var(--pastel-pink) !important; filter: drop-shadow(0 0 8px rgba(254, 235, 238, 0.8)); }
+        .star-blue, .star-blue:before, .star-blue:after { border-bottom-color: var(--soft-blue) !important; filter: drop-shadow(0 0 8px rgba(232, 247, 250, 0.8)); }
 
-        /* จัดตำแหน่งดาวรอบสมุด */
-        .vst-1 { top: 20px; left: 15px; transform: scale(1.1) rotate(15deg); }
-        .vst-2 { top: 180px; right: 15px; transform: scale(0.8) rotate(45deg); animation-delay: 0.5s; }
-        .vst-3 { top: 420px; left: 10px; transform: scale(1) rotate(-20deg); animation-delay: 1s; }
-        .vst-4 { bottom: 300px; right: 12px; transform: scale(1.2) rotate(10deg); animation-delay: 1.5s; }
-        .vst-5 { bottom: 100px; left: 20px; transform: scale(0.7) rotate(35deg); animation-delay: 0.2s; }
-        .vst-6 { bottom: 10px; right: 40px; transform: scale(0.9) rotate(-15deg); animation-delay: 0.8s; }
+        /* การกระจายฝูงดาวแบบโปรยปรายรอบทิศทาง */
+        .vst-1 { top: 20px; left: 5%; transform: scale(1.1); animation-delay: 0s; }
+        .vst-2 { top: 90px; right: 6%; transform: scale(0.8); animation-delay: 0.5s; }
+        .vst-3 { top: 260px; left: 4%; transform: scale(0.9); animation-delay: 1.2s; }
+        .vst-4 { top: 400px; right: 3%; transform: scale(1.2); animation-delay: 0.3s; }
+        .vst-5 { top: 580px; left: 6%; transform: scale(0.7); animation-delay: 1.8s; }
+        .vst-6 { top: 720px; right: 5%; transform: scale(1); animation-delay: 0.9s; }
+        .vst-7 { bottom: 180px; left: 3%; transform: scale(1.1); animation-delay: 0.6s; }
+        .vst-8 { bottom: 40px; right: 8%; transform: scale(0.8); animation-delay: 1.5s; }
 
-        /* --- โครงสร้างตัวเล่มสมุดโน้ต --- */
+        /* --- โครงสร้างตัวเล่มสมุดโน้ตพร้อมเอฟเฟกต์ฟุ้ง --- */
         .notebook-wrapper {
             max-width: 540px;
-            margin: 40px auto 0;
+            margin: 0 auto;
             position: relative;
+            animation: softGlow 5s ease-in-out infinite;
         }
 
-        /* --- หน้าเมนูแบบใหม่: ป้ายสติกเกอร์วงกลมด้านบน (Round Sticker Menu Tabs) --- */
+        /* --- แถบเมนูเลือกหน้าด้านบนสุด (Top Navigation Tabs) --- */
         .notebook-tabs {
             display: flex;
-            justify-content: center;
-            gap: 12px;
+            gap: 4px;
             position: absolute;
-            top: -46px;
-            width: 100%;
-            z-index: 1;
+            top: -42px;
+            left: 20px;
+            z-index: 2;
         }
 
         .tab-btn {
-            background-color: var(--white);
+            background-color: #e5dacb;
             border: 3px solid var(--white);
-            padding: 8px 16px;
-            border-radius: 30px; /* ทำเป็นทรงมนแคปซูล/วงกลมรีสไตล์ป้ายแปะ */
-            font-size: 0.88rem;
+            border-bottom: none;
+            padding: 8px 20px 14px;
+            border-radius: 16px 16px 0 0;
+            font-size: 0.9rem;
             font-weight: 500;
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(118, 88, 78, 0.06);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            transform: scale(0.95);
+            transition: all 0.25s ease;
+            transform: translateY(4px);
+            box-shadow: inset 0 -5px 10px rgba(0,0,0,0.03);
         }
 
+        /* สลับสีพาสเทลนุ่ม ๆ ให้แต่ละแท็บ */
         .tab-btn:nth-child(1) { background-color: var(--soft-blue); }
         .tab-btn:nth-child(2) { background-color: var(--pastel-pink); }
         .tab-btn:nth-child(3) { background-color: var(--pastel-yellow); }
 
-        /* เมื่อหน้าเลือกอยู่ ป้ายจะขยายใหญ่ขึ้นและเด้งขึ้นมาเด่นชัด */
+        /* แถบเมนูที่ถูกกดเลือก จะเด้งเชื่อมต่อเข้ากับขอบสมุดโน้ต */
         .tab-btn.active {
-            transform: scale(1.08) translateY(-4px);
-            z-index: 3;
+            transform: translateY(0px);
             font-weight: 600;
-            box-shadow: 0 8px 15px rgba(118, 88, 78, 0.1);
-            border-color: var(--cute-brown);
+            padding-bottom: 16px;
+            z-index: 4;
+            box-shadow: 0 -4px 12px rgba(118, 88, 78, 0.05);
         }
 
         .notebook-page {
             background-color: var(--notebook-bg);
-            border-radius: 36px;
+            border-radius: 32px;
             padding: 35px 22px;
-            box-shadow: 0 15px 35px rgba(118, 88, 78, 0.08), inset 0 0 20px rgba(253, 235, 238, 0.3);
+            box-shadow: 0 20px 45px rgba(118, 88, 78, 0.06), inset 0 0 25px rgba(253, 235, 238, 0.2);
             border: 4px solid var(--white);
             position: relative;
-            z-index: 2;
+            z-index: 3;
         }
 
+        /* ระบบสลับหน้ากระดาษ */
         .page-content { display: none; }
         .page-content.active {
             display: block;
-            animation: floatCute 0.4s ease-out;
+            animation: floatStar 0.4s ease-out reverse;
         }
 
-        /* --- Header --- */
+        /* --- ส่วนหัวเว็บบล็อก --- */
         header {
             text-align: center;
             padding: 35px 15px;
             background-color: var(--soft-blue);
-            border-radius: 26px;
+            border-radius: 24px;
             border: 3px solid var(--white);
             position: relative;
-            animation: ultraGlow 4s ease-in-out infinite;
             margin-bottom: 30px;
+            box-shadow: 0 8px 20px rgba(232, 247, 250, 0.5);
         }
 
         .washi-tape-header {
@@ -198,14 +202,14 @@
             width: 30%;
             height: 18px;
             background-color: rgba(254, 235, 238, 0.85);
-            border-left: 2px dashed rgba(0,0,0,0.05);
-            border-right: 2px dashed rgba(0,0,0,0.05);
-            transform: rotate(-2deg);
+            border-left: 2px dashed rgba(0,0,0,0.03);
+            border-right: 2px dashed rgba(0,0,0,0.03);
+            transform: rotate(-1.5deg);
         }
 
         .logo-container {
-            width: 105px;
-            height: 105px;
+            width: 100px;
+            height: 100px;
             margin: 0 auto 15px;
             background-color: var(--white);
             border-radius: 50%;
@@ -214,21 +218,21 @@
             justify-content: center;
             overflow: hidden;
             border: 4px solid var(--white);
-            box-shadow: 0 6px 12px rgba(118, 88, 78, 0.04);
+            box-shadow: 0 6px 12px rgba(118, 88, 78, 0.03);
             transition: transform 0.3s;
         }
-        .logo-container:hover { transform: scale(1.1) rotate(5deg); }
+        .logo-container:hover { transform: scale(1.08) rotate(3deg); }
 
         header h1 {
-            font-size: 2.4rem;
+            font-size: 2.3rem;
             margin-bottom: 12px;
             font-weight: 600;
             text-shadow: 2px 2px 0px var(--white);
         }
 
         .tagline {
-            font-size: 0.95rem;
-            background-color: rgba(255, 255, 255, 0.9);
+            font-size: 0.92rem;
+            background-color: rgba(255, 255, 255, 0.85);
             padding: 10px 18px;
             border-radius: 20px;
             display: inline-block;
@@ -237,7 +241,7 @@
             border: 1px dashed var(--light-brown);
         }
 
-        /* --- Links Grid Section (ปุ่มแบบมีเส้นประวิ่งเฉพาะตอน Hover) --- */
+        /* --- โซนปุ่มลิงก์สไตล์มินิมอล --- */
         .badges-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -247,18 +251,18 @@
 
         .badge-item {
             background-color: var(--white);
-            border-radius: 22px;
+            border-radius: 20px;
             padding: 18px 8px;
             text-align: center;
             text-decoration: none;
             border: 2px solid transparent;
-            box-shadow: 0 4px 10px rgba(118, 88, 78, 0.03);
-            transition: all 0.2s ease;
+            box-shadow: 0 4px 10px rgba(118, 88, 78, 0.02);
+            transition: all 0.22s ease;
         }
 
         .badge-item:hover {
-            transform: translateY(-4px) scale(1.03);
-            box-shadow: 0 10px 20px var(--glow-color);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 20px var(--glow-color);
             background-image: 
                 linear-gradient(to right, var(--cute-brown) 50%, transparent 50%), 
                 linear-gradient(to bottom, var(--cute-brown) 50%, transparent 50%), 
@@ -271,20 +275,18 @@
         }
 
         .badge-icon {
-            font-size: 1.9rem;
+            font-size: 1.8rem;
             margin-bottom: 4px;
-            transition: transform 0.3s;
         }
-        .badge-item:hover .badge-icon { transform: scale(1.2) rotate(-5deg); }
         .badge-title { font-size: 0.82rem; font-weight: 500; line-height: 1.3; }
 
-        /* --- Content Card --- */
+        /* --- กล่องข้อความบันทึก (Memo Cards) --- */
         .card {
             background-color: var(--white);
-            border-radius: 24px;
+            border-radius: 22px;
             padding: 25px;
             margin-bottom: 25px;
-            border: 1px solid rgba(215, 196, 190, 0.2);
+            border: 1px solid rgba(215, 196, 190, 0.15);
             position: relative;
         }
 
@@ -293,104 +295,87 @@
             position: absolute;
             top: -8px;
             left: 25px;
-            width: 65px;
-            height: 18px;
-            background-color: rgba(254, 235, 238, 0.8);
-            transform: rotate(-3deg);
-            border-left: 2px dashed rgba(0,0,0,0.03);
-            border-right: 2px dashed rgba(0,0,0,0.03);
+            width: 60px;
+            height: 16px;
+            background-color: rgba(254, 235, 238, 0.7);
+            transform: rotate(-2deg);
         }
         .card:nth-child(even)::before {
             left: auto;
             right: 25px;
-            background-color: rgba(232, 247, 250, 0.8);
-            transform: rotate(4deg);
+            background-color: rgba(232, 247, 250, 0.7);
+            transform: rotate(3deg);
         }
 
         .card h2 {
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             margin-bottom: 18px;
             border-bottom: 2px dotted var(--light-brown);
             padding-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
         .sub-section-box {
             background-color: #faf7f5;
-            border-radius: 16px;
+            border-radius: 14px;
             padding: 15px;
             margin-bottom: 15px;
-            border: 1px dashed rgba(118, 88, 78, 0.15);
+            border: 1px dashed rgba(118, 88, 78, 0.1);
         }
 
-        .sub-section-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: var(--cute-brown); }
-        .features-list { list-style: none; }
-        .features-list li {
+        .sub-section-title { font-size: 0.92rem; font-weight: 600; margin-bottom: 8px; color: var(--cute-brown); }
+        
+        .features-list, .rules-list { list-style: none; }
+        .features-list li, .rules-list li {
             position: relative;
-            padding-left: 24px;
+            padding-left: 20px;
             margin-bottom: 8px;
             font-size: 0.9rem;
             line-height: 1.5;
         }
         .features-list li::before {
-            content: "☁️";
+            content: "•";
             position: absolute;
-            left: 2px;
-            top: 1px;
-            font-size: 0.8rem;
-            opacity: 0.7;
-        }
-
-        .rules-list { list-style: none; }
-        .rules-list li {
-            position: relative;
-            padding-left: 24px;
-            margin-bottom: 10px;
-            font-size: 0.88rem;
-            line-height: 1.5;
+            left: 4px;
+            font-size: 1.1rem;
+            color: var(--light-brown);
         }
         .rules-list li::before {
-            content: "🩹";
+            content: "-";
             position: absolute;
-            left: 2px;
-            top: 1px;
-            font-size: 0.85rem;
+            left: 4px;
+            font-size: 1.1rem;
+            color: #d89b9b;
         }
 
-        /* --- ปรับปรุงโซนปุ่มช่องทางติดต่อให้น่ารักขึ้นเป็นพิเศษ --- */
+        /* --- ช่องทางติดต่อแบบปรับปรุงใหม่ ดีไซน์คลีนแต่ฟุ้งน่ารัก --- */
         .contact-container {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 14px;
             margin-top: 15px;
         }
 
-        /* ปุ่มดีไซน์สติกเกอร์การ์ตูนนูนนุ่มพาสเทล */
         .sticker-link-btn {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-            padding: 16px;
-            border-radius: 24px;
+            gap: 10px;
+            padding: 15px;
+            border-radius: 20px;
             text-decoration: none;
             font-weight: 600;
-            font-size: 1.05rem;
+            font-size: 1rem;
             border: 3px solid var(--white);
-            box-shadow: 0 8px 16px rgba(118, 88, 78, 0.05);
+            box-shadow: 0 6px 15px rgba(118, 88, 78, 0.03);
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
         }
 
-        /* ปุ่ม Facebook ลายเส้นประน่ารัก */
         .btn-cute-fb {
             background-color: var(--fb-blue);
         }
         .btn-cute-fb:hover {
-            transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 12px 24px var(--glow-color);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 22px rgba(143, 165, 207, 0.35);
             background-image: 
                 linear-gradient(to right, #8fa5cf 50%, transparent 50%), 
                 linear-gradient(to bottom, #8fa5cf 50%, transparent 50%), 
@@ -402,53 +387,50 @@
             animation: dashMove 0.6s linear infinite;
         }
 
-        /* ปุ่ม Line จัดระเบียบให้น่ารักสมดุล */
         .btn-cute-line {
             background-color: var(--line-green);
         }
         .btn-cute-line:hover {
-            transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 12px 24px rgba(188, 226, 202, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 22px rgba(188, 226, 202, 0.35);
         }
-        .btn-cute-line img {
-            transition: transform 0.3s;
-        }
-        .btn-cute-line:hover img {
-            transform: scale(1.15) rotate(-5deg);
-        }
+        .btn-cute-line img { transition: transform 0.25s; }
+        .btn-cute-line:hover img { transform: scale(1.1); }
 
         .warranty {
             text-align: center;
             font-size: 0.85rem;
             background-color: var(--pastel-yellow);
-            border: 2px dashed rgba(118, 88, 78, 0.2);
+            border: 2px dashed rgba(118, 88, 78, 0.15);
             padding: 12px;
             border-radius: 16px;
             margin-top: 20px;
-            box-shadow: 3px 3px 0px rgba(118, 88, 78, 0.05);
         }
     </style>
 </head>
 <body>
 
-    <!-- กลุ่มดาวมินิมอลเวกเตอร์ไร้เส้นขอบดำ (ขยับดุ๊กดิ๊กเวลาลากเมาส์ผ่าน) -->
+    <!-- ฝูงดาวตกแต่งรอบนอก (หนาแน่นขึ้น ไม่มีลายขอบ สลับสีพาสเทลฟุ้ง ๆ) -->
     <div class="vector-star vst-1"></div>
     <div class="vector-star vst-2 star-pink"></div>
     <div class="vector-star vst-3 star-blue"></div>
     <div class="vector-star vst-4"></div>
     <div class="vector-star vst-5 star-pink"></div>
     <div class="vector-star vst-6 star-blue"></div>
+    <div class="vector-star vst-7"></div>
+    <div class="vector-star vst-8 star-pink"></div>
 
+    <!-- โครงสร้างสมุดโน้ต -->
     <div class="notebook-wrapper">
         
-        <!-- แถบเมนูดีไซน์ป้ายสติกเกอร์วงกลมแคปซูลแบบเยื้อง -->
+        <!-- แถบเมนูคั่นหน้าด้านบนสุด (Top Tabs) กดเปลี่ยนแผ่นงาน -->
         <div class="notebook-tabs">
-            <button class="tab-btn active" onclick="switchPage('main-page', this)">🏡 หน้าแรก</button>
-            <button class="tab-btn" onclick="switchPage('price-page', this)">🎨 เรทงานป้าย</button>
-            <button class="tab-btn" onclick="switchPage('rules-page', this)">📌 กฎ & ติดต่อ</button>
+            <button class="tab-btn active" onclick="switchPage('main-page', this)">หน้าแรก</button>
+            <button class="tab-btn" onclick="switchPage('price-page', this)">เรทงานป้าย</button>
+            <button class="tab-btn" onclick="switchPage('rules-page', this)">กฎร้าน & ติดต่อ</button>
         </div>
 
-        <!-- หน้ากระดาษสมุดโน้ต -->
+        <!-- ตัวเล่มเนื้อหาด้านใน -->
         <div class="notebook-page">
 
             <!-- ================= หน้าหลัก ================= -->
@@ -460,7 +442,7 @@
                     </div>
                     <h1>zenithyshop</h1>
                     <div class="tagline">
-                        zenity รับทำเว็บไซต์ร้าน / เติมเกมidentity v / ทำป้ายต่าง ๆ open 9:00-23:00 น.
+                        รับทำเว็บไซต์ร้าน / เติมเกม identity v / ทำป้ายต่าง ๆ เปิดเวลา 9:00 - 23:00 น.
                     </div>
                 </header>
 
@@ -480,12 +462,12 @@
                 </div>
 
                 <div class="card">
-                    <h2>🌐 ทำเว็บไซต์ร้านเริ่มต้น 129.-</h2>
+                    <h2>ทำเว็บไซต์ร้าน เริ่มต้น 129.-</h2>
                     <ul class="features-list">
-                        <li>มีเทมเพลตให้เลือกมากกว่า 50+</li>
-                        <li>มีทั้งแนวน่ารัก พาสเทล แนวมืด !</li>
-                        <li>รองาน 4-8 ชั่วโมง</li>
-                        <li>รันงานตามคิว ถ้าช่วงนั้นติดคิวจะแจ้งก่อนค่ะ</li>
+                        <li>มีเทมเพลตให้เลือกมากกว่า 50+ แบบ</li>
+                        <li>มีทั้งแนวน่ารัก พาสเทล และแนวมืด</li>
+                        <li>ระยะเวลารองานประมาณ 4-8 ชั่วโมง</li>
+                        <li>รันงานตามคิว (หากติดคิวงานอื่นอยู่จะแจ้งล่วงหน้าค่ะ)</li>
                     </ul>
                 </div>
             </div>
@@ -493,10 +475,10 @@
             <!-- ================= เรทงานป้าย ================= -->
             <div id="price-page" class="page-content">
                 <div class="card">
-                    <h2>🎨 รายละเอียดงานป้าย</h2>
+                    <h2>รายละเอียดงานป้าย</h2>
                     
                     <div class="sub-section-box">
-                        <div class="sub-section-title">✨ ป้ายเติมเกม & ส่งของขวัญ</div>
+                        <div class="sub-section-title">ป้ายเติมเกม & ส่งของขวัญ</div>
                         <ul class="features-list">
                             <li>เรทที่ใส่ 1-10 ราคา 59.-</li>
                             <li>เรทที่ใส่ 11-20 ราคา 69.-</li>
@@ -506,37 +488,37 @@
                     </div>
 
                     <div class="sub-section-box">
-                        <div class="sub-section-title">✨ ป้ายเครดิต</div>
+                        <div class="sub-section-title">ป้ายเครดิต</div>
                         <ul class="features-list">
-                            <li>1 ตัวละคร 50.-</li>
-                            <li>มากกว่า 1 ตัวละคร บวกเพิ่มตัวละ 5฿</li>
+                            <li>1 ตัวละคร ราคา 50.-</li>
+                            <li>มากกว่า 1 ตัวละคร บวกเพิ่มตัวละ 5.-</li>
                         </ul>
                     </div>
 
                     <div class="sub-section-box">
-                        <div class="sub-section-title">✨ ป้ายไอดี & ป้ายบัญชี</div>
+                        <div class="sub-section-title">ป้ายไอดี & ป้ายบัญชี</div>
                         <ul class="features-list">
-                            <li>ตกแต่งปกติ 69.-</li>
-                            <li>ตกแต่งเยอะ 79.-</li>
+                            <li>ตกแต่งปกติ ราคา 69.-</li>
+                            <li>ตกแต่งเยอะ ราคา 79.-</li>
                         </ul>
                     </div>
 
                     <div class="sub-section-box">
-                        <div class="sub-section-title">✨ ป้ายเช่าไอดี</div>
+                        <div class="sub-section-title">ป้ายเช่าไอดี</div>
                         <ul class="features-list">
-                            <li>แค่หัวป้าย 59.-</li>
-                            <li>100-250 สกินละ 1฿</li>
-                            <li>250 สกินขึ้นไป สกินละ 0.8฿</li>
-                            <li><strong>ฟรี :</strong> ประดับ ห้อง แรงค์ สัตว์เลี้ยง ยอดเติม ของจิปาถะ</li>
-                            <li>ลูกค้าที่ยอดเรียงสกิน 100 ขึ้นไป ฟรีหัวป้าย !</li>
+                            <li>เฉพาะหัวป้าย ราคา 59.-</li>
+                            <li>100-250 สกินละ 1.-</li>
+                            <li>250 สกินขึ้นไป สกินละ 0.8.-</li>
+                            <li><strong>ฟรี:</strong> ตกแต่งห้อง แรงค์ สัตว์เลี้ยง ยอดเติม และของจิปาถะ</li>
+                            <li>ลูกค้าที่มียอดเรียงสกิน 100 ขึ้นไป ฟรีหัวป้ายทันที</li>
                         </ul>
                     </div>
 
                     <div class="sub-section-box">
-                        <div class="sub-section-title">📋 ข้อมูลเพิ่มเติม</div>
+                        <div class="sub-section-title">ข้อมูลเพิ่มเติม</div>
                         <ul class="features-list">
-                            <li>บรีฟตัวละครและโทนสีได้ตามต้องการ</li>
-                            <li>รองาน 1-2 วัน (งานเร่ง +10฿ )</li>
+                            <li>สามารถบรีฟตัวละครและโทนสีได้ตามต้องการ</li>
+                            <li>ระยะเวลารองาน 1-2 วัน (งานเร่งด่วน +10.-)</li>
                         </ul>
                     </div>
                 </div>
@@ -545,27 +527,27 @@
             <!-- ================= กฎร้าน & ติดต่อ ================= -->
             <div id="rules-page" class="page-content">
                 <div class="card">
-                    <h2>📍 กฎของร้าน 📍</h2>
+                    <h2>กฎของร้าน</h2>
                     <ul class="rules-list">
-                        <li>ถ้าโอนเงินแล้วทางร้านไม่คืนเงินทุกกรณีนะคะ</li>
-                        <li>แจ้งไอดีผิดทางร้านไม่รับผิดชอบทุกกรณี</li>
-                        <li>ผ่อนชำระส่งยอดไม่ครบไม่ต่อเนื่องยึดยอดทันที</li>
-                        <li>งานป้ายยกเลิกไม่คืนเงินทุกกรณี</li>
-                        <li>ส่งงาน/ลูกค้าเช็คงานแล้ว แต่ขอแก้งานทีหลังทางร้านคิดจุดละ 20฿</li>
-                        <li>เว็บไซต์มีปัญหาแก้ไขให้ฟรี ถ้าต้องการเปลี่ยนข้อมูลคิดจุดละ 20฿</li>
+                        <li>หากโอนเงินเรียบร้อยแล้ว ทางร้านไม่คืนเงินทุกกรณี</li>
+                        <li>กรณีแจ้งไอดีผิด ทางร้านไม่รับผิดชอบทุกกรณี</li>
+                        <li>หากผ่อนชำระแล้วส่งยอดไม่ครบหรือไม่ต่อเนื่อง ทางร้านขอยึดยอดทันที</li>
+                        <li>งานป้ายทุกชนิด หากยกเลิกจะไม่คืนเงินทุกกรณี</li>
+                        <li>หลังจากส่งงานและเช็คงานแล้ว ขอแก้งานทีหลังคิดจุดละ 20.-</li>
+                        <li>เว็บไซต์มีปัญหาแก้ไขให้ฟรี หากต้องการเปลี่ยนข้อมูลภายหลังคิดจุดละ 20.-</li>
                     </ul>
                 </div>
 
                 <div class="card">
-                    <h2>📱 ช่องทางติดต่อ</h2>
+                    <h2>ช่องทางติดต่อ</h2>
                     <div class="contact-container">
                         
-                        <!-- ปรับโฉมปุ่มเฟสบุ๊กให้น่ารักขี้เล่น -->
+                        <!-- Facebook Cute Button -->
                         <a href="https://www.facebook.com/profile.php?id=61554192600355" class="sticker-link-btn btn-cute-fb" target="_blank">
-                            📘 Facebook : Zenithyshop 💌
+                            Facebook : Zenithyshop
                         </a>
                         
-                        <!-- ปรับโฉมปุ่มแอดไลน์คิ้วท์ใสพาสเทล -->
+                        <!-- Line Cute Button -->
                         <a href="https://lin.ee/qihwQGM" class="sticker-link-btn btn-cute-line" target="_blank">
                             <img src="https://scdn.line-apps.com/n/line_add_friends/btn/th.png" alt="เพิ่มเพื่อน" height="34" border="0">
                         </a>
@@ -574,14 +556,14 @@
                 </div>
 
                 <div class="warranty">
-                    📍มีรับประกันเว็บ 1 เดือน เว็บมีปัญหาแจ้งได้ตลอดค่ะ
+                    มีรับประกันเว็บไซต์ให้ 1 เดือน เว็บมีปัญหาแจ้งได้ตลอดเวลาค่ะ
                 </div>
             </div>
 
         </div>
     </div>
 
-    <!-- สคริปต์เปลี่ยนหน้าแบบสมูท -->
+    <!-- สคริปต์สลับหน้าเมนู -->
     <script>
         function switchPage(pageId, element) {
             const contents = document.querySelectorAll('.page-content');
