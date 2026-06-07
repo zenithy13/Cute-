@@ -3,428 +3,461 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>zenithyshop - Story Music Style</title>
+    <title>zenithyshop - Receiptify Y2K Style</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Mitr:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- ใช้ฟอนต์เครื่องพิมพ์ดีด (Courier Prime) และฟอนต์หัวข้อตัวเขียนให้ตรงตามเรฟภาพ -->
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Mitr:wght@300;400;500;600&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            /* โทนสีฟ้าอ่อน เทา ตามบรีฟ */
-            --bg-gradient: linear-gradient(135deg, #eef2f7 0%, #d9e2ec 100%);
-            --glass-bg: rgba(255, 255, 255, 0.4);
-            --glass-border: rgba(255, 255, 255, 0.6);
-            --text-dark: #243b53;
-            --text-sub: #627d98;
-            --accent-blue: #486581;
-            --card-shadow: 0 20px 40px rgba(36, 59, 83, 0.15);
-        }
-
-        /* --- Animations --- */
-        @keyframes meteorAnimation {
-            0% { transform: translateX(0) translateY(0) rotate(-45deg) scale(0); opacity: 0; }
-            10% { opacity: 0.8; scale: 1; }
-            90% { opacity: 0.8; }
-            100% { transform: translateX(-400px) translateY(400px) rotate(-45deg) scale(0.5); opacity: 0; }
-        }
-
-        @keyframes contentFade {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
+            --bg-color: #e2e2e4;
+            --pink-accent: #e52d73;
+            --text-dark: #111111;
+            --text-muted: #555555;
+            --font-mono: 'Courier Prime', monospace;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Fredoka', 'Mitr', sans-serif;
         }
 
         body {
-            background: var(--bg-gradient);
+            background-color: var(--bg-color);
+            /* จำลองเนื้อกระดาษหยาบ ๆ และเส้นวงกลมสีชมพูอาร์ต ๆ ด้านหลังตาม image_5.png */
+            background-image: 
+                radial-gradient(rgba(0, 0, 0, 0.03) 15%, transparent 15%),
+                radial-gradient(circle at 30% 40%, transparent 60%, rgba(229, 45, 115, 0.08) 60%, rgba(229, 45, 115, 0.08) 62%, transparent 62%);
+            background-size: 4px 4px, 100% 100%;
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
-            overflow: hidden;
-            padding: 20px;
-            position: relative;
+            align-items: center;
+            padding: 40px 20px;
+            font-family: 'Mitr', sans-serif;
+            color: var(--text-dark);
         }
 
-        /* --- เอฟเฟกต์ฝนดาวตกด้านหลังจอ --- */
-        .meteor-container {
-            position: absolute;
-            top: 0;
-            left: 0;
+        /* บอร์ดสไตล์โปสเตอร์ใหญ่ */
+        .poster-container {
             width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-        .meteor {
-            position: absolute;
-            width: 40px;
-            height: 2px;
-            background: linear-gradient(90deg, rgba(255,255,255,0.9), transparent);
-            animation: meteorAnimation 4s linear infinite;
-            opacity: 0;
+            max-width: 950px;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 40px;
+            position: relative;
         }
 
-        /* --- โครงสร้างใหญ่แบบมินิการ์ด Story Music ตาม image_4.png --- */
-        .story-wrapper {
-            position: relative;
-            z-index: 2;
+        /* --- ฝั่งซ้าย: TOP ALBUMS (กล่องซีดีข้อมูลร้าน) --- */
+        .left-section {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            width: 100%;
-            max-width: 450px;
+            gap: 25px;
         }
 
-        /* โซนการ์ดรูปภาพซ้อนกันด้านหลัง (เด้งบิดทำมุมสไตล์กองไพ่/ปกอัลบั้ม) */
-        .deck-container {
-            position: relative;
-            width: 320px;
-            height: 340px;
-            margin-bottom: 25px;
+        .section-title-pink {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-style: italic;
+            color: var(--pink-accent);
+            font-weight: 500;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
         }
 
-        .bg-photo-card {
-            position: absolute;
-            width: 180px;
-            height: 230px;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        .album-item {
             display: flex;
-            align-items: flex-end;
-            padding: 15px;
-            color: white;
-            font-weight: bold;
-            font-size: 1.2rem;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+        }
+
+        /* เลขอันดับเอียง ๆ อินดี้ */
+        .album-rank {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-style: italic;
+            width: 30px;
+            color: var(--text-dark);
+        }
+
+        /* ตัวกล่องซีดีพลาสติก (Jewel Case Effect) */
+        .cd-case {
+            position: relative;
+            width: 110px;
+            height: 110px;
             background-size: cover;
             background-position: center;
+            box-shadow: -8px 12px 20px rgba(0,0,0,0.25);
+            border-radius: 2px;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+        .cd-case:hover {
+            transform: scale(1.05) rotate(2deg);
         }
 
-        /* การ์ดซ้ายบิดเฉียง */
-        .card-left {
-            top: 30px;
-            left: 5px;
-            transform: rotate(-15deg);
-            z-index: 3;
-            background-image: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1557683316-973673baf926?q=80&w=500');
-        }
-        /* การ์ดขวาบิดเฉียง */
-        .card-right {
-            top: 30px;
-            right: 5px;
-            transform: rotate(15deg);
-            z-index: 3;
-            background-image: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1518609878373-06d740f60d8b?q=80&w=500');
-        }
-        /* การ์ดกลาง ตั้งตรงอยู่หลังสุด */
-        .card-center {
-            top: 10px;
-            left: 70px;
-            transform: rotate(0deg) scale(1.05);
-            z-index: 2;
-            background-image: linear-gradient(to bottom, rgba(0,0,0,0.15), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=500');
-        }
-
-        /* การ์ดกระจกฝ้าแผ่นหน้าสุด ตัดขอบรอยหยักแบบเว้าโค้งตามรูปเรฟ */
-        .foreground-glass-card {
+        /* เลเยอร์แสงสะท้อนบนหน้ากล่องซีดีพลาสติก */
+        .cd-case::after {
+            content: '';
             position: absolute;
-            bottom: 10px;
-            left: 10px;
-            width: 300px;
-            height: 170px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            /* ปาดส่วนเว้าด้านบนขวาให้ขอบหยักลงมาแบบ Folder Tab ในรูปเป๊ะ ๆ */
-            clip-path: polygon(0 0, 45% 0, 55% 15%, 100% 15%, 100% 100%, 0 100%);
-            padding: 35px 20px 20px 20px; /* เว้นด้านบนกันข้อความจมรอยหยัก */
-            z-index: 5;
-            box-shadow: var(--card-shadow);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(125deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.1) 40%, transparent 45%, rgba(0,0,0,0.1) 50%, transparent 55%);
+            border: 1px solid rgba(255,255,255,0.4);
+            pointer-events: none;
+        }
+        /* แถบสันกล่องซีดีด้านซ้าย */
+        .cd-case::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 6px; height: 100%;
+            background: rgba(255,255,255,0.2);
+            border-right: 1px solid rgba(0,0,0,0.1);
+            backdrop-filter: blur(1px);
         }
 
-        /* กล่องเนื้อหาในกระจกฝ้าสกรอลล์อ่านได้ */
-        .story-text-scroller {
-            flex: 1;
-            overflow-y: auto;
-            margin-bottom: 5px;
-            padding-right: 4px;
-        }
-        .story-text-scroller::-webkit-scrollbar { width: 2px; }
-        .story-text-scroller::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 4px; }
-
-        .pane-content { display: none; }
-        .pane-content.active {
-            display: block;
-            animation: contentFade 0.4s ease forwards;
-        }
-
-        .pane-content h3 {
-            font-size: 0.95rem;
-            color: var(--text-dark);
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-        .pane-content p {
-            font-size: 0.75rem;
-            color: var(--text-sub);
+        .album-details {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
             line-height: 1.4;
-            margin-bottom: 6px;
+            max-width: 260px;
         }
-        .pane-content a {
-            font-size: 0.72rem;
-            color: var(--accent-blue);
-            text-decoration: none;
-            font-weight: 600;
-            display: inline-block;
+        .album-details .headline {
+            font-weight: bold;
+            color: #000;
+        }
+        .album-details .desc {
+            color: var(--text-muted);
+            font-size: 0.8rem;
             margin-top: 2px;
         }
 
-        /* ลายเซ็นเครดิตเล็กๆ มุมซ้ายล่างกระจกฝ้าแบบในภาพ (*Creativestyle.) */
-        .glass-credit {
-            font-size: 0.65rem;
-            color: rgba(36, 59, 83, 0.5);
-            letter-spacing: 0.5px;
-        }
-
-        /* ปุ่มเล่นดนตรีวงกลมทึบสีดำขวาล่างตามรูป (*Music Icon Button) */
-        .music-circle-btn {
-            position: absolute;
-            bottom: 25px;
-            right: 25px;
-            width: 44px;
-            height: 44px;
-            background-color: #2b3a4a;
-            border-radius: 50%;
+        /* --- ฝั่งขวา: RECEIPTIFY & TOP ARTISTS --- */
+        .right-section {
             display: flex;
+            flex-direction: column;
+            gap: 45px;
             align-items: center;
-            justify-content: center;
-            z-index: 6;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
-            transition: transform 0.2s;
-        }
-        .music-circle-btn:hover { transform: scale(1.08); }
-        .music-circle-btn svg {
-            fill: #ffffff;
-            width: 18px;
-            height: 18px;
         }
 
-        /* --- โซนชื่อเว็บบอร์ดหนาเด่นด้านล่าง (STORY MUSIC Style) --- */
-        .branding-title {
-            font-size: 2.4rem;
-            font-weight: 600;
-            color: var(--text-dark);
-            letter-spacing: -0.5px;
+        /* ตัวใบเสร็จของแท้ตามภาพ */
+        .receipt-paper {
+            background: #f9f9f9;
+            width: 100%;
+            max-width: 360px;
+            padding: 30px 20px 25px 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+            font-family: var(--font-mono);
+            position: relative;
+            color: #000;
+        }
+
+        /* เอฟเฟกต์สีกระดาษด่างๆ เก่าๆ */
+        .receipt-paper::before {
+            content: '';
+            position: absolute;
+            top:0; left:0; width:100%; height:100%;
+            background: radial-gradient(circle at 70% 20%, rgba(0,0,0,0.02) 0%, transparent 80%);
+            pointer-events: none;
+        }
+
+        /* เทปกาวสีชมพูแปะหัวใบเสร็จเด่นมาก */
+        .pink-tape {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-2deg);
+            width: 120px;
+            height: 30px;
+            background-color: rgba(229, 45, 115, 0.75);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            clip-path: polygon(5% 0%, 95% 2%, 100% 100%, 0% 95%); /* ทำขอบหยักเบี้ยวๆ */
+        }
+
+        .receipt-heading {
             text-align: center;
-            margin-top: 5px;
-            text-transform: uppercase;
+            font-size: 1.7rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 3px;
+        }
+        .receipt-sub {
+            text-align: center;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
         }
 
-        /* ปุ่มแคปซูลปี 2026 ด้านล่างสุด */
-        .year-capsule {
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: #7b8794;
-            background-color: rgba(0, 0, 0, 0.05);
-            padding: 4px 22px;
-            border-radius: 20px;
-            margin-top: 8px;
-            display: inline-block;
-            letter-spacing: 0.5px;
+        .receipt-meta {
+            font-size: 0.72rem;
+            line-height: 1.3;
+            margin-bottom: 12px;
         }
 
-        /* --- แผงปุ่มแท็บสลับเมนู (ใช้กดแทนเพลงเพื่ออ่านบอร์ด) --- */
-        .tab-menu-bar {
-            display: flex;
-            gap: 8px;
-            margin-top: 30px;
-            background: rgba(0, 0, 0, 0.03);
-            padding: 5px;
-            border-radius: 30px;
+        .receipt-divider {
+            border-top: 1px dashed #666;
+            margin: 8px 0;
         }
-        .tab-btn {
-            border: none;
-            background: transparent;
-            padding: 8px 18px;
-            border-radius: 20px;
+
+        /* ตารางรายการในใบเสร็จ */
+        .receipt-table {
+            width: 100%;
+            font-size: 0.75rem;
+            border-collapse: collapse;
+        }
+        .receipt-table th {
+            text-align: left;
+            font-weight: normal;
+            padding-bottom: 5px;
+        }
+        .receipt-table td {
+            padding: 6px 0;
+            vertical-align: top;
+        }
+        .receipt-table .amt-col {
+            text-align: right;
+            padding-left: 10px;
+        }
+
+        .receipt-summary {
             font-size: 0.78rem;
-            font-weight: 600;
-            color: var(--text-sub);
-            cursor: pointer;
-            transition: all 0.25s;
+            margin-top: 10px;
         }
-        .tab-btn.active {
-            background-color: #ffffff;
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+        }
+
+        .receipt-footer {
+            font-size: 0.7rem;
+            margin-top: 15px;
+            line-height: 1.4;
+        }
+
+        /* โซนขวาล่าง: รายชื่ออันดับแบบแนวตั้ง (Top Artists) */
+        .top-artists-container {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            width: 100%;
+            max-width: 340px;
+            margin-left: 20px;
+        }
+
+        /* ตัวหนังสือแนวตั้งคำว่า Top artists */
+        .vertical-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.2rem;
+            font-style: italic;
+            color: var(--pink-accent);
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            white-space: nowrap;
+            line-height: 1;
+        }
+
+        .artists-list {
+            font-family: var(--font-mono);
+            list-style: none;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+        .artists-list li {
             color: var(--text-dark);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        /* เครดิตซ้ายสุดขอบล่างบอร์ด */
+        .footer-credit {
+            position: absolute;
+            bottom: -30px;
+            left: 0;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* เคลียร์หน้าจอสำหรับมือถือ */
+        @media (max-width: 768px) {
+            .poster-container {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+            .vertical-text {
+                writing-mode: horizontal-tb;
+                transform: none;
+                margin-bottom: 10px;
+            }
+            .top-artists-container {
+                flex-direction: column;
+                gap: 10px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- เลเยอร์เส้นฝนดาวตกวิ่งผ่านพื้นหลังสีฟ้าเทา -->
-    <div class="meteor-container" id="meteorField"></div>
-
-    <div class="story-wrapper">
+    <div class="poster-container">
         
-        <!-- โซนตัวเล่นการ์ดและกระจกซ้อนชั้น (ถอดแบบโครงสร้างจาก image_4.png) -->
-        <div class="deck-container">
-            <!-- ภาพอาร์ตเวิร์กซ้อนเอียงหลังกระจกฝ้า -->
-            <div class="bg-photo-card card-left" id="picLeft"></div>
-            <div class="bg-photo-card card-right" id="picRight"></div>
-            <div class="bg-photo-card card-center" id="picCenter"></div>
+        <!-- ================= ฝั่งซ้าย: TOP ALBUMS ================= -->
+        <div class="left-section">
+            <h1 class="section-title-pink">Top albums</h1>
 
-            <!-- แผ่นหน้าต่างกระจกฝ้าเว้าขอบหน้าสุด -->
-            <div class="foreground-glass-card">
-                <div class="story-text-scroller">
-                    
-                    <!-- เนื้อหาแท็บ 1: หน้าแรกข้อมูลร้าน -->
-                    <div class="pane-content active" id="pane-home">
-                        <h3>ABOUT US</h3>
-                        <p>รับทำเว็บไซต์ร้านค้า / เติมเกม Identity V / ออกแบบป้ายทุกประเภท คลีนมินิมอล</p>
-                        <h3>WEB DESIGN</h3>
-                        <p>งานด่วนจัดส่งไวภายใน 4-8 ชั่วโมง มีเทมเพลตมาตรฐานกว่า 50+ สไตล์</p>
-                    </div>
-
-                    <!-- เนื้อหาแท็บ 2: ตารางเรทราคา -->
-                    <div class="pane-content" id="pane-prices">
-                        <h3>PRICE LIST</h3>
-                        <p>• ป้ายเติมเกมลงตาราง 1-10 เริ่มต้น 59.-</p>
-                        <p>• ป้ายข้อมูลไอดีบัญชีตกแต่งพิเศษ 79.-</p>
-                        <a href="https://m.facebook.com/story.php?story_fbid=pfbid0VoVRA4MbGu79CbqBREGD8jcxavv6HzJ2F9jcyvVCUrLxEPSRoFtNQNA44yM83zs9l&id=61586611223621" target="_blank">ดูเรทราคากระดุมทั้งหมด ➔</a>
-                    </div>
-
-                    <!-- เนื้อหาแท็บ 3: กฎและช่องทางติดต่อ -->
-                    <div class="pane-content" id="pane-rules">
-                        <h3>SHOP RULES</h3>
-                        <p>สรุปงานและโอนยอดแล้ว ไม่คืนเงินทุกกรณี สั่งแก้งานย้อนหลังจุดละ 20.-</p>
-                        <a href="https://lin.ee/qihwQGM" target="_blank">ติดต่อผ่าน LINE OFFICIAL ➔</a>
-                    </div>
-
+            <!-- อันดับ 1: ข้อมูลหลักร้าน -->
+            <div class="album-item">
+                <span class="album-rank">1.</span>
+                <div class="cd-case" style="background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=300');"></div>
+                <div class="album-details">
+                    <p class="headline">zenithyshop - Profile</p>
+                    <p class="desc">เปิดให้บริการระบบบอร์ดอัตโนมัติ 24 ชม. เจ้าหน้าที่สแตนบายคอยซัพพอร์ต 9:00 น. - 23:00 น. ของทุกวัน</p>
                 </div>
-
-                <!-- เครดิตตัวเขียนเอียงเล็กๆ มุมล่างกระจกฝ้าเหมือนในรูปภาพ -->
-                <div class="glass-credit">*zenithyshop.</div>
             </div>
 
-            <!-- ปุ่มวงกลมทึบขวาล่างตามดีไซน์เรฟต้นฉบับ -->
-            <button class="music-circle-btn" onclick="randomizeMeteors()">
-                <svg viewBox="0 0 24 24">
-                    <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
-                </svg>
-            </button>
+            <!-- อันดับ 2: แนะนำบริการทำเว็บ -->
+            <div class="album-item">
+                <span class="album-rank">2.</span>
+                <!-- จำลองปกแนวตัวอักษรแบบแท้ในรูปเรฟใบที่ 2 -->
+                <div class="cd-case" style="background-color: #ffffff; display:flex; align-items:center; justify-content:center; padding:5px; text-align:center; font-family:var(--font-mono); font-size:0.55rem; font-weight:bold; color:#000; line-height:1.2;">
+                    WEB DESIGN AND IT'S THE BEST STYLE FOR YOU
+                </div>
+                <div class="album-details">
+                    <p class="headline">Web Design - Service</p>
+                    <p class="desc">รับทำหน้าเว็บโปสเตอร์, เว็บบอร์ดร้านค้า, และพอร์ตโฟลิโอ มีเทมเพลตสวยงามให้เลือกมากกว่า 50+ รูปแบบ</p>
+                </div>
+            </div>
+
+            <!-- อันดับ 3: ความเร็วการส่งงาน -->
+            <div class="album-item">
+                <span class="album-rank">3.</span>
+                <div class="cd-case" style="background-image: url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=300');"></div>
+                <div class="album-details">
+                    <p class="headline">Fast Delivery - 4-8H</p>
+                    <p class="desc">การันตีความเร็วจัดส่งงานด่วนไวสุดภายใน 4-8 ชั่วโมงหลังจากสรุปแบบและคิวงานเรียบร้อย</p>
+                </div>
+            </div>
+
+            <!-- อันดับ 4: บริการเสริมเติมเกม -->
+            <div class="album-item">
+                <span class="album-rank">4.</span>
+                <div class="cd-case" style="background-image: url('https://images.unsplash.com/photo-1557683316-973673baf926?q=80&w=300');"></div>
+                <div class="album-details">
+                    <p class="headline">Identity V - Top Up</p>
+                    <p class="desc">รับเติมกระดุมเกม Identity V และส่งของขวัญในเกม เรทราคาถูก ปลอดภัย ไร้ประวัติการรีฟันด์ 100%</p>
+                </div>
+            </div>
+
+            <!-- อันดับ 5: การรับประกันระบบ -->
+            <div class="album-item">
+                <span class="album-rank">5.</span>
+                <div class="cd-case" style="background-image: url('https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&w=300');"></div>
+                <div class="album-details">
+                    <p class="headline">1 Month - Warranty</p>
+                    <p class="desc">ฟรีบริการดูแลความเสถียรของระบบและคอยตรวจสอบความปลอดภัยของโค้ดหน้าเว็บให้ยาวนาน 1 เดือนเต็ม</p>
+                </div>
+            </div>
         </div>
 
-        <!-- ชื่อแบรนดิ้งหนาตัวใหญ่ใต้ตัวเครื่องเล่นเพลง -->
-        <h1 class="branding-title">zenithy shop</h1>
-        
-        <!-- แคปซูลแสดงปีตัวเลขด้านล่างสุด -->
-        <div class="year-capsule">2026</div>
+        <!-- ================= ฝั่งขวา: RECEIPTIFY & TOP ARTISTS ================= -->
+        <div class="right-section">
+            
+            <!-- ส่วนใบเสร็จรายการเรทราคาอาหารสมอง/บริการยอดฮิต -->
+            <div class="receipt-paper">
+                <div class="pink-tape"></div>
+                <h2 class="receipt-heading">RECEIPTIFY</h2>
+                <p class="receipt-sub">PRICE LIST</p>
+                
+                <div class="receipt-meta">
+                    ORDER #0026 FOR ZENITHYSHOP<br>
+                    MONDAY, JUNE 8, 2026
+                </div>
+                
+                <div class="receipt-divider"></div>
+                
+                <table class="receipt-table">
+                    <thead>
+                        <tr>
+                            <th>QTY</th>
+                            <th>ITEM</th>
+                            <th class="amt-col">AMT</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>01</td>
+                            <td>ตารางเติมเกมอันดับ 1-10 (ITEMS)</td>
+                            <td class="amt-col">59.-</td>
+                        </tr>
+                        <tr>
+                            <td>02</td>
+                            <td>ตารางเติมเกมอันดับ 11-20 (ITEMS)</td>
+                            <td class="amt-col">69.-</td>
+                        </tr>
+                        <tr>
+                            <td>03</td>
+                            <td>ตารางเติมเกมอันดับ 21-35 (ITEMS)</td>
+                            <td class="amt-col">89.-</td>
+                        </tr>
+                        <tr>
+                            <td>04</td>
+                            <td>ออกแบบป้ายเครดิตร้านค้า (DESIGN)</td>
+                            <td class="amt-col">50.-</td>
+                        </tr>
+                        <tr>
+                            <td>05</td>
+                            <td>ป้ายบัญชีธนาคารตกแต่งพิเศษ (ART)</td>
+                            <td class="amt-col">79.-</td>
+                        </tr>
+                        <tr>
+                            <td>06</td>
+                            <td>แก้จุดงานป้ายย้อนหลัง (PER POINT)</td>
+                            <td class="amt-col">20.-</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="receipt-divider"></div>
+                
+                <div class="receipt-summary">
+                    <div class="summary-row">
+                        <span>ITEM COUNT:</span>
+                        <span>6 SERVICES</span>
+                    </div>
+                    <div class="summary-row" style="font-weight: bold;">
+                        <span>TOTAL SYSTEM:</span>
+                        <span>FAST & TRUST</span>
+                    </div>
+                </div>
+                
+                <div class="receipt-divider"></div>
+                
+                <div class="receipt-footer">
+                    CARD #: **** **** **** 2026<br>
+                    AUTH CODE: 123421<br>
+                    CARDHOLDER: CUSTOMER THANKYOU
+                </div>
+            </div>
 
-        <!-- แผงแท็บควบคุมการสลับดูข้อมูลบอร์ดด้านล่างสุด -->
-        <div class="tab-menu-bar">
-            <button class="tab-btn active" onclick="switchStoryTab('pane-home', this, 0)">HOME</button>
-            <button class="tab-btn" onclick="switchStoryTab('pane-prices', this, 1)">PRICES</button>
-            <button class="tab-btn" onclick="switchStoryTab('pane-rules', this, 2)">RULES</button>
+            <!-- ส่วนรายชื่ออันดับกฎร้านค้ายอดนิยมด้านล่างใบเสร็จ -->
+            <div class="top-artists-container">
+                <div class="vertical-text">Top rules</div>
+                <ul class="artists-list">
+                    <li>1. โอนยอดเงินเรียบร้อยแล้ว ไม่คืนเงินทุกกรณี</li>
+                    <li>2. หากลูกค้าพิมพ์แจ้งไอดีผิด ร้านจะไม่รับผิดชอบ</li>
+                    <li>3. งานป้ายส่งมอบแล้ว สั่งแก้ไขจุดละ 20 บาท</li>
+                    <li>4. ห้ามนำโค้ดหรือดีไซน์เว็บไปดัดแปลงขายต่อ</li>
+                    <li>5. เช็คคิวงานด่วนกับเจ้าหน้าที่ก่อนชำระเงินทุกครั้ง</li>
+                </ul>
+            </div>
+
         </div>
+
+        <!-- ข้อความเครดิตชื่อเจ้าของบอร์ดมุมล่างซ้ายสุด -->
+        <div class="footer-credit">@zenithyshop_official</div>
 
     </div>
 
-    <!-- สคริปต์ควบคุมการทำงานและการโปรยฝนดาวตก -->
-    <script>
-        // ชุดรูปภาพจำลองที่จะเปลี่ยนไปตามแท็บเพื่อเพิ่มลูกเล่นความเคลื่อนไหว
-        const themePhotos = [
-            [
-                'https://images.unsplash.com/photo-1557683316-973673baf926?q=80&w=500',
-                'https://images.unsplash.com/photo-1518609878373-06d740f60d8b?q=80&w=500',
-                'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=500'
-            ],
-            [
-                'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=500',
-                'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?q=80&w=500',
-                'https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&w=500'
-            ],
-            [
-                'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=500',
-                'https://images.unsplash.com/photo-1471922687909-6a70d477de15?q=80&w=500',
-                'https://images.unsplash.com/photo-1519046904884-53103b34b206?q=80&w=500'
-            ]
-        ];
-
-        // ฟังก์ชันสลับการ์ดเนื้อหาพร้อมขยับเอฟเฟกต์รูปภาพหลังกระจก
-        function switchStoryTab(paneId, btnElement, index) {
-            // สลับแท็บตัวอักษรเนื้อหาด้านใน
-            const panes = document.querySelectorAll('.pane-content');
-            panes.forEach(p => p.classList.remove('active'));
-            document.getElementById(paneId).classList.add('active');
-
-            // เปลี่ยนปุ่ม Active ด้านล่าง
-            const tabs = document.querySelectorAll('.tab-btn');
-            tabs.forEach(t => t.classList.remove('active'));
-            btnElement.classList.add('active');
-
-            // เปลี่ยนรูปภาพและทำการบิดเอียงการ์ดสร้างไดนามิกแอนิเมชันตอนกดคลิก
-            const cardLeft = document.getElementById('picLeft');
-            const cardRight = document.getElementById('picRight');
-            const cardCenter = document.getElementById('picCenter');
-
-            cardLeft.style.backgroundImage = `linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.5)), url('${themePhotos[index][0]}')`;
-            cardRight.style.backgroundImage = `linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.5)), url('${themePhotos[index][1]}')`;
-            cardCenter.style.backgroundImage = `linear-gradient(to bottom, rgba(0,0,0,0.15), rgba(0,0,0,0.6)), url('${themePhotos[index][2]}')`;
-
-            // ขยับจังหวะการหมุนชั่วคราวเพื่อให้ดูมีเอฟเฟกต์ตอบสนองการกด
-            cardLeft.style.transform = 'rotate(-22deg) scale(0.95)';
-            cardRight.style.transform = 'rotate(22deg) scale(0.95)';
-            setTimeout(() => {
-                cardLeft.style.transform = 'rotate(-15deg) scale(1)';
-                cardRight.style.transform = 'rotate(15deg) scale(1)';
-            }, 250);
-        }
-
-        // ฟังก์ชันสร้างกลุ่มเส้นฝนดาวตกสไลด์เฉียงจากขวาไปซ้าย
-        function createMeteors() {
-            const container = document.getElementById('meteorField');
-            const count = 25; // จำนวนเส้นฝนดาวตก บนท้องฟ้า
-
-            for (let i = 0; i < count; i++) {
-                const meteor = document.createElement('div');
-                meteor.classList.add('meteor');
-                
-                // สุ่มกระจายตำแหน่งจุดเริ่มต้นและเวลาการตกให้เป็นธรรมชาติ
-                meteor.style.top = `${Math.random() * 40}%`;
-                meteor.style.left = `${60 + Math.random() * 60}%`;
-                meteor.style.animationDelay = `${Math.random() * 8}s`;
-                meteor.style.animationDuration = `${3 + Math.random() * 4}s`;
-                
-                container.appendChild(meteor);
-            }
-        }
-
-        // กดปุ่มไอคอนดนตรีเพื่อสั่งให้ดาวตกเร่งสปีดร่วงหล่นลงมาเพิ่มความสนุกได้
-        function randomizeMeteors() {
-            const meteors = document.querySelectorAll('.meteor');
-            meteors.forEach(m => {
-                m.style.animation = 'none';
-                m.offsetHeight; /* Trigger reflow เพื่อรีเซ็ตแอนิเมชัน */
-                m.style.animation = `meteorAnimation ${1.5 + Math.random() * 2}s linear infinite`;
-            });
-        }
-
-        window.addEventListener('DOMContentLoaded', createMeteors);
-    </script>
 </body>
 </html>
+
