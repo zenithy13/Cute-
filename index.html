@@ -6,59 +6,51 @@
     <title>zenithyshop</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Mitr:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Mitr:wght@300;400;500;600&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --locker-pink: #ffb7ce;
-            --locker-blue: #a0e7f5;
-            --neon-glow-pink: rgba(255, 105, 180, 0.8);
-            --neon-glow-blue: rgba(0, 243, 255, 0.8);
-            --y2k-purple: #6a4fa3;
-            --pastel-yellow: #fffce3;
-            --pastel-pink: #ffe5ec;
-            --soft-blue: #e0f7fa;
+            --cyber-bg: #0b0813;
+            --cyber-pink: #ff007f;
+            --cyber-cyan: #00f3ff;
+            --cyber-purple: #9d4edd;
+            --dark-card: #161224;
+            --neon-glow-pink: rgba(255, 0, 127, 0.85);
+            --neon-glow-cyan: rgba(0, 243, 255, 0.85);
             --white: #ffffff;
-            --line-green: #e1f5fe;
-            --fb-blue: #edf2fa;
+            --text-gray: #b5b2bc;
         }
 
-        /* --- Animations & Y2K Neon Glow --- */
-        @keyframes dashMove {
-            to { background-position: 20px 0, 100% 20px, 20px 100%, 0 20px; }
-        }
-
-        /* เงาฟุ้งออร่านีออนสะท้อนแสงรอบตู้ล็อกเกอร์ */
-        @keyframes lockerNeonGlow {
+        /* --- Animations & Neon Glitch/Glow --- */
+        @keyframes cyberGlow {
             0% { 
-                box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15),
-                            0 0 35px var(--neon-glow-blue),
-                            0 0 60px var(--neon-glow-pink);
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6),
+                            0 0 40px var(--neon-glow-pink),
+                            0 0 70px var(--neon-glow-cyan);
             }
             50% { 
-                box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2),
-                            0 0 55px var(--neon-glow-pink),
-                            0 0 75px var(--neon-glow-blue);
-                transform: translateY(-2px);
+                box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8),
+                            0 0 60px var(--neon-glow-cyan),
+                            0 0 90px var(--neon-glow-pink);
+                transform: translateY(-3px);
             }
             100% { 
-                box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15),
-                            0 0 35px var(--neon-glow-blue),
-                            0 0 60px var(--neon-glow-pink);
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6),
+                            0 0 40px var(--neon-glow-pink),
+                            0 0 70px var(--neon-glow-cyan);
             }
         }
 
-        /* ฝนดาวโปรยปราย */
-        @keyframes starRain {
-            0% { transform: translateY(-50px) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.9; }
-            90% { opacity: 0.9; }
-            100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
+        @keyframes cyberStarRain {
+            0% { transform: translateY(-60px) rotate(0deg) scale(0); opacity: 0; }
+            10% { opacity: 1; transform: translateY(0px) rotate(45deg) scale(1); }
+            90% { opacity: 1; }
+            100% { transform: translateY(105vh) rotate(360deg) scale(0.5); opacity: 0; }
         }
 
-        @keyframes openLocker {
-            from { opacity: 0; transform: scale(0.97); filter: blur(4px); }
-            to { opacity: 1; transform: scale(1); filter: blur(0); }
+        @keyframes contentFade {
+            from { opacity: 0; transform: translateY(10px) scale(0.99); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         * {
@@ -66,23 +58,23 @@
             margin: 0;
             padding: 0;
             font-family: 'Fredoka', 'Mitr', sans-serif;
-            color: var(--y2k-purple);
+            color: var(--white);
         }
 
         body {
-            background-color: #1a1625; /* ปรับพื้นหลังให้มืดลงเพื่อขับเงาฟุ้ง Y2K ให้เด่นสุด ๆ */
+            background-color: var(--cyber-bg); 
             background-image: 
-                linear-gradient(rgba(160, 231, 245, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(160, 231, 245, 0.05) 1px, transparent 1px);
-            background-size: 25px 25px;
-            padding: 100px 15px 80px;
+                linear-gradient(rgba(157, 78, 221, 0.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(157, 78, 221, 0.08) 1px, transparent 1px);
+            background-size: 30px 30px;
+            padding: 110px 15px 80px;
             position: relative;
             overflow-x: hidden;
             min-height: 100vh;
         }
 
-        /* --- เอฟเฟกต์ฝนดาวตกไซเบอร์พาสเทล --- */
-        .star-rain-container {
+        /* --- ระบบฝนดาวตกไซเบอร์ Y2K (4 แฉก เรโทร ดิจิทัล) --- */
+        .cyber-rain-container {
             position: fixed;
             top: 0;
             left: 0;
@@ -93,182 +85,140 @@
             overflow: hidden;
         }
 
-        .rain-star {
+        /* ดีไซน์ดาว 4 แฉกแนว Y2K Futurism */
+        .cyber-star {
             position: absolute;
-            width: 0;
-            height: 0;
-            border-right: 10px solid transparent;
-            border-bottom: 7px solid var(--pastel-yellow);
-            border-left: 10px solid transparent;
-            animation: starRain linear infinite;
+            width: 12px;
+            height: 12px;
+            background: var(--white);
+            clip-path: polygon(50% 0%, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0% 50%, 39% 39%);
+            animation: cyberStarRain linear infinite;
+            filter: drop-shadow(0 0 8px var(--cyber-cyan));
         }
-        .rain-star:before {
-            border-bottom: 7px solid var(--pastel-yellow);
-            border-left: 3px solid transparent;
-            border-right: 3px solid transparent;
-            position: absolute;
-            height: 0;
-            width: 0;
-            top: -5px;
-            left: -7px;
-            display: block;
-            content: '';
-            transform: rotate(-35deg);
-        }
-        .rain-star:after {
-            position: absolute;
-            display: block;
-            top: 0;
-            left: -10px;
-            width: 0;
-            height: 0;
-            border-right: 10px solid transparent;
-            border-bottom: 7px solid var(--pastel-yellow);
-            border-left: 10px solid transparent;
-            transform: rotate(-70deg);
-            content: '';
-        }
-        .r-pink, .r-pink:before, .r-pink:after { border-bottom-color: var(--locker-pink) !important; }
-        .r-blue, .r-blue:before, .r-blue:after { border-bottom-color: var(--locker-blue) !important; }
+        .cs-pink { background: var(--cyber-pink); filter: drop-shadow(0 0 8px var(--cyber-pink)); }
+        .cs-cyan { background: var(--cyber-cyan); filter: drop-shadow(0 0 8px var(--cyber-cyan)); }
+        .cs-purple { background: var(--cyber-purple); filter: drop-shadow(0 0 8px var(--cyber-purple)); }
 
-        /* --- โครงสร้างดีไซน์ตู้ล็อกเกอร์ Y2K พร้อมเงาฟุ้งขั้นสุด --- */
-        .locker-wrapper {
+        /* --- โครงสร้างหน้าต่างระบบ OS ยุค Y2K พร้อมเงาเรืองแสงรอบกรอบ --- */
+        .cyber-window-wrapper {
             max-width: 540px;
             margin: 0 auto;
             position: relative;
             z-index: 2;
-            animation: lockerNeonGlow 5s ease-in-out infinite;
-            background-color: var(--locker-pink);
-            border: 6px solid var(--white);
-            border-radius: 36px;
-            padding: 12px;
+            background-color: #1c1830;
+            border: 4px solid var(--cyber-purple);
+            border-radius: 24px;
+            padding: 6px;
+            animation: cyberGlow 6s ease-in-out infinite;
         }
 
-        /* --- แถบเมนูล็อกเกอร์แนวพวงกุญแจห้อยอะคริลิคด้านบน --- */
-        .notebook-tabs {
+        /* แถบหัวหน้าต่างคอมพิวเตอร์แนวเรโทร */
+        .window-top-bar {
             display: flex;
-            justify-content: center;
-            gap: 12px;
-            position: absolute;
-            top: -54px;
-            left: 0;
-            width: 100%;
-            z-index: 2;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(90deg, var(--cyber-purple), #4a154b);
+            padding: 8px 16px;
+            border-radius: 16px 16px 0 0;
+            margin-bottom: 6px;
+        }
+        .window-title { font-size: 0.85rem; font-weight: 600; letter-spacing: 1px; color: var(--cyber-cyan); }
+        .window-dots { display: flex; gap: 6px; }
+        .window-dot { width: 10px; height: 10px; border-radius: 50%; background: #ff5f56; }
+        .window-dot:nth-child(2) { background: #ffbd2e; }
+        .window-dot:nth-child(3) { background: #27c93f; }
+
+        /* --- แถบเมนูปุ่มกด 3D เรืองแสงด้านบน --- */
+        .cyber-tabs {
+            display: flex;
+            gap: 8px;
+            margin: 10px 6px 15px;
         }
 
         .tab-btn {
-            background-color: var(--white);
-            border: 3px solid var(--white);
-            border-bottom: none;
-            padding: 10px 22px;
-            border-radius: 20px 20px 0 0;
-            font-size: 0.95rem;
+            flex: 1;
+            background-color: var(--dark-card);
+            border: 2px solid var(--cyber-purple);
+            padding: 12px 10px;
+            border-radius: 14px;
+            font-size: 0.9rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.25);
-            transform: translateY(8px);
-            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: inset 0 -4px 0px rgba(0,0,0,0.5);
+            transition: all 0.2s ease;
         }
 
-        .tab-btn:nth-child(1) { background-color: var(--locker-blue); }
-        .tab-btn:nth-child(2) { background-color: var(--pastel-yellow); }
-        .tab-btn:nth-child(3) { background-color: #d1c4e9; }
+        .tab-btn:hover {
+            border-color: var(--cyber-cyan);
+            color: var(--cyber-cyan);
+        }
 
+        /* เมนูเมื่อถูกกดเลือก จะสว่างวาบเป็นสีชมพูนีออน */
         .tab-btn.active {
-            transform: translateY(0px) scale(1.05);
-            box-shadow: 0 -6px 15px var(--neon-glow-blue);
-            z-index: 4;
+            background-color: var(--cyber-pink);
             border-color: var(--white);
+            color: var(--white);
+            box-shadow: 0 0 15px var(--cyber-pink), inset 0 -4px 0px rgba(0,0,0,0.3);
+            transform: scale(1.02);
         }
 
-        /* หน้าบานประตูล็อกเกอร์ด้านใน */
-        .locker-door {
-            background-color: #fffbfa;
-            border-radius: 26px;
-            padding: 30px 20px;
-            border: 3px solid rgba(106, 79, 163, 0.15);
-            position: relative;
+        /* กล่องเนื้อหาหลัก */
+        .window-body {
+            background-color: var(--cyber-bg);
+            border-radius: 0 0 18px 18px;
+            padding: 25px 16px;
+            border: 2px solid rgba(157, 78, 221, 0.2);
+            max-height: 70vh;
+            overflow-y: auto;
         }
 
-        /* กิมมิคช่องระบายอากาศของตู้ล็อกเกอร์เหล็ก */
-        .locker-vent-container {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            align-items: center;
-            margin-bottom: 25px;
-        }
-        .locker-vent {
-            width: 70px;
-            height: 6px;
-            background-color: rgba(106, 79, 163, 0.12);
-            border-radius: 10px;
-            box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
-        }
-
-        /* กิมมิคแม่กุญแจหมุนรหัสสีเงินข้างตู้ */
-        .locker-lock {
-            position: absolute;
-            top: 40px;
-            right: 20px;
-            width: 32px;
-            height: 32px;
-            background: radial-gradient(circle, #f0f0f0 30%, #b0b0b0 90%);
-            border: 2px solid var(--white);
-            border-radius: 50%;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-        }
-        .locker-lock::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 14px;
-            height: 4px;
-            background-color: #555;
-            border-radius: 2px;
-        }
-
-        /* ระบบสลับหน้ากระดาษ */
         .page-content { display: none; }
         .page-content.active {
             display: block;
-            animation: openLocker 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+            animation: contentFade 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
         }
 
-        /* --- ส่วนหัวสไตล์ป้ายสติกเกอร์ Y2K --- */
+        /* --- ส่วนหัวเว็บบอร์ดไซเบอร์ --- */
         header {
             text-align: center;
-            padding: 30px 15px;
-            background-color: var(--locker-blue);
-            border-radius: 20px;
-            border: 3px solid var(--white);
-            position: relative;
+            padding: 25px 15px;
+            background-color: var(--dark-card);
+            border-radius: 18px;
+            border: 2px solid var(--cyber-cyan);
             margin-bottom: 25px;
-            box-shadow: 0 8px 0px rgba(160, 231, 245, 0.3);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.15);
         }
 
+        .logo-container {
+            width: 85px;
+            height: 85px;
+            margin: 0 auto 12px;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 2px solid var(--cyber-pink);
+            box-shadow: 0 0 12px var(--cyber-pink);
+        }
+        .logo-container img { width: 100%; height: 100%; object-fit: cover; }
+
         header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 8px;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
             font-weight: 700;
-            letter-spacing: -1px;
-            text-shadow: 3px 3px 0px var(--white);
+            color: var(--white);
+            text-shadow: 3px 3px 0px var(--cyber-purple);
+            letter-spacing: -0.5px;
         }
 
         .tagline {
-            font-size: 0.9rem;
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 10px 15px;
-            border-radius: 14px;
-            display: inline-block;
-            max-width: 95%;
+            font-size: 0.88rem;
+            color: var(--text-gray);
             line-height: 1.5;
-            border: 2px dashed var(--locker-pink);
+            padding: 0 5px;
         }
 
-        /* --- แผงปุ่มกดลิงก์ทรงแคปซูลเรโทร --- */
+        /* --- แผงปุ่มลิงก์สไตล์ Grid ยุคไซเบอร์ --- */
         .badges-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -277,89 +227,83 @@
         }
 
         .badge-item {
-            background-color: var(--white);
-            border-radius: 16px;
-            padding: 15px 5px;
+            background-color: var(--dark-card);
+            border-radius: 14px;
+            padding: 16px 5px;
             text-align: center;
             text-decoration: none;
-            border: 2px solid rgba(106, 79, 163, 0.1);
-            box-shadow: 0 4px 0px rgba(106, 79, 163, 0.05);
+            border: 1px solid var(--cyber-purple);
             transition: all 0.2s ease;
         }
 
         .badge-item:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px var(--neon-glow-blue);
-            background-image: 
-                linear-gradient(to right, var(--y2k-purple) 50%, transparent 50%), 
-                linear-gradient(to bottom, var(--y2k-purple) 50%, transparent 50%), 
-                linear-gradient(to right, var(--y2k-purple) 50%, transparent 50%), 
-                linear-gradient(to bottom, var(--y2k-purple) 50%, transparent 50%);
-            background-position: 0 0, 100% 0, 0 100%, 0 0;
-            background-size: 14px 2px, 2px 14px, 14px 2px, 2px 14px;
-            background-repeat: repeat-x, repeat-y, repeat-x, repeat-y;
-            animation: dashMove 0.6s linear infinite;
+            transform: translateY(-2px);
+            border-color: var(--cyber-cyan);
+            box-shadow: 0 0 15px var(--neon-glow-cyan);
         }
 
-        .badge-icon { font-size: 1.6rem; margin-bottom: 4px; }
-        .badge-title { font-size: 0.8rem; font-weight: 600; }
+        .badge-icon { font-size: 1.4rem; margin-bottom: 4px; }
+        .badge-title { font-size: 0.78rem; font-weight: 600; color: var(--text-gray); }
+        .badge-item:hover .badge-title { color: var(--white); }
 
-        /* --- กล่องข้อความสไตล์หน้าต่างคอมพิวเตอร์ Y2K --- */
+        /* --- กล่องข้อความสไตล์บอร์ดคอนโซล (Cyber Cards) --- */
         .card {
-            background-color: var(--white);
-            border-radius: 18px;
-            padding: 22px;
+            background-color: var(--dark-card);
+            border-radius: 16px;
+            padding: 20px;
             margin-bottom: 20px;
-            border: 2px solid rgba(106, 79, 163, 0.1);
-            box-shadow: 0 6px 0px rgba(106, 79, 163, 0.03);
+            border-left: 4px solid var(--cyber-pink);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .card h2 {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             margin-bottom: 15px;
-            border-bottom: 2px dotted var(--locker-pink);
-            padding-bottom: 6px;
-            font-weight: 700;
+            color: var(--cyber-cyan);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
         }
 
         .sub-section-box {
-            background-color: #fbf9fc;
-            border-radius: 12px;
-            padding: 14px;
+            background-color: rgba(11, 8, 19, 0.5);
+            border-radius: 10px;
+            padding: 12px;
             margin-bottom: 12px;
-            border: 1px dashed rgba(106, 79, 163, 0.15);
+            border: 1px solid rgba(157, 78, 221, 0.15);
         }
 
-        .sub-section-title { font-size: 0.9rem; font-weight: 700; margin-bottom: 6px; }
+        .sub-section-title { font-size: 0.88rem; font-weight: 600; margin-bottom: 6px; color: var(--cyber-pink); }
         
         .features-list, .rules-list { list-style: none; }
         .features-list li, .rules-list li {
             position: relative;
-            padding-left: 18px;
+            padding-left: 16px;
             margin-bottom: 6px;
-            font-size: 0.88rem;
+            font-size: 0.85rem;
             line-height: 1.5;
+            color: var(--text-gray);
         }
         .features-list li::before {
-            content: "•";
+            content: ">";
             position: absolute;
-            left: 4px;
-            font-size: 1rem;
-            color: var(--locker-blue);
+            left: 0;
+            color: var(--cyber-cyan);
+            font-weight: bold;
         }
         .rules-list li::before {
-            content: "-";
+            content: "[!]";
             position: absolute;
-            left: 4px;
-            font-size: 1rem;
-            color: #ff94b8;
+            left: -4px;
+            font-size: 0.75rem;
+            color: var(--cyber-pink);
         }
 
-        /* --- โซนปุ่มติดต่อสไตล์ป้ายสติกเกอร์นีออนพาสเทล --- */
+        /* --- ช่องทางการติดต่อปุ่มนีออนสตรีท --- */
         .contact-container {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
             margin-top: 15px;
         }
 
@@ -367,89 +311,92 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
             padding: 14px;
-            border-radius: 16px;
+            border-radius: 12px;
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.95rem;
-            border: 3px solid var(--white);
-            box-shadow: 0 4px 0px rgba(106, 79, 163, 0.1);
-            transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.25);
+            font-size: 0.9rem;
+            border: 2px solid transparent;
+            transition: all 0.25s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .btn-cute-fb {
-            background-color: var(--fb-blue);
+            background-color: #1877f2;
+            box-shadow: 0 4px 12px rgba(24, 119, 242, 0.3);
         }
         .btn-cute-fb:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px var(--neon-glow-blue);
-            background-image: 
-                linear-gradient(to right, #6a4fa3 50%, transparent 50%), 
-                linear-gradient(to bottom, #6a4fa3 50%, transparent 50%), 
-                linear-gradient(to right, #6a4fa3 50%, transparent 50%), 
-                linear-gradient(to bottom, #6a4fa3 50%, transparent 50%);
-            background-position: 0 0, 100% 0, 0 100%, 0 0;
-            background-size: 16px 2px, 2px 16px, 16px 2px, 2px 16px;
-            background-repeat: repeat-x, repeat-y, repeat-x, repeat-y;
-            animation: dashMove 0.6s linear infinite;
+            border-color: var(--white);
+            box-shadow: 0 0 20px rgba(24, 119, 242, 0.7);
         }
 
         .btn-cute-line {
-            background-color: var(--line-green);
+            background-color: #06c755;
+            box-shadow: 0 4px 12px rgba(6, 199, 85, 0.3);
         }
         .btn-cute-line:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px var(--neon-glow-pink);
+            border-color: var(--white);
+            box-shadow: 0 0 20px rgba(6, 199, 85, 0.7);
         }
 
         .warranty {
             text-align: center;
-            font-size: 0.82rem;
-            background-color: var(--pastel-yellow);
-            border: 2px dashed rgba(106, 79, 163, 0.15);
+            font-size: 0.8rem;
+            background-color: rgba(157, 78, 221, 0.1);
+            border: 1px dashed var(--cyber-purple);
             padding: 12px;
-            border-radius: 14px;
+            border-radius: 12px;
             margin-top: 15px;
-            font-weight: 500;
+            color: var(--cyber-cyan);
         }
+
+        /* ปรับสไตล์แถบเลื่อน Scrollbar ด้านในกล่องให้ดูไซเบอร์ */
+        .window-body::-webkit-scrollbar { width: 6px; }
+        .window-body::-webkit-scrollbar-track { background: var(--cyber-bg); }
+        .window-body::-webkit-scrollbar-thumb { background: var(--cyber-purple); border-radius: 10px; }
+        .window-body::-webkit-scrollbar-thumb:hover { background: var(--cyber-pink); }
     </style>
 </head>
 <body>
 
-    <!-- พื้นหลังฝนดาวตกพาสเทล Y2K -->
-    <div class="star-rain-container" id="starRainBg"></div>
+    <!-- พื้นหลังสายฝนดาวตกไซเบอร์ Y2K -->
+    <div class="cyber-rain-container" id="cyberStarRain"></div>
 
-    <!-- โครงสร้างตู้ล็อกเกอร์ -->
-    <div class="locker-wrapper">
+    <!-- โครงสร้างกรอบระบบคอมพิวเตอร์หลัก -->
+    <div class="cyber-window-wrapper">
         
-        <!-- แถบเมนูพวงกุญแจห้อยตู้ล็อกเกอร์ด้านบน -->
-        <div class="notebook-tabs">
-            <button class="tab-btn active" onclick="switchPage('main-page', this)">หน้าแรก</button>
-            <button class="tab-btn" onclick="switchPage('price-page', this)">เรทงานป้าย</button>
-            <button class="tab-btn" onclick="switchPage('rules-page', this)">กฎร้าน & ติดต่อ</button>
+        <!-- แถบหัวหน้าต่าง OS -->
+        <div class="window-top-bar">
+            <div class="window-title">SYSTEM_DASHBOARD.EXE</div>
+            <div class="window-dots">
+                <div class="window-dot"></div>
+                <div class="window-dot"></div>
+                <div class="window-dot"></div>
+            </div>
         </div>
 
-        <!-- ประตูตู้ล็อกเกอร์เหล็ก -->
-        <div class="locker-door">
-            
-            <!-- กิมมิคดีเทลตู้ล็อกเกอร์ -->
-            <div class="locker-vent-container">
-                <div class="locker-vent"></div>
-                <div class="locker-vent"></div>
-                <div class="locker-vent"></div>
-            </div>
-            <div class="locker-lock"></div>
+        <!-- แผงควบคุมเมนูปุ่มกดด้านบนสุด -->
+        <div class="cyber-tabs">
+            <button class="tab-btn active" onclick="switchPage('main-page', this)">MAIN</button>
+            <button class="tab-btn" onclick="switchPage('price-page', this)">PRICES</button>
+            <button class="tab-btn" onclick="switchPage('rules-page', this)">RULES</button>
+        </div>
+
+        <!-- ห้องเนื้อหาหลักด้านในตู้ควบคุม -->
+        <div class="window-body">
 
             <!-- ================= หน้าหลัก ================= -->
             <div id="main-page" class="page-content active">
                 <header>
-                    <div class="logo-container" style="width: 90px; height: 90px; margin: 0 auto 12px; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 3px solid var(--white);">
-                        <img src="IMG_0545.jpeg" alt="zenithyshop Logo" style="width: 100%; height: 100%; object-fit: cover;">
+                    <div class="logo-container">
+                        <img src="IMG_0545.jpeg" alt="zenithyshop Logo">
                     </div>
                     <h1>zenithyshop</h1>
                     <div class="tagline">
-                        รับทำเว็บไซต์ร้าน / เติมเกม identity v / ทำป้ายต่าง ๆ เปิดเวลา 9:00 - 23:00 น.
+                        รับทำเว็บไซต์ร้าน / เติมเกม identity v / ทำป้ายต่าง ๆ<br>OPEN : 9:00 - 23:00 น.
                     </div>
                 </header>
 
@@ -556,7 +503,7 @@
                         
                         <!-- Line Button -->
                         <a href="https://lin.ee/qihwQGM" class="sticker-link-btn btn-cute-line" target="_blank">
-                            <img src="https://scdn.line-apps.com/n/line_add_friends/btn/th.png" alt="เพิ่มเพื่อน" height="34" border="0">
+                            LINE OFFICIAL ACCOUNT
                         </a>
                         
                     </div>
@@ -570,7 +517,7 @@
         </div>
     </div>
 
-    <!-- สคริปต์สลับหน้าตู้ล็อกเกอร์ & ระบบสายฝนดาว Y2K -->
+    <!-- สคริปต์สลับหน้าเมนู & เจนเนอเรตฝนดาวตกไซเบอร์ -->
     <script>
         function switchPage(pageId, element) {
             const contents = document.querySelectorAll('.page-content');
@@ -583,30 +530,30 @@
             element.classList.add('active');
         }
 
-        function createStarRain() {
-            const container = document.getElementById('starRainBg');
-            const starCount = 45; 
-            const colors = ['', 'r-pink', 'r-blue']; 
+        function generateCyberStars() {
+            const container = document.getElementById('cyberStarRain');
+            const starCount = 50; 
+            const themes = ['cs-pink', 'cs-cyan', 'cs-purple', '']; // คละสีประจำแผงไฟนีออน
 
             for (let i = 0; i < starCount; i++) {
                 const star = document.createElement('div');
-                star.classList.add('rain-star');
+                star.classList.add('cyber-star');
                 
-                const randomColor = colors[Math.floor(Math.random() * colors.length)];
-                if (randomColor) star.classList.add(randomColor);
+                const randomTheme = themes[Math.floor(Math.random() * themes.length)];
+                if (randomTheme) star.classList.add(randomTheme);
 
-                const scale = 0.4 + Math.random() * 0.8;
+                const scale = 0.3 + Math.random() * 0.9;
                 
                 star.style.left = `${Math.random() * 95}%`;
-                star.style.animationDelay = `${Math.random() * 8}s`;
-                star.style.animationDuration = `${5 + Math.random() * 5}s`;
+                star.style.animationDelay = `${Math.random() * 6}s`;
+                star.style.animationDuration = `${3 + Math.random() * 4}s`; // วิ่งตกลงมาเร็วขึ้นแบบฝนดาวตกดิจิทัล
                 star.style.transform = `scale(${scale})`;
 
                 container.appendChild(star);
             }
         }
 
-        window.addEventListener('DOMContentLoaded', createStarRain);
+        window.addEventListener('DOMContentLoaded', generateCyberStars);
     </script>
 
 </body>
