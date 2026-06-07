@@ -3,461 +3,425 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>zenithyshop - Receiptify Y2K Style</title>
+    <title>zenithyshop - Apple Music Style</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- ใช้ฟอนต์เครื่องพิมพ์ดีด (Courier Prime) และฟอนต์หัวข้อตัวเขียนให้ตรงตามเรฟภาพ -->
-    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Mitr:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Mitr:wght@300;400;500;600&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --bg-color: #e2e2e4;
-            --pink-accent: #e52d73;
-            --text-dark: #111111;
-            --text-muted: #555555;
-            --font-mono: 'Courier Prime', monospace;
+            /* โทนสีฟ้าอ่อน - เทา สไตล์ Apple Music */
+            --bg-main: #f5f7fa;
+            --sidebar-bg: #eef2f7;
+            --card-bg: #ffffff;
+            --accent-blue: #007aff; /* ฟ้า Apple */
+            --light-blue-past: #e1f0ff;
+            --text-main: #1d1d1f;
+            --text-sub: #86868b;
+            --border-color: #e5e5ea;
+            --player-bg: rgba(255, 255, 255, 0.75);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            font-family: 'Inter', 'Mitr', sans-serif;
         }
 
         body {
-            background-color: var(--bg-color);
-            /* จำลองเนื้อกระดาษหยาบ ๆ และเส้นวงกลมสีชมพูอาร์ต ๆ ด้านหลังตาม image_5.png */
-            background-image: 
-                radial-gradient(rgba(0, 0, 0, 0.03) 15%, transparent 15%),
-                radial-gradient(circle at 30% 40%, transparent 60%, rgba(229, 45, 115, 0.08) 60%, rgba(229, 45, 115, 0.08) 62%, transparent 62%);
-            background-size: 4px 4px, 100% 100%;
-            min-height: 100vh;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            height: 100vh;
             display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* --- 1. แถบเครื่องเล่นเพลงด้านบนสุด (Top Player Bar) --- */
+        .top-player-bar {
+            height: 64px;
+            background: var(--player-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* ปุ่มควบคุมตรงกลาง */
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .control-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
             justify-content: center;
-            align-items: center;
-            padding: 40px 20px;
-            font-family: 'Mitr', sans-serif;
-            color: var(--text-dark);
+        }
+        .control-btn svg { width: 20px; height: 20px; fill: currentColor; }
+        .control-btn.play-inside {
+            background: var(--text-main);
+            color: #fff;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
         }
 
-        /* บอร์ดสไตล์โปสเตอร์ใหญ่ */
-        .poster-container {
-            width: 100%;
-            max-width: 950px;
-            display: grid;
-            grid-template-columns: 1.1fr 0.9fr;
-            gap: 40px;
-            position: relative;
-        }
-
-        /* --- ฝั่งซ้าย: TOP ALBUMS (กล่องซีดีข้อมูลร้าน) --- */
-        .left-section {
+        /* หลอดแสดงสถานะเวลาเพลง (Progress Display) */
+        .player-center-display {
             display: flex;
             flex-direction: column;
-            gap: 25px;
-        }
-
-        .section-title-pink {
-            font-family: 'Playfair Display', serif;
-            font-size: 3.5rem;
-            font-style: italic;
-            color: var(--pink-accent);
-            font-weight: 500;
-            margin-bottom: 10px;
-            letter-spacing: -1px;
-        }
-
-        .album-item {
-            display: flex;
             align-items: center;
-            gap: 20px;
-            position: relative;
+            gap: 4px;
+            width: 40%;
+            max-width: 500px;
         }
-
-        /* เลขอันดับเอียง ๆ อินดี้ */
-        .album-rank {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.2rem;
-            font-style: italic;
-            width: 30px;
-            color: var(--text-dark);
+        .now-playing-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-main);
         }
-
-        /* ตัวกล่องซีดีพลาสติก (Jewel Case Effect) */
-        .cd-case {
-            position: relative;
-            width: 110px;
-            height: 110px;
-            background-size: cover;
-            background-position: center;
-            box-shadow: -8px 12px 20px rgba(0,0,0,0.25);
+        .progress-container {
+            width: 100%;
+            height: 4px;
+            background: var(--border-color);
             border-radius: 2px;
-            flex-shrink: 0;
-            transition: transform 0.3s ease;
+            position: relative;
         }
-        .cd-case:hover {
-            transform: scale(1.05) rotate(2deg);
-        }
-
-        /* เลเยอร์แสงสะท้อนบนหน้ากล่องซีดีพลาสติก */
-        .cd-case::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(125deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.1) 40%, transparent 45%, rgba(0,0,0,0.1) 50%, transparent 55%);
-            border: 1px solid rgba(255,255,255,0.4);
-            pointer-events: none;
-        }
-        /* แถบสันกล่องซีดีด้านซ้าย */
-        .cd-case::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 6px; height: 100%;
-            background: rgba(255,255,255,0.2);
-            border-right: 1px solid rgba(0,0,0,0.1);
-            backdrop-filter: blur(1px);
+        .progress-bar {
+            width: 35%;
+            height: 100%;
+            background: var(--text-sub);
+            border-radius: 2px;
         }
 
-        .album-details {
-            font-family: var(--font-mono);
-            font-size: 0.9rem;
-            line-height: 1.4;
-            max-width: 260px;
+        /* ข้อมูลร้านย่อมุมขวาบน */
+        .player-right-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
-        .album-details .headline {
-            font-weight: bold;
-            color: #000;
-        }
-        .album-details .desc {
-            color: var(--text-muted);
-            font-size: 0.8rem;
-            margin-top: 2px;
+        .shop-badge {
+            font-size: 0.75rem;
+            background: var(--light-blue-past);
+            color: var(--accent-blue);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 600;
         }
 
-        /* --- ฝั่งขวา: RECEIPTIFY & TOP ARTISTS --- */
-        .right-section {
+        /* --- โครงสร้างหลักด้านล่าง (Main Layout) --- */
+        .main-container {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* --- 2. แผงเมนูด้านซ้าย (Sidebar Navigation) --- */
+        .sidebar {
+            width: 240px;
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
+            padding: 24px 12px;
             display: flex;
             flex-direction: column;
-            gap: 45px;
-            align-items: center;
+            gap: 24px;
         }
 
-        /* ตัวใบเสร็จของแท้ตามภาพ */
-        .receipt-paper {
-            background: #f9f9f9;
-            width: 100%;
-            max-width: 360px;
-            padding: 30px 20px 25px 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
-            font-family: var(--font-mono);
-            position: relative;
-            color: #000;
-        }
-
-        /* เอฟเฟกต์สีกระดาษด่างๆ เก่าๆ */
-        .receipt-paper::before {
-            content: '';
-            position: absolute;
-            top:0; left:0; width:100%; height:100%;
-            background: radial-gradient(circle at 70% 20%, rgba(0,0,0,0.02) 0%, transparent 80%);
-            pointer-events: none;
-        }
-
-        /* เทปกาวสีชมพูแปะหัวใบเสร็จเด่นมาก */
-        .pink-tape {
-            position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%) rotate(-2deg);
-            width: 120px;
-            height: 30px;
-            background-color: rgba(229, 45, 115, 0.75);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            clip-path: polygon(5% 0%, 95% 2%, 100% 100%, 0% 95%); /* ทำขอบหยักเบี้ยวๆ */
-        }
-
-        .receipt-heading {
-            text-align: center;
-            font-size: 1.7rem;
+        .sidebar-brand {
+            font-size: 1.15rem;
             font-weight: 700;
-            letter-spacing: 1px;
-            margin-bottom: 3px;
-        }
-        .receipt-sub {
-            text-align: center;
-            font-size: 0.75rem;
-            letter-spacing: 2px;
-            margin-bottom: 20px;
+            padding-left: 12px;
+            letter-spacing: -0.5px;
         }
 
-        .receipt-meta {
-            font-size: 0.72rem;
-            line-height: 1.3;
-            margin-bottom: 12px;
+        .sidebar-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-main);
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .menu-item svg { width: 18px; height: 18px; fill: var(--text-sub); }
+        .menu-item:hover, .menu-item.active {
+            background-color: var(--border-color);
+        }
+        .menu-item.active svg { fill: var(--accent-blue); }
+
+        /* --- 3. พื้นที่แสดงเนื้อหาหลัก (Main Content Area) --- */
+        .content-area {
+            flex: 1;
+            padding: 32px 40px;
+            overflow-y: auto;
+            background-color: var(--bg-main);
         }
 
-        .receipt-divider {
-            border-top: 1px dashed #666;
-            margin: 8px 0;
+        .content-tab {
+            display: none;
+        }
+        .content-tab.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
         }
 
-        /* ตารางรายการในใบเสร็จ */
-        .receipt-table {
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .page-header {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            letter-spacing: -0.5px;
+        }
+
+        /* การจัดวางกล่องแบบกริดอัลบั้มเพลง (Album Grid Layout) */
+        .album-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .album-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .album-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.06);
+        }
+
+        /* หน้าปกจำลองสีฟ้าเทาพาสเทล */
+        .album-cover {
             width: 100%;
-            font-size: 0.75rem;
-            border-collapse: collapse;
-        }
-        .receipt-table th {
-            text-align: left;
-            font-weight: normal;
-            padding-bottom: 5px;
-        }
-        .receipt-table td {
-            padding: 6px 0;
-            vertical-align: top;
-        }
-        .receipt-table .amt-col {
-            text-align: right;
-            padding-left: 10px;
+            aspect-ratio: 1;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #cbd5e1 0%, #94a3b8 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: bold;
+            font-size: 1.5rem;
         }
 
-        .receipt-summary {
-            font-size: 0.78rem;
-            margin-top: 10px;
+        .album-title {
+            font-size: 0.92rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--text-main);
         }
-        .summary-row {
+        .album-artist {
+            font-size: 0.82rem;
+            color: var(--text-sub);
+        }
+
+        /* --- ตารางตารางเรทราคาแบบ Apple List --- */
+        .apple-list {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            list-style: none;
+        }
+        .apple-list-item {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 4px;
+            align-items: center;
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.9rem;
         }
+        .apple-list-item:last-child { border-bottom: none; }
+        .list-item-title { font-weight: 500; }
+        .list-item-price { font-weight: 600; color: var(--accent-blue); }
 
-        .receipt-footer {
-            font-size: 0.7rem;
+        /* ปุ่มลิงก์ติดต่อสไตล์ปุ่ม Apple Action */
+        .apple-btn-primary {
+            display: inline-flex;
+            align-items: center;
+            background-color: var(--accent-blue);
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 20px;
+            font-size: 0.88rem;
+            font-weight: 600;
             margin-top: 15px;
-            line-height: 1.4;
+            transition: opacity 0.2s;
         }
+        .apple-btn-primary:hover { opacity: 0.9; }
 
-        /* โซนขวาล่าง: รายชื่ออันดับแบบแนวตั้ง (Top Artists) */
-        .top-artists-container {
-            display: flex;
-            align-items: flex-start;
-            gap: 20px;
-            width: 100%;
-            max-width: 340px;
-            margin-left: 20px;
-        }
-
-        /* ตัวหนังสือแนวตั้งคำว่า Top artists */
-        .vertical-text {
-            font-family: 'Playfair Display', serif;
-            font-size: 3.2rem;
-            font-style: italic;
-            color: var(--pink-accent);
-            writing-mode: vertical-rl;
-            transform: rotate(180deg);
-            white-space: nowrap;
-            line-height: 1;
-        }
-
-        .artists-list {
-            font-family: var(--font-mono);
-            list-style: none;
-            font-size: 0.95rem;
-            line-height: 1.7;
-        }
-        .artists-list li {
-            color: var(--text-dark);
-        }
-
-        /* เครดิตซ้ายสุดขอบล่างบอร์ด */
-        .footer-credit {
-            position: absolute;
-            bottom: -30px;
-            left: 0;
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            color: var(--text-muted);
-        }
-
-        /* เคลียร์หน้าจอสำหรับมือถือ */
         @media (max-width: 768px) {
-            .poster-container {
-                grid-template-columns: 1fr;
-                gap: 50px;
-            }
-            .vertical-text {
-                writing-mode: horizontal-tb;
-                transform: none;
-                margin-bottom: 10px;
-            }
-            .top-artists-container {
-                flex-direction: column;
-                gap: 10px;
-            }
+            .sidebar { width: 70px; padding: 24px 4px; }
+            .sidebar-brand, .menu-text { display: none; }
+            .content-area { padding: 20px; }
+            .player-center-display { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <div class="poster-container">
-        
-        <!-- ================= ฝั่งซ้าย: TOP ALBUMS ================= -->
-        <div class="left-section">
-            <h1 class="section-title-pink">Top albums</h1>
+    <!-- 1. แถบเครื่องเล่นเพลงด้านบนสุด (Top Player Bar) -->
+    <div class="top-player-bar">
+        <div class="player-controls">
+            <button class="control-btn">
+                <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+            </button>
+            <button class="control-btn play-inside">
+                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <button class="control-btn">
+                <svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6zm9-12v12h2V6z"/></svg>
+            </button>
+        </div>
 
-            <!-- อันดับ 1: ข้อมูลหลักร้าน -->
-            <div class="album-item">
-                <span class="album-rank">1.</span>
-                <div class="cd-case" style="background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=300');"></div>
-                <div class="album-details">
-                    <p class="headline">zenithyshop - Profile</p>
-                    <p class="desc">เปิดให้บริการระบบบอร์ดอัตโนมัติ 24 ชม. เจ้าหน้าที่สแตนบายคอยซัพพอร์ต 9:00 น. - 23:00 น. ของทุกวัน</p>
-                </div>
-            </div>
-
-            <!-- อันดับ 2: แนะนำบริการทำเว็บ -->
-            <div class="album-item">
-                <span class="album-rank">2.</span>
-                <!-- จำลองปกแนวตัวอักษรแบบแท้ในรูปเรฟใบที่ 2 -->
-                <div class="cd-case" style="background-color: #ffffff; display:flex; align-items:center; justify-content:center; padding:5px; text-align:center; font-family:var(--font-mono); font-size:0.55rem; font-weight:bold; color:#000; line-height:1.2;">
-                    WEB DESIGN AND IT'S THE BEST STYLE FOR YOU
-                </div>
-                <div class="album-details">
-                    <p class="headline">Web Design - Service</p>
-                    <p class="desc">รับทำหน้าเว็บโปสเตอร์, เว็บบอร์ดร้านค้า, และพอร์ตโฟลิโอ มีเทมเพลตสวยงามให้เลือกมากกว่า 50+ รูปแบบ</p>
-                </div>
-            </div>
-
-            <!-- อันดับ 3: ความเร็วการส่งงาน -->
-            <div class="album-item">
-                <span class="album-rank">3.</span>
-                <div class="cd-case" style="background-image: url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=300');"></div>
-                <div class="album-details">
-                    <p class="headline">Fast Delivery - 4-8H</p>
-                    <p class="desc">การันตีความเร็วจัดส่งงานด่วนไวสุดภายใน 4-8 ชั่วโมงหลังจากสรุปแบบและคิวงานเรียบร้อย</p>
-                </div>
-            </div>
-
-            <!-- อันดับ 4: บริการเสริมเติมเกม -->
-            <div class="album-item">
-                <span class="album-rank">4.</span>
-                <div class="cd-case" style="background-image: url('https://images.unsplash.com/photo-1557683316-973673baf926?q=80&w=300');"></div>
-                <div class="album-details">
-                    <p class="headline">Identity V - Top Up</p>
-                    <p class="desc">รับเติมกระดุมเกม Identity V และส่งของขวัญในเกม เรทราคาถูก ปลอดภัย ไร้ประวัติการรีฟันด์ 100%</p>
-                </div>
-            </div>
-
-            <!-- อันดับ 5: การรับประกันระบบ -->
-            <div class="album-item">
-                <span class="album-rank">5.</span>
-                <div class="cd-case" style="background-image: url('https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&w=300');"></div>
-                <div class="album-details">
-                    <p class="headline">1 Month - Warranty</p>
-                    <p class="desc">ฟรีบริการดูแลความเสถียรของระบบและคอยตรวจสอบความปลอดภัยของโค้ดหน้าเว็บให้ยาวนาน 1 เดือนเต็ม</p>
-                </div>
+        <div class="player-center-display">
+            <div class="now-playing-title">zenithyshop — Streaming Service 2026</div>
+            <div class="progress-container">
+                <div class="progress-bar"></div>
             </div>
         </div>
 
-        <!-- ================= ฝั่งขวา: RECEIPTIFY & TOP ARTISTS ================= -->
-        <div class="right-section">
+        <div class="player-right-info">
+            <span class="shop-badge">ONLINE</span>
+        </div>
+    </div>
+
+    <!-- โครงสร้างหลักด้านล่าง -->
+    <div class="main-container">
+        
+        <!-- 2. แผงเมนูด้านซ้าย (Sidebar Navigation) -->
+        <div class="sidebar">
+            <div class="sidebar-brand">zenithyshop</div>
+            <ul class="sidebar-menu">
+                <li>
+                    <a class="menu-item active" onclick="switchTab('tab-home', this)">
+                        <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                        <span class="menu-text">Listen Now (หน้าแรก)</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="menu-item" onclick="switchTab('tab-prices', this)">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
+                        <span class="menu-text">Browse (เรทราคา)</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="menu-item" onclick="switchTab('tab-rules', this)">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                        <span class="menu-text">Radio (กฎของร้าน)</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 3. พื้นที่แสดงเนื้อหาหลัก (Main Content Area) -->
+        <div class="content-area">
             
-            <!-- ส่วนใบเสร็จรายการเรทราคาอาหารสมอง/บริการยอดฮิต -->
-            <div class="receipt-paper">
-                <div class="pink-tape"></div>
-                <h2 class="receipt-heading">RECEIPTIFY</h2>
-                <p class="receipt-sub">PRICE LIST</p>
-                
-                <div class="receipt-meta">
-                    ORDER #0026 FOR ZENITHYSHOP<br>
-                    MONDAY, JUNE 8, 2026
-                </div>
-                
-                <div class="receipt-divider"></div>
-                
-                <table class="receipt-table">
-                    <thead>
-                        <tr>
-                            <th>QTY</th>
-                            <th>ITEM</th>
-                            <th class="amt-col">AMT</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>01</td>
-                            <td>ตารางเติมเกมอันดับ 1-10 (ITEMS)</td>
-                            <td class="amt-col">59.-</td>
-                        </tr>
-                        <tr>
-                            <td>02</td>
-                            <td>ตารางเติมเกมอันดับ 11-20 (ITEMS)</td>
-                            <td class="amt-col">69.-</td>
-                        </tr>
-                        <tr>
-                            <td>03</td>
-                            <td>ตารางเติมเกมอันดับ 21-35 (ITEMS)</td>
-                            <td class="amt-col">89.-</td>
-                        </tr>
-                        <tr>
-                            <td>04</td>
-                            <td>ออกแบบป้ายเครดิตร้านค้า (DESIGN)</td>
-                            <td class="amt-col">50.-</td>
-                        </tr>
-                        <tr>
-                            <td>05</td>
-                            <td>ป้ายบัญชีธนาคารตกแต่งพิเศษ (ART)</td>
-                            <td class="amt-col">79.-</td>
-                        </tr>
-                        <tr>
-                            <td>06</td>
-                            <td>แก้จุดงานป้ายย้อนหลัง (PER POINT)</td>
-                            <td class="amt-col">20.-</td>
-                        </tr>
-                    </tbody>
-                </table>
-                
-                <div class="receipt-divider"></div>
-                
-                <div class="receipt-summary">
-                    <div class="summary-row">
-                        <span>ITEM COUNT:</span>
-                        <span>6 SERVICES</span>
+            <!-- แท็บ 1: หน้าแรกข้อมูลร้าน -->
+            <div class="content-tab active" id="tab-home">
+                <h2 class="page-header">Listen Now</h2>
+                <div class="album-grid">
+                    <div class="album-card">
+                        <div class="album-cover" style="background: linear-gradient(135deg, #bfdbfe 0%, #3b82f6 100%);">WEB</div>
+                        <div class="album-title">รับทำหน้าเว็บไซต์</div>
+                        <div class="album-artist">สไตล์มินิมอล ด่วน 4-8 ชม.</div>
                     </div>
-                    <div class="summary-row" style="font-weight: bold;">
-                        <span>TOTAL SYSTEM:</span>
-                        <span>FAST & TRUST</span>
+                    <div class="album-card">
+                        <div class="album-cover" style="background: linear-gradient(135deg, #e2e8f0 0%, #64748b 100%);">IDV</div>
+                        <div class="album-title">เติมกระดุม Identity V</div>
+                        <div class="album-artist">เรทถูก ปลอดภัย ไร้รีฟันด์</div>
                     </div>
-                </div>
-                
-                <div class="receipt-divider"></div>
-                
-                <div class="receipt-footer">
-                    CARD #: **** **** **** 2026<br>
-                    AUTH CODE: 123421<br>
-                    CARDHOLDER: CUSTOMER THANKYOU
+                    <div class="album-card">
+                        <div class="album-cover" style="background: linear-gradient(135deg, #fed7aa 0%, #ea580c 100%);">ART</div>
+                        <div class="album-title">ออกแบบป้ายร้านค้า</div>
+                        <div class="album-artist">ป้ายบัญชี ป้ายเครดิตกลุ่ม</div>
+                    </div>
                 </div>
             </div>
 
-            <!-- ส่วนรายชื่ออันดับกฎร้านค้ายอดนิยมด้านล่างใบเสร็จ -->
-            <div class="top-artists-container">
-                <div class="vertical-text">Top rules</div>
-                <ul class="artists-list">
-                    <li>1. โอนยอดเงินเรียบร้อยแล้ว ไม่คืนเงินทุกกรณี</li>
-                    <li>2. หากลูกค้าพิมพ์แจ้งไอดีผิด ร้านจะไม่รับผิดชอบ</li>
-                    <li>3. งานป้ายส่งมอบแล้ว สั่งแก้ไขจุดละ 20 บาท</li>
-                    <li>4. ห้ามนำโค้ดหรือดีไซน์เว็บไปดัดแปลงขายต่อ</li>
-                    <li>5. เช็คคิวงานด่วนกับเจ้าหน้าที่ก่อนชำระเงินทุกครั้ง</li>
+            <!-- แท็บ 2: ตารางเรทราคา -->
+            <div class="content-tab" id="tab-prices">
+                <h2 class="page-header">Browse Tracks</h2>
+                <ul class="apple-list">
+                    <li class="apple-list-item">
+                        <span class="list-item-title">ตารางเติมเกมอันดับ 1-10</span>
+                        <span class="list-item-price">59 บาท</span>
+                    </li>
+                    <li class="apple-list-item">
+                        <span class="list-item-title">ตารางเติมเกมอันดับ 11-20</span>
+                        <span class="list-item-price">69 บาท</span>
+                    </li>
+                    <li class="apple-list-item">
+                        <span class="list-item-title">ตารางเติมเกมอันดับ 21-35</span>
+                        <span class="list-item-price">89 บาท</span>
+                    </li>
+                    <li class="apple-list-item">
+                        <span class="list-item-title">ป้ายข้อมูลบัญชีธนาคารตกแต่งพิเศษ</span>
+                        <span class="list-item-price">79 บาท</span>
+                    </li>
                 </ul>
             </div>
 
+            <!-- แท็บ 3: กฎของร้านและปุ่มติดต่อ -->
+            <div class="content-tab" id="tab-rules">
+                <h2 class="page-header">Radio & Rules</h2>
+                <ul class="apple-list" style="margin-bottom: 20px;">
+                    <li class="apple-list-item"><span class="list-item-title">1. สรุปงานและโอนยอดแล้ว ไม่คืนเงินทุกกรณี</span></li>
+                    <li class="apple-list-item"><span class="list-item-title">2. ตรวจสอบข้อมูลไอดีให้ถูกต้องก่อนส่งให้ระบบ</span></li>
+                    <li class="apple-list-item"><span class="list-item-title">3. สั่งแก้งานป้ายย้อนหลัง คิดค่าบริการจุดละ 20 บาท</span></li>
+                </ul>
+                <a href="https://lin.ee/qihwQGM" class="apple-btn-primary" target="_blank">Connect via LINE Official</a>
+            </div>
+
         </div>
-
-        <!-- ข้อความเครดิตชื่อเจ้าของบอร์ดมุมล่างซ้ายสุด -->
-        <div class="footer-credit">@zenithyshop_official</div>
-
     </div>
 
+    <!-- สคริปต์สลับแท็บเมนู -->
+    <script>
+        function switchTab(tabId, element) {
+            // ซ่อนแท็บเนื้อหาทั้งหมด
+            const tabs = document.querySelectorAll('.content-tab');
+            tabs.forEach(t => t.classList.remove('active'));
+            
+            // เปิดแท็บที่เลือก
+            document.getElementById(tabId).classList.add('active');
+
+            // เปลี่ยนสถานะไฮไลท์ของปุ่มเมนู
+            const menuItems = document.querySelectorAll('.menu-item');
+            menuItems.forEach(item => item.classList.remove('active'));
+            element.classList.add('active');
+        }
+    </script>
 </body>
 </html>
-
