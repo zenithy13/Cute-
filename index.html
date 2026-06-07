@@ -10,47 +10,28 @@
     
     <style>
         :root {
-            --cyber-bg: #0b0813;
-            --cyber-pink: #ff007f;
-            --cyber-cyan: #00f3ff;
-            --cyber-purple: #9d4edd;
-            --dark-card: #161224;
-            --neon-glow-pink: rgba(255, 0, 127, 0.85);
-            --neon-glow-cyan: rgba(0, 243, 255, 0.85);
+            --bg-pastel-blue: #e3f2fd;
+            --book-cover-brown: #d7ccc8;
+            --book-page-cream: #fffdf9;
+            --text-dark-brown: #5d4037;
+            --text-light-brown: #8d6e63;
+            --accent-blue: #90caf9;
+            --line-color: #efebe9;
             --white: #ffffff;
-            --text-gray: #b5b2bc;
         }
 
-        /* --- Animations & Neon Glitch/Glow --- */
-        @keyframes cyberGlow {
-            0% { 
-                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6),
-                            0 0 40px var(--neon-glow-pink),
-                            0 0 70px var(--neon-glow-cyan);
-            }
-            50% { 
-                box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8),
-                            0 0 60px var(--neon-glow-cyan),
-                            0 0 90px var(--neon-glow-pink);
-                transform: translateY(-3px);
-            }
-            100% { 
-                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6),
-                            0 0 40px var(--neon-glow-pink),
-                            0 0 70px var(--neon-glow-cyan);
-            }
+        /* --- Animations --- */
+        @keyframes pageTurn {
+            0% { transform: rotateY(0deg); opacity: 1; filter: blur(0); }
+            50% { transform: rotateY(-90deg); opacity: 0.5; filter: blur(2px); }
+            100% { transform: rotateY(0deg); opacity: 1; filter: blur(0); }
         }
 
-        @keyframes cyberStarRain {
-            0% { transform: translateY(-60px) rotate(0deg) scale(0); opacity: 0; }
-            10% { opacity: 1; transform: translateY(0px) rotate(45deg) scale(1); }
-            90% { opacity: 1; }
-            100% { transform: translateY(105vh) rotate(360deg) scale(0.5); opacity: 0; }
-        }
-
-        @keyframes contentFade {
-            from { opacity: 0; transform: translateY(10px) scale(0.99); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
+        @keyframes floatStar {
+            0% { transform: translateY(-20px) translateX(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(105vh) translateX(50px) rotate(180deg); opacity: 0; }
         }
 
         * {
@@ -58,23 +39,27 @@
             margin: 0;
             padding: 0;
             font-family: 'Fredoka', 'Mitr', sans-serif;
-            color: var(--white);
+            color: var(--text-dark-brown);
         }
 
         body {
-            background-color: var(--cyber-bg); 
+            background-color: var(--bg-pastel-blue);
             background-image: 
-                linear-gradient(rgba(157, 78, 221, 0.08) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(157, 78, 221, 0.08) 1px, transparent 1px);
-            background-size: 30px 30px;
-            padding: 110px 15px 80px;
-            position: relative;
-            overflow-x: hidden;
+                radial-gradient(var(--white) 15%, transparent 16%),
+                radial-gradient(var(--white) 15%, transparent 16%);
+            background-size: 40px 40px;
+            background-position: 0 0, 20px 20px;
             min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow: hidden;
+            position: relative;
         }
 
-        /* --- ระบบฝนดาวตกไซเบอร์ Y2K (4 แฉก เรโทร ดิจิทัล) --- */
-        .cyber-rain-container {
+        /* --- พื้นหลังฝนดาวพาสเทลลอยละมุน --- */
+        .star-container {
             position: fixed;
             top: 0;
             left: 0;
@@ -82,479 +67,422 @@
             height: 100%;
             pointer-events: none;
             z-index: 1;
-            overflow: hidden;
         }
-
-        /* ดีไซน์ดาว 4 แฉกแนว Y2K Futurism */
-        .cyber-star {
+        .pastel-star {
             position: absolute;
-            width: 12px;
-            height: 12px;
-            background: var(--white);
-            clip-path: polygon(50% 0%, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0% 50%, 39% 39%);
-            animation: cyberStarRain linear infinite;
-            filter: drop-shadow(0 0 8px var(--cyber-cyan));
+            width: 16px;
+            height: 16px;
+            background-color: var(--white);
+            clip-path: polygon(50% 0%, 65% 35%, 100% 50%, 65% 65%, 50% 100%, 35% 65%, 0% 50%, 35% 35%);
+            animation: floatStar linear infinite;
         }
-        .cs-pink { background: var(--cyber-pink); filter: drop-shadow(0 0 8px var(--cyber-pink)); }
-        .cs-cyan { background: var(--cyber-cyan); filter: drop-shadow(0 0 8px var(--cyber-cyan)); }
-        .cs-purple { background: var(--cyber-purple); filter: drop-shadow(0 0 8px var(--cyber-purple)); }
 
-        /* --- โครงสร้างหน้าต่างระบบ OS ยุค Y2K พร้อมเงาเรืองแสงรอบกรอบ --- */
-        .cyber-window-wrapper {
-            max-width: 540px;
-            margin: 0 auto;
+        /* --- โครงสร้างหนังสือแบบกางเต็มจอ (Open Book) --- */
+        .book-wrapper {
+            width: 100%;
+            max-width: 1100px;
+            height: 85vh;
+            min-height: 550px;
+            background-color: var(--book-cover-brown);
+            border-radius: 24px;
+            padding: 15px;
+            box-shadow: 0 20px 50px rgba(93, 64, 55, 0.15);
+            display: flex;
             position: relative;
             z-index: 2;
-            background-color: #1c1830;
-            border: 4px solid var(--cyber-purple);
-            border-radius: 24px;
-            padding: 6px;
-            animation: cyberGlow 6s ease-in-out infinite;
         }
 
-        /* แถบหัวหน้าต่างคอมพิวเตอร์แนวเรโทร */
-        .window-top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: linear-gradient(90deg, var(--cyber-purple), #4a154b);
-            padding: 8px 16px;
-            border-radius: 16px 16px 0 0;
-            margin-bottom: 6px;
-        }
-        .window-title { font-size: 0.85rem; font-weight: 600; letter-spacing: 1px; color: var(--cyber-cyan); }
-        .window-dots { display: flex; gap: 6px; }
-        .window-dot { width: 10px; height: 10px; border-radius: 50%; background: #ff5f56; }
-        .window-dot:nth-child(2) { background: #ffbd2e; }
-        .window-dot:nth-child(3) { background: #27c93f; }
-
-        /* --- แถบเมนูปุ่มกด 3D เรืองแสงด้านบน --- */
-        .cyber-tabs {
-            display: flex;
-            gap: 8px;
-            margin: 10px 6px 15px;
+        /* สันกลางหนังสือ */
+        .book-spine {
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
+            height: calc(100% - 30px);
+            background: linear-gradient(90deg, rgba(0,0,0,0.08), transparent 30%, transparent 70%, rgba(0,0,0,0.08));
+            border-radius: 4px;
+            z-index: 5;
+            pointer-events: none;
         }
 
-        .tab-btn {
+        /* หน้ากระดาษแต่ละฝั่ง (ซ้าย-ขวา) */
+        .book-page {
             flex: 1;
-            background-color: var(--dark-card);
-            border: 2px solid var(--cyber-purple);
-            padding: 12px 10px;
-            border-radius: 14px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            box-shadow: inset 0 -4px 0px rgba(0,0,0,0.5);
-            transition: all 0.2s ease;
-        }
-
-        .tab-btn:hover {
-            border-color: var(--cyber-cyan);
-            color: var(--cyber-cyan);
-        }
-
-        /* เมนูเมื่อถูกกดเลือก จะสว่างวาบเป็นสีชมพูนีออน */
-        .tab-btn.active {
-            background-color: var(--cyber-pink);
-            border-color: var(--white);
-            color: var(--white);
-            box-shadow: 0 0 15px var(--cyber-pink), inset 0 -4px 0px rgba(0,0,0,0.3);
-            transform: scale(1.02);
-        }
-
-        /* กล่องเนื้อหาหลัก */
-        .window-body {
-            background-color: var(--cyber-bg);
-            border-radius: 0 0 18px 18px;
-            padding: 25px 16px;
-            border: 2px solid rgba(157, 78, 221, 0.2);
-            max-height: 70vh;
+            background-color: var(--book-page-cream);
+            height: 100%;
+            padding: 40px 35px;
             overflow-y: auto;
+            position: relative;
         }
 
+        .page-left {
+            border-radius: 14px 0 0 14px;
+            border-right: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .page-right {
+            border-radius: 0 14px 14px 0;
+            border-left: 1px solid rgba(0,0,0,0.05);
+        }
+
+        /* ปรับแต่ง Scrollbar ในหน้ากระดาษ */
+        .book-page::-webkit-scrollbar { width: 5px; }
+        .book-page::-webkit-scrollbar-track { background: transparent; }
+        .book-page::-webkit-scrollbar-thumb { background: var(--book-cover-brown); border-radius: 10px; }
+
+        /* --- เมนูที่คั่นหนังสือด้านขวา (Bookmarks) --- */
+        .book-nav {
+            position: absolute;
+            right: -45px;
+            top: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 1;
+        }
+
+        .nav-bookmark {
+            background-color: var(--book-cover-brown);
+            border: none;
+            padding: 15px 12px;
+            width: 48px;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            font-size: 0.88rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            cursor: pointer;
+            border-radius: 0 10px 10px 0;
+            transition: all 0.25s ease;
+            box-shadow: 3px 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .nav-bookmark.active {
+            background-color: var(--book-page-cream);
+            width: 56px;
+            padding-left: 18px;
+            color: var(--text-dark-brown);
+            font-weight: 700;
+            box-shadow: 4px 2px 8px rgba(93, 64, 55, 0.1);
+        }
+        .nav-bookmark:nth-child(1) { border-left: 4px solid var(--accent-blue); }
+        .nav-bookmark:nth-child(2) { border-left: 4px solid #bcaaa4; }
+        .nav-bookmark:nth-child(3) { border-left: 4px solid #ffe082; }
+
+        /* ระบบสลับหน้ากระดาษฝั่งขวา */
         .page-content { display: none; }
         .page-content.active {
             display: block;
-            animation: contentFade 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+            animation: pageTurn 0.45s ease-in-out forwards;
         }
 
-        /* --- ส่วนหัวเว็บบอร์ดไซเบอร์ --- */
-        header {
+        /* --- ดีไซน์เนื้อหาภายในเล่ม --- */
+        /* ฝั่งซ้าย: Profile คงที่เสมอเหมือนหน้าปกใน */
+        .profile-container {
             text-align: center;
-            padding: 25px 15px;
-            background-color: var(--dark-card);
-            border-radius: 18px;
-            border: 2px solid var(--cyber-cyan);
-            margin-bottom: 25px;
-            box-shadow: 0 0 15px rgba(0, 243, 255, 0.15);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
-        .logo-container {
-            width: 85px;
-            height: 85px;
-            margin: 0 auto 12px;
-            border-radius: 20px;
+        .logo-box {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
             overflow: hidden;
-            border: 2px solid var(--cyber-pink);
-            box-shadow: 0 0 12px var(--cyber-pink);
+            border: 4px solid var(--white);
+            box-shadow: 0 8px 20px rgba(93, 64, 55, 0.1);
+            margin-bottom: 20px;
         }
-        .logo-container img { width: 100%; height: 100%; object-fit: cover; }
+        .logo-box img { width: 100%; height: 100%; object-fit: cover; }
 
-        header h1 {
-            font-size: 2.2rem;
-            margin-bottom: 10px;
+        .profile-container h1 {
+            font-size: 2.4rem;
             font-weight: 700;
-            color: var(--white);
-            text-shadow: 3px 3px 0px var(--cyber-purple);
             letter-spacing: -0.5px;
+            margin-bottom: 8px;
         }
 
-        .tagline {
-            font-size: 0.88rem;
-            color: var(--text-gray);
-            line-height: 1.5;
-            padding: 0 5px;
+        .profile-tagline {
+            font-size: 0.92rem;
+            color: var(--text-light-brown);
+            line-height: 1.6;
+            margin-bottom: 30px;
+            max-width: 85%;
         }
 
-        /* --- แผงปุ่มลิงก์สไตล์ Grid ยุคไซเบอร์ --- */
-        .badges-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
+        /* ปุ่มลิงก์สไตล์ตราประทับในสมุด */
+        .quick-links {
+            display: flex;
+            flex-direction: column;
             gap: 10px;
-            margin-bottom: 25px;
+            width: 100%;
+            max-width: 280px;
         }
 
-        .badge-item {
-            background-color: var(--dark-card);
+        .link-stamp {
+            background-color: var(--white);
+            border: 1.5px solid var(--line-color);
+            padding: 14px;
             border-radius: 14px;
-            padding: 16px 5px;
-            text-align: center;
             text-decoration: none;
-            border: 1px solid var(--cyber-purple);
+            font-size: 0.88rem;
+            font-weight: 600;
             transition: all 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
+        .link-stamp:hover {
+            background-color: var(--bg-pastel-blue);
+            transform: translateX(4px);
         }
 
-        .badge-item:hover {
-            transform: translateY(-2px);
-            border-color: var(--cyber-cyan);
-            box-shadow: 0 0 15px var(--neon-glow-cyan);
+        /* ฝั่งขวา: การ์ดเนื้อหาในหน้ากระดาษ */
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            border-bottom: 2px dashed var(--book-cover-brown);
+            padding-bottom: 8px;
+            letter-spacing: 0.5px;
         }
 
-        .badge-icon { font-size: 1.4rem; margin-bottom: 4px; }
-        .badge-title { font-size: 0.78rem; font-weight: 600; color: var(--text-gray); }
-        .badge-item:hover .badge-title { color: var(--white); }
-
-        /* --- กล่องข้อความสไตล์บอร์ดคอนโซล (Cyber Cards) --- */
-        .card {
-            background-color: var(--dark-card);
+        .info-card {
+            background-color: var(--white);
             border-radius: 16px;
             padding: 20px;
-            margin-bottom: 20px;
-            border-left: 4px solid var(--cyber-pink);
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 16px;
+            border: 1px solid var(--line-color);
         }
 
-        .card h2 {
-            font-size: 1.05rem;
-            margin-bottom: 15px;
-            color: var(--cyber-cyan);
+        .info-card h3 {
+            font-size: 1rem;
             font-weight: 600;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
+            margin-bottom: 10px;
+            color: var(--text-light-brown);
         }
 
-        .sub-section-box {
-            background-color: rgba(11, 8, 19, 0.5);
-            border-radius: 10px;
-            padding: 12px;
-            margin-bottom: 12px;
-            border: 1px solid rgba(157, 78, 221, 0.15);
-        }
-
-        .sub-section-title { font-size: 0.88rem; font-weight: 600; margin-bottom: 6px; color: var(--cyber-pink); }
-        
-        .features-list, .rules-list { list-style: none; }
-        .features-list li, .rules-list li {
+        .bullet-list { list-style: none; }
+        .bullet-list li {
             position: relative;
-            padding-left: 16px;
-            margin-bottom: 6px;
-            font-size: 0.85rem;
-            line-height: 1.5;
-            color: var(--text-gray);
+            padding-left: 18px;
+            margin-bottom: 8px;
+            font-size: 0.88rem;
+            line-height: 1.6;
         }
-        .features-list li::before {
-            content: ">";
+        .bullet-list li::before {
+            content: "•";
             position: absolute;
-            left: 0;
-            color: var(--cyber-cyan);
-            font-weight: bold;
-        }
-        .rules-list li::before {
-            content: "[!]";
-            position: absolute;
-            left: -4px;
-            font-size: 0.75rem;
-            color: var(--cyber-pink);
+            left: 4px;
+            color: var(--accent-blue);
+            font-size: 1.2rem;
+            top: -2px;
         }
 
-        /* --- ช่องทางการติดต่อปุ่มนีออนสตรีท --- */
-        .contact-container {
+        /* ปุ่มติดต่อในหน้าหนังสือ */
+        .btn-container {
             display: flex;
             flex-direction: column;
             gap: 10px;
             margin-top: 15px;
         }
 
-        .sticker-link-btn {
+        .action-btn {
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 14px;
-            border-radius: 12px;
+            border-radius: 14px;
             text-decoration: none;
             font-weight: 600;
             font-size: 0.9rem;
-            border: 2px solid transparent;
-            transition: all 0.25s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            transition: all 0.2s ease;
+            border: none;
         }
+        .btn-fb { background-color: #e8f0fe; color: #1a73e8; }
+        .btn-line { background-color: #e6f4ea; color: #137333; }
+        .action-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 12px rgba(0,0,0,0.05); }
 
-        .btn-cute-fb {
-            background-color: #1877f2;
-            box-shadow: 0 4px 12px rgba(24, 119, 242, 0.3);
-        }
-        .btn-cute-fb:hover {
-            transform: translateY(-2px);
-            border-color: var(--white);
-            box-shadow: 0 0 20px rgba(24, 119, 242, 0.7);
-        }
-
-        .btn-cute-line {
-            background-color: #06c755;
-            box-shadow: 0 4px 12px rgba(6, 199, 85, 0.3);
-        }
-        .btn-cute-line:hover {
-            transform: translateY(-2px);
-            border-color: var(--white);
-            box-shadow: 0 0 20px rgba(6, 199, 85, 0.7);
-        }
-
-        .warranty {
+        .footer-notice {
             text-align: center;
             font-size: 0.8rem;
-            background-color: rgba(157, 78, 221, 0.1);
-            border: 1px dashed var(--cyber-purple);
+            background-color: #fffde7;
             padding: 12px;
             border-radius: 12px;
-            margin-top: 15px;
-            color: var(--cyber-cyan);
+            margin-top: 20px;
+            border: 1px dashed #fff59d;
         }
 
-        /* ปรับสไตล์แถบเลื่อน Scrollbar ด้านในกล่องให้ดูไซเบอร์ */
-        .window-body::-webkit-scrollbar { width: 6px; }
-        .window-body::-webkit-scrollbar-track { background: var(--cyber-bg); }
-        .window-body::-webkit-scrollbar-thumb { background: var(--cyber-purple); border-radius: 10px; }
-        .window-body::-webkit-scrollbar-thumb:hover { background: var(--cyber-pink); }
+        /* ปรับแต่งการแสดงผลบนมือถือ (ให้เรียงต่อกันเป็นเล่มเดียวแนวตั้ง) */
+        @media (max-width: 768px) {
+            body { overflow-y: auto; padding: 60px 15px 40px; }
+            .book-wrapper { flex-direction: column; height: auto; padding-bottom: 30px; }
+            .book-spine { display: none; }
+            .page-left { border-radius: 14px 14px 0 0; border-right: none; border-bottom: 2px dashed var(--line-color); padding: 30px 20px; }
+            .page-right { border-radius: 0 0 14px 14px; border-left: none; padding: 30px 20px; }
+            .book-nav { right: 10px; top: -50px; flex-direction: row; }
+            .nav-bookmark { writing-mode: horizontal-tb; border-radius: 10px 10px 0 0; border-left: none !important; width: auto; padding: 10px 14px; height: 35px; }
+            .nav-bookmark.active { width: auto; height: 40px; padding-top: 12px; }
+            .nav-bookmark:nth-child(1) { border-top: 4px solid var(--accent-blue); }
+            .nav-bookmark:nth-child(2) { border-top: 4px solid #bcaaa4; }
+            .nav-bookmark:nth-child(3) { border-top: 4px solid #ffe082; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- พื้นหลังสายฝนดาวตกไซเบอร์ Y2K -->
-    <div class="cyber-rain-container" id="cyberStarRain"></div>
+    <!-- พื้นหลังฝนดาวพาสเทล -->
+    <div class="star-container" id="starField"></div>
 
-    <!-- โครงสร้างกรอบระบบคอมพิวเตอร์หลัก -->
-    <div class="cyber-window-wrapper">
-        
-        <!-- แถบหัวหน้าต่าง OS -->
-        <div class="window-top-bar">
-            <div class="window-title">SYSTEM_DASHBOARD.EXE</div>
-            <div class="window-dots">
-                <div class="window-dot"></div>
-                <div class="window-dot"></div>
-                <div class="window-dot"></div>
+    <!-- ตัวหนังสือเปิดกางออก -->
+    <div class="book-wrapper">
+        <div class="book-spine"></div>
+
+        <!-- === หน้าซ้าย: ข้อมูลร้านคงที่ (Profile) === -->
+        <div class="book-page page-left">
+            <div class="profile-container">
+                <div class="logo-box">
+                    <img src="IMG_0545.jpeg" alt="zenithyshop Logo">
+                </div>
+                <h1>zenithyshop</h1>
+                <p class="profile-tagline">
+                    รับทำเว็บไซต์ร้าน / เติมเกม identity v / ทำป้ายต่าง ๆ<br>เวลาทำการ : 9:00 - 23:00 น.
+                </p>
+                
+                <div class="quick-links">
+                    <a href="https://drive.google.com/drive/folders/1_XMpP9EC2Yqq2-6cYfRn0fy8i9Q6cvoi" class="link-stamp" target="_blank">🗂️ Gallery ตัวอย่างงานป้าย</a>
+                    <a href="https://m.facebook.com/story.php?story_fbid=pfbid0VoVRA4MbGu79CbqBREGD8jcxavv6HzJ2F9jcyvVCUrLxEPSRoFtNQNA44yM83zs9l&id=61586611223621" class="link-stamp" target="_blank">💎 เรทเติมกระดุมเกม</a>
+                    <a href="https://drive.google.com/drive/mobile/folders/1fj024BhkgC1ctJeiwyZUG3USteSdzWzr" class="link-stamp" target="_blank">🌐 คลังเทมเพลตเว็บไซต์</a>
+                </div>
             </div>
         </div>
 
-        <!-- แผงควบคุมเมนูปุ่มกดด้านบนสุด -->
-        <div class="cyber-tabs">
-            <button class="tab-btn active" onclick="switchPage('main-page', this)">MAIN</button>
-            <button class="tab-btn" onclick="switchPage('price-page', this)">PRICES</button>
-            <button class="tab-btn" onclick="switchPage('rules-page', this)">RULES</button>
-        </div>
+        <!-- === หน้าขวา: เปลี่ยนเนื้อหาตามที่คั่นหนังสือ === -->
+        <div class="book-page page-right">
+            
+            <!-- ที่คั่นหนังสือเมนูขวา -->
+            <div class="book-nav">
+                <button class="nav-bookmark active" onclick="switchPage('main-content', this)">หน้าแรก</button>
+                <button class="nav-bookmark" onclick="switchPage('price-content', this)">เรทป้าย</button>
+                <button class="nav-bookmark" onclick="switchPage('rules-content', this)">กฎร้าน</button>
+            </div>
 
-        <!-- ห้องเนื้อหาหลักด้านในตู้ควบคุม -->
-        <div class="window-body">
-
-            <!-- ================= หน้าหลัก ================= -->
-            <div id="main-page" class="page-content active">
-                <header>
-                    <div class="logo-container">
-                        <img src="IMG_0545.jpeg" alt="zenithyshop Logo">
-                    </div>
-                    <h1>zenithyshop</h1>
-                    <div class="tagline">
-                        รับทำเว็บไซต์ร้าน / เติมเกม identity v / ทำป้ายต่าง ๆ<br>OPEN : 9:00 - 23:00 น.
-                    </div>
-                </header>
-
-                <div class="badges-grid">
-                    <a href="https://drive.google.com/drive/folders/1_XMpP9EC2Yqq2-6cYfRn0fy8i9Q6cvoi" class="badge-item" target="_blank">
-                        <div class="badge-icon">🖼️</div>
-                        <div class="badge-title">ตัวอย่างงานป้าย</div>
-                    </a>
-                    <a href="https://m.facebook.com/story.php?story_fbid=pfbid0VoVRA4MbGu79CbqBREGD8jcxavv6HzJ2F9jcyvVCUrLxEPSRoFtNQNA44yM83zs9l&id=61586611223621" class="badge-item" target="_blank">
-                        <div class="badge-icon">💰</div>
-                        <div class="badge-title">เรทเติมกระดุม</div>
-                    </a>
-                    <a href="https://drive.google.com/drive/mobile/folders/1fj024BhkgC1ctJeiwyZUG3USteSdzWzr" class="badge-item" target="_blank">
-                        <div class="badge-icon">📑</div>
-                        <div class="badge-title">เทมเพลตเว็บ</div>
-                    </a>
-                </div>
-
-                <div class="card">
-                    <h2>ทำเว็บไซต์ร้าน เริ่มต้น 129.-</h2>
-                    <ul class="features-list">
-                        <li>มีเทมเพลตให้เลือกมากกว่า 50+ แบบ</li>
-                        <li>มีทั้งแนวน่ารัก พาสเทล และแนวมืด</li>
-                        <li>ระยะเวลารองานประมาณ 4-8 ชั่วโมง</li>
-                        <li>รันงานตามคิว (หากติดคิวงานอื่นอยู่จะแจ้งล่วงหน้าค่ะ)</li>
+            <!-- หน้า 1: บริการเว็บไซต์ -->
+            <div id="main-content" class="page-content active">
+                <h2 class="section-title">Website Service</h2>
+                <div class="info-card">
+                    <h3>รับทำเว็บไซต์ร้าน เริ่มต้น 129.-</h3>
+                    <ul class="bullet-list">
+                        <li>มีเทมเพลตดีไซน์ให้เลือกมากกว่า 50+ รูปแบบ</li>
+                        <li>ครอบคลุมทุกสไตล์ ทั้งแนวน่ารัก พาสเทล และโทนมืดสตรีท</li>
+                        <li>ระยะเวลาจัดทำรวดเร็ว ประมาณ 4-8 ชั่วโมง</li>
+                        <li>รันงานตามคิวอย่างเป็นระบบ (หากติดคิวอื่นจะแจ้งให้ทราบล่วงหน้าค่ะ)</li>
                     </ul>
                 </div>
             </div>
 
-            <!-- ================= เรทงานป้าย ================= -->
-            <div id="price-page" class="page-content">
-                <div class="card">
-                    <h2>รายละเอียดงานป้าย</h2>
-                    
-                    <div class="sub-section-box">
-                        <div class="sub-section-title">ป้ายเติมเกม & ส่งของขวัญ</div>
-                        <ul class="features-list">
-                            <li>เรทที่ใส่ 1-10 ราคา 59.-</li>
-                            <li>เรทที่ใส่ 11-20 ราคา 69.-</li>
-                            <li>เรทที่ใส่ 21-25 ราคา 79.-</li>
-                            <li>เรทที่ใส่ 26-35 ราคา 89.-</li>
-                        </ul>
-                    </div>
-
-                    <div class="sub-section-box">
-                        <div class="sub-section-title">ป้ายเครดิต</div>
-                        <ul class="features-list">
-                            <li>1 ตัวละคร ราคา 50.-</li>
-                            <li>มากกว่า 1 ตัวละคร บวกเพิ่มตัวละ 5.-</li>
-                        </ul>
-                    </div>
-
-                    <div class="sub-section-box">
-                        <div class="sub-section-title">ป้ายไอดี & ป้ายบัญชี</div>
-                        <ul class="features-list">
-                            <li>ตกแต่งปกติ ราคา 69.-</li>
-                            <li>ตกแต่งเยอะ ราคา 79.-</li>
-                        </ul>
-                    </div>
-
-                    <div class="sub-section-box">
-                        <div class="sub-section-title">ป้ายเช่าไอดี</div>
-                        <ul class="features-list">
-                            <li>เฉพาะหัวป้าย ราคา 59.-</li>
-                            <li>100-250 สกินละ 1.-</li>
-                            <li>250 สกินขึ้นไป สกินละ 0.8.-</li>
-                            <li><strong>ฟรี:</strong> ตกแต่งห้อง แรงค์ สัตว์เลี้ยง ยอดเติม และของจิปาถะ</li>
-                            <li>ลูกค้าที่มียอดเรียงสกิน 100 ขึ้นไป ฟรีหัวป้ายทันที</li>
-                        </ul>
-                    </div>
-
-                    <div class="sub-section-box">
-                        <div class="sub-section-title">ข้อมูลเพิ่มเติม</div>
-                        <ul class="features-list">
-                            <li>สามารถบรีฟตัวละครและโทนสีได้ตามต้องการ</li>
-                            <li>ระยะเวลารองาน 1-2 วัน (งานเร่งด่วน +10.-)</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ================= กฎร้าน & ติดต่อ ================= -->
-            <div id="rules-page" class="page-content">
-                <div class="card">
-                    <h2>กฎของร้าน</h2>
-                    <ul class="rules-list">
-                        <li>หากโอนเงินเรียบร้อยแล้ว ทางร้านไม่คืนเงินทุกกรณี</li>
-                        <li>กรณีแจ้งไอดีผิด ทางร้านไม่รับผิดชอบทุกกรณี</li>
-                        <li>หากผ่อนชำระแล้วส่งยอดไม่ครบหรือไม่ต่อเนื่อง ทางร้านขอยึดยอดทันที</li>
-                        <li>งานป้ายทุกชนิด หากยกเลิกจะไม่คืนเงินทุกกรณี</li>
-                        <li>หลังจากส่งงานและเช็คงานแล้ว ขอแก้งานทีหลังคิดจุดละ 20.-</li>
-                        <li>เว็บไซต์มีปัญหาแก้ไขให้ฟรี หากต้องการเปลี่ยนข้อมูลภายหลังคิดจุดละ 20.-</li>
+            <!-- หน้า 2: เรทงานป้าย -->
+            <div id="price-content" class="page-content">
+                <h2 class="section-title">Price List</h2>
+                
+                <div class="info-card">
+                    <h3>ป้ายเติมเกม & ส่งของขวัญ</h3>
+                    <ul class="bullet-list">
+                        <li>เรทที่ใส่ 1-10 ราคา 59.-</li>
+                        <li>เรทที่ใส่ 11-20 ราคา 69.-</li>
+                        <li>เรทที่ใส่ 21-25 ราคา 79.-</li>
+                        <li>เรทที่ใส่ 26-35 ราคา 89.-</li>
                     </ul>
                 </div>
 
-                <div class="card">
-                    <h2>ช่องทางติดต่อ</h2>
-                    <div class="contact-container">
-                        
-                        <!-- Facebook Button -->
-                        <a href="https://www.facebook.com/profile.php?id=61554192600355" class="sticker-link-btn btn-cute-fb" target="_blank">
-                            Facebook : Zenithyshop
-                        </a>
-                        
-                        <!-- Line Button -->
-                        <a href="https://lin.ee/qihwQGM" class="sticker-link-btn btn-cute-line" target="_blank">
-                            LINE OFFICIAL ACCOUNT
-                        </a>
-                        
-                    </div>
+                <div class="info-card">
+                    <h3>ป้ายเครดิต / ไอดี & บัญชี</h3>
+                    <ul class="bullet-list">
+                        <li>ป้ายเครดิต (1 ตัวละคร) ราคา 50.- (เพิ่มตัวละ 5.-)</li>
+                        <li>ป้ายไอดี & ป้ายบัญชี แบบปกติ ราคา 69.-</li>
+                        <li>ป้ายไอดี & ป้ายบัญชี แบบตกแต่งเยอะ ราคา 79.-</li>
+                    </ul>
                 </div>
 
-                <div class="warranty">
-                    มีรับประกันเว็บไซต์ให้ 1 เดือน เว็บมีปัญหาแจ้งได้ตลอดเวลาค่ะ
+                <div class="info-card">
+                    <h3>ป้ายเช่าไอดี</h3>
+                    <ul class="bullet-list">
+                        <li>เฉพาะหัวป้าย ราคา 59.-</li>
+                        <li>จำนวน 100-250 สกิน คิดสกินละ 1.-</li>
+                        <li>จำนวน 250 สกินขึ้นไป คิดสกินละ 0.8.-</li>
+                        <li>ตกแต่งห้อง แรงค์ สัตว์เลี้ยง ยอดเติมฟรีทั้งหมด</li>
+                        <li>พิเศษ! ลูกค้าที่มียอดเรียงสกิน 100 ขึ้นไป ฟรีหัวป้ายทันที</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- หน้า 3: กฎ & ช่องทางติดต่อ -->
+            <div id="rules-content" class="page-content">
+                <h2 class="section-title">Terms & Contact</h2>
+                
+                <div class="info-card">
+                    <h3>กฎกติกาของร้าน</h3>
+                    <ul class="bullet-list" style="color: var(--text-light-brown);">
+                        <li>เมื่อโอนเงินเรียบร้อยแล้ว ทางร้านไม่คืนเงินทุกกรณี</li>
+                        <li>กรุณาตรวจสอบไอดีให้ถูกต้อง หากแจ้งผิดร้านไม่รับผิดชอบค่ะ</li>
+                        <li>กรณีผ่อนชำระ หากส่งยอดไม่ครบตามกำหนดขอยึดยอดทันที</li>
+                        <li>หลังส่งงานและตรวจสอบแล้ว ขอแก้ไขภายหลังคิดจุดละ 20.-</li>
+                    </ul>
+                </div>
+
+                <div class="btn-container">
+                    <a href="https://www.facebook.com/profile.php?id=61554192600355" class="action-btn btn-fb" target="_blank">Facebook : Zenithyshop</a>
+                    <a href="https://lin.ee/qihwQGM" class="action-btn btn-line" target="_blank">Line Official Account</a>
+                </div>
+
+                <div class="footer-notice">
+                    มีรับประกันเว็บไซต์ให้ 1 เดือนเต็ม ระบบมีปัญหาทักแจ้งได้ตลอดค่ะ
                 </div>
             </div>
 
         </div>
     </div>
 
-    <!-- สคริปต์สลับหน้าเมนู & เจนเนอเรตฝนดาวตกไซเบอร์ -->
+    <!-- สคริปต์สลับหน้ากระดาษหนังสือ & เม็ดดาวพาสเทล -->
     <script>
-        function switchPage(pageId, element) {
+        function switchPage(contentId, element) {
             const contents = document.querySelectorAll('.page-content');
             contents.forEach(content => content.classList.remove('active'));
             
-            const tabs = document.querySelectorAll('.tab-btn');
-            tabs.forEach(tab => tab.classList.remove('active'));
+            const bookmarks = document.querySelectorAll('.nav-bookmark');
+            bookmarks.forEach(bookmark => bookmark.classList.remove('active'));
             
-            document.getElementById(pageId).classList.add('active');
+            const targetContent = document.getElementById(contentId);
+            targetContent.classList.add('active');
             element.classList.add('active');
+            
+            // รีเซ็ตแอนิเมชันพลิกหน้ากระดาษ
+            targetContent.style.animation = 'none';
+            targetContent.offsetHeight; /* trigger reflow */
+            targetContent.style.animation = null;
         }
 
-        function generateCyberStars() {
-            const container = document.getElementById('cyberStarRain');
-            const starCount = 50; 
-            const themes = ['cs-pink', 'cs-cyan', 'cs-purple', '']; // คละสีประจำแผงไฟนีออน
+        function createStars() {
+            const container = document.getElementById('starField');
+            const starCount = 30;
 
             for (let i = 0; i < starCount; i++) {
                 const star = document.createElement('div');
-                star.classList.add('cyber-star');
-                
-                const randomTheme = themes[Math.floor(Math.random() * themes.length)];
-                if (randomTheme) star.classList.add(randomTheme);
-
-                const scale = 0.3 + Math.random() * 0.9;
+                star.classList.add('pastel-star');
                 
                 star.style.left = `${Math.random() * 95}%`;
-                star.style.animationDelay = `${Math.random() * 6}s`;
-                star.style.animationDuration = `${3 + Math.random() * 4}s`; // วิ่งตกลงมาเร็วขึ้นแบบฝนดาวตกดิจิทัล
-                star.style.transform = `scale(${scale})`;
+                star.style.animationDelay = `${Math.random() * 8}s`;
+                star.style.animationDuration = `${6 + Math.random() * 6}s`;
+                star.style.transform = `scale(${0.4 + Math.random() * 0.7})`;
+                star.style.opacity = Math.random();
 
                 container.appendChild(star);
             }
         }
 
-        window.addEventListener('DOMContentLoaded', generateCyberStars);
+        window.addEventListener('DOMContentLoaded', createStars);
     </script>
-
 </body>
 </html>
