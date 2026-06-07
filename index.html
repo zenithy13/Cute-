@@ -34,14 +34,14 @@
 
         @keyframes floatCute {
             0% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-5px) rotate(2deg); }
+            50% { transform: translateY(-5px) rotate(3deg); }
             100% { transform: translateY(0px) rotate(0deg); }
         }
 
         @keyframes wiggle {
             0%, 100% { transform: rotate(0deg); }
-            25% { transform: rotate(-8deg) scale(1.1); }
-            75% { transform: rotate(8deg) scale(1.1); }
+            25% { transform: rotate(-8deg) scale(1.2); }
+            75% { transform: rotate(8deg) scale(1.2); }
         }
 
         * {
@@ -54,63 +54,102 @@
 
         body {
             background-color: #f5ede6; 
-            /* ลายตารางสมุดกราฟจางๆ เพิ่มกิมมิกสมุดจด */
             background-image: 
                 linear-gradient(rgba(118, 88, 78, 0.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(118, 88, 78, 0.03) 1px, transparent 1px);
             background-size: 20px 20px;
-            padding: 40px 15px 80px;
+            padding: 80px 15px 80px; /* เพิ่ม padding บนเพื่อหลบแท็บเมนู */
             position: relative;
             overflow-x: hidden;
         }
 
-        /* --- สติกเกอร์ตกแต่งแนว Scrapbook (ลูกเล่น: เอาเมาส์แตะแล้วจะดุ๊กดิ๊ก) --- */
-        .sticker {
+        /* --- สติกเกอร์ฝูงดาวตกแต่งรอบเล่ม (Hover แล้วสั่นดุ๊กดิ๊ก) --- */
+        .star-sticker {
             position: absolute;
-            font-size: 2.3rem;
             user-select: none;
-            pointer-events: auto; /* เปิดให้สัมผัสเมาส์ได้ */
+            pointer-events: auto;
             cursor: pointer;
             animation: floatCute 4s ease-in-out infinite;
             filter: drop-shadow(0 4px 6px rgba(0,0,0,0.04));
-            z-index: 10;
+            z-index: 5;
             transition: transform 0.2s;
         }
-        .sticker:hover {
+        .star-sticker:hover {
             animation: wiggle 0.4s ease-in-out infinite;
         }
-        .st-bear { top: -20px; left: 10px; font-size: 2.6rem; }
-        .st-cloud { top: 140px; right: 5px; font-size: 2.8rem; animation-delay: 0.5s; }
-        .st-flower { top: 400px; left: 5px; animation-delay: 1s; }
-        .st-heart { bottom: 250px; right: 10px; font-size: 2rem; animation-delay: 1.5s; }
-        .st-pencil { top: 620px; left: 8px; font-size: 1.8rem; transform: rotate(-15deg); }
-        .st-star { bottom: -15px; right: 40px; font-size: 2rem; }
+        /* กระจายตำแหน่งดาว */
+        .st-1 { top: -40px; left: 15px; font-size: 2.5rem; }
+        .st-2 { top: 120px; right: 5px; font-size: 1.8rem; animation-delay: 0.5s; }
+        .st-3 { top: 380px; left: -5px; font-size: 2.2rem; animation-delay: 1s; }
+        .st-4 { bottom: 280px; right: 0px; font-size: 2.6rem; animation-delay: 1.5s; }
+        .st-5 { bottom: 60px; left: 10px; font-size: 1.6rem; animation-delay: 0.2s; }
+        .st-6 { bottom: -30px; right: 30px; font-size: 2.3rem; animation-delay: 0.8s; }
 
-        /* --- สมุดโน้ตหลัก (ถอดเส้นประวิ่งออกแล้ว เป็นกรอบมนเนียนๆ) --- */
-        .notebook-page {
+        /* --- โครงสร้างตัวเล่มสมุดโน้ต --- */
+        .notebook-wrapper {
             max-width: 540px;
             margin: 0 auto;
+            position: relative;
+        }
+
+        /* --- แถบป้ายคั่นหน้าเมนู (Index Tabs) --- */
+        .notebook-tabs {
+            display: flex;
+            gap: 6px;
+            position: absolute;
+            top: -42px; /* ให้โผล่พ้นขอบสมุดขึ้นไป */
+            left: 25px;
+            z-index: 1;
+        }
+
+        .tab-btn {
+            background-color: var(--light-brown);
+            padding: 8px 18px 15px;
+            border-radius: 14px 14px 0 0;
+            border: 3px solid var(--white);
+            border-bottom: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            transform: translateY(4px); /* ซ่อนตัวอยู่ด้านหลังเล็กน้อย */
+            box-shadow: 0 -3px 6px rgba(118, 88, 78, 0.05);
+        }
+
+        /* สีสลับของแต่ละแท็บเพิ่มความสดใส */
+        .tab-btn:nth-child(1) { background-color: var(--soft-blue); }
+        .tab-btn:nth-child(2) { background-color: var(--pastel-pink); }
+        .tab-btn:nth-child(3) { background-color: var(--pastel-yellow); }
+
+        /* หน้าที่กำลังเปิดอยู่ ป้ายจะเด้งนูนขึ้นมาเด่นชัด */
+        .tab-btn.active {
+            transform: translateY(0px);
+            z-index: 3;
+            font-weight: 600;
+            padding-bottom: 18px;
+            filter: drop-shadow(0 -2px 5px rgba(0,0,0,0.03));
+        }
+
+        .notebook-page {
             background-color: var(--notebook-bg);
             border-radius: 36px;
             padding: 35px 22px;
             box-shadow: 0 15px 35px rgba(118, 88, 78, 0.08), inset 0 0 20px rgba(253, 235, 238, 0.3);
             border: 4px solid var(--white);
             position: relative;
+            z-index: 2; /* ทับส่วนล่างของป้ายเมนู */
         }
 
-        /* หัวกระดาษฉีกจางๆ ด้านบน */
-        .notebook-page::before {
-            content: "✂---------------------------";
-            position: absolute;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 0.75rem;
-            opacity: 0.15;
-            letter-spacing: 4px;
+        /* --- ระบบสลับหน้าแผ่นงาน (Page Content) --- */
+        .page-content {
+            display: none; /* ซ่อนหน้าธรรมดาไว้ */
+        }
+        .page-content.active {
+            display: block; /* แสดงเฉพาะหน้าที่เปิดอยู่ */
+            animation: floatCute 0.4s ease-out; /* เอฟเฟกต์พลิกกระดาษเบา ๆ */
         }
 
-        /* --- Header ป้ายสติกเกอร์บวมฟุ้ง --- */
+        /* --- ส่วนหัวเว็บบล็อกสติกเกอร์บวมฟุ้ง --- */
         header {
             text-align: center;
             padding: 35px 15px;
@@ -119,10 +158,9 @@
             border: 3px solid var(--white);
             position: relative;
             animation: ultraGlow 4s ease-in-out infinite;
-            margin-bottom: 35px;
+            margin-bottom: 30px;
         }
 
-        /* ลวดลายเทปวาชิตกแต่งหัวแผ่นกระดาษ */
         .washi-tape-header {
             position: absolute;
             top: -10px;
@@ -149,9 +187,7 @@
             box-shadow: 0 6px 12px rgba(118, 88, 78, 0.04);
             transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .logo-container:hover {
-            transform: scale(1.1) rotate(5deg);
-        }
+        .logo-container:hover { transform: scale(1.1) rotate(5deg); }
 
         header h1 {
             font-size: 2.4rem;
@@ -176,7 +212,7 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 12px;
-            margin-bottom: 30px;
+            margin-bottom: 10px;
         }
 
         .badge-item {
@@ -187,12 +223,10 @@
             text-decoration: none;
             border: 2px solid transparent;
             box-shadow: 0 4px 10px rgba(118, 88, 78, 0.03);
-            background-clip: padding-box;
             transition: all 0.2s ease;
-            position: relative;
         }
 
-        /* ลูกเล่น: เมื่อเมาส์ชี้ (Hover) ค่อยเกิดเส้นประวิ่งวนดุ๊กดิ๊กเฉพาะปุ่มนี้! */
+        /* เส้นประวิ่งเฉพาะตอนที่เมาส์มาชี้ที่ปุ่มกด */
         .badge-item:hover {
             transform: translateY(-4px) scale(1.03);
             box-shadow: 0 10px 20px var(--glow-color);
@@ -212,28 +246,19 @@
             margin-bottom: 4px;
             transition: transform 0.3s;
         }
-        .badge-item:hover .badge-icon {
-            transform: scale(1.2) rotate(-5deg);
-        }
+        .badge-item:hover .badge-icon { transform: scale(1.2) rotate(-5deg); }
+        .badge-title { font-size: 0.82rem; font-weight: 500; line-height: 1.3; }
 
-        .badge-title {
-            font-size: 0.82rem;
-            font-weight: 500;
-            line-height: 1.3;
-        }
-
-        /* --- Content Card (กระดาษ Memo แปะสก็อตเทปหัวมุม) --- */
+        /* --- Content Card (บันทึก Memo) --- */
         .card {
             background-color: var(--white);
             border-radius: 24px;
             padding: 25px;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             border: 1px solid rgba(215, 196, 190, 0.2);
             position: relative;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.005);
         }
 
-        /* แปะเทปใสสไตล์สมุดโน้ตตรงมุมกล่องเยื้องสลับฝั่ง */
         .card::before {
             content: "";
             position: absolute;
@@ -276,15 +301,9 @@
             font-weight: 600;
             margin-bottom: 8px;
             color: var(--cute-brown);
-            display: flex;
-            align-items: center;
-            gap: 5px;
         }
 
-        .features-list {
-            list-style: none;
-        }
-
+        .features-list { list-style: none; }
         .features-list li {
             position: relative;
             padding-left: 24px;
@@ -292,22 +311,15 @@
             font-size: 0.9rem;
             line-height: 1.5;
         }
-
         .features-list li::before {
-            content: "🧸"; /* หัวข้อลิสต์ลายหมีสลับดอกไม้ */
+            content: "⭐";
             position: absolute;
             left: 2px;
             top: 1px;
-            font-size: 0.85rem;
-        }
-        .sub-section-box:nth-child(even) .features-list li::before {
-            content: "🌸";
+            font-size: 0.8rem;
         }
 
-        .rules-list {
-            list-style: none;
-        }
-
+        .rules-list { list-style: none; }
         .rules-list li {
             position: relative;
             padding-left: 24px;
@@ -315,16 +327,15 @@
             font-size: 0.88rem;
             line-height: 1.5;
         }
-
         .rules-list li::before {
-            content: "🩹"; /* หัวข้อกฎเหล็กเปลี่ยนเป็นพลาสเตอร์ยาน่ารักๆ */
+            content: "🩹";
             position: absolute;
             left: 2px;
             top: 1px;
             font-size: 0.85rem;
         }
 
-        /* --- Contact Links --- */
+        /* --- Contact --- */
         .contact-buttons {
             display: flex;
             flex-direction: column;
@@ -348,9 +359,6 @@
             transition: all 0.3s ease;
             text-align: center;
         }
-        .contact-btn-fb * { color: var(--white); }
-        
-        /* ลูกเล่นปุ่มเฟสบุ๊ก: ชี้แล้วเส้นประวิ่งเฉพาะตอน Hover */
         .contact-btn-fb:hover {
             background-color: var(--white);
             color: #8fa5cf;
@@ -364,16 +372,10 @@
             background-repeat: repeat-x, repeat-y, repeat-x, repeat-y;
             animation: dashMove 0.6s linear infinite;
         }
-        .contact-btn-fb:hover * { color: #8fa5cf; }
 
-        .line-wrapper {
-            transition: transform 0.2s;
-        }
-        .line-wrapper:hover {
-            transform: scale(1.08) rotate(-2deg);
-        }
+        .line-wrapper { transition: transform 0.2s; }
+        .line-wrapper:hover { transform: scale(1.08) rotate(-2deg); }
 
-        /* --- Warranty Text (กระดาษโน้ตชิ้นเล็กๆ) --- */
         .warranty {
             text-align: center;
             font-size: 0.85rem;
@@ -388,141 +390,171 @@
 </head>
 <body>
 
-    <!-- เล่มสมุดบันทึกหลัก -->
-    <div class="notebook-page">
+    <!-- สติกเกอร์ฝูงดาวพาสเทลวิบวับ ลอยอยู่นอกตัวเล่มสมุดโน้ต -->
+    <div class="star-sticker st-1">✨</div>
+    <div class="star-sticker st-2">⭐</div>
+    <div class="star-sticker st-3">🌟</div>
+    <div class="star-sticker st-4">✨</div>
+    <div class="star-sticker st-5">⭐</div>
+    <div class="star-sticker st-6">🌟</div>
+
+    <!-- โครงสร้างหลักของสมุดบันทึก -->
+    <div class="notebook-wrapper">
         
-        <!-- สติกเกอร์ตกแต่งแนวสแครปบุ๊กขยับดุ๊กดิ๊กเมื่อจิ้ม/Hover -->
-        <div class="sticker st-bear">🧸</div>
-        <div class="sticker st-cloud">☁️</div>
-        <div class="sticker st-flower">🌷</div>
-        <div class="sticker st-heart">🎀</div>
-        <div class="sticker st-pencil">✏️</div>
-        <div class="sticker st-star">✨</div>
-
-        <!-- ส่วนหัวเว็บแปะแถบเทปวาชิหวานๆ -->
-        <header>
-            <div class="washi-tape-header"></div>
-            <div class="logo-container">
-                <img src="IMG_0545.jpeg" alt="zenithyshop Logo">
-            </div>
-            <h1>zenithyshop</h1>
-            <div class="tagline">
-                zenity รับทำเว็บไซต์ร้าน / เติมเกมidentity v / ทำป้ายต่าง ๆ open 9:00-23:00 น.
-            </div>
-        </header>
-
-        <!-- กลุ่มปุ่มกดลิงก์ (ลูกเล่น: เส้นประจะวิ่งเฉพาะตอนเอาเมาส์มาชี้เท่านั้น!) -->
-        <div class="badges-grid">
-            <a href="https://drive.google.com/drive/folders/1_XMpP9EC2Yqq2-6cYfRn0fy8i9Q6cvoi" class="badge-item" target="_blank">
-                <div class="badge-icon">🖼️</div>
-                <div class="badge-title">ตัวอย่างงานป้าย</div>
-            </a>
-            <a href="https://m.facebook.com/story.php?story_fbid=pfbid0VoVRA4MbGu79CbqBREGD8jcxavv6HzJ2F9jcyvVCUrLxEPSRoFtNQNA44yM83zs9l&id=61586611223621" class="badge-item" target="_blank">
-                <div class="badge-icon">💰</div>
-                <div class="badge-title">เรทเติมกระดุม</div>
-            </a>
-            <a href="https://drive.google.com/drive/mobile/folders/1fj024BhkgC1ctJeiwyZUG3USteSdzWzr" class="badge-item" target="_blank">
-                <div class="badge-icon">📑</div>
-                <div class="badge-title">เทมเพลตเว็บ</div>
-            </a>
+        <!-- แถบปุ่มกดเปลี่ยนหน้าดีไซน์ Index คั่นสมุดดุ๊กดิ๊ก -->
+        <div class="notebook-tabs">
+            <button class="tab-btn active" onclick="switchPage('main-page', this)">หน้าแรก 🏡</button>
+            <button class="tab-btn" onclick="switchPage('price-page', this)">เรทงานป้าย 🎨</button>
+            <button class="tab-btn" onclick="switchPage('rules-page', this)">กฎร้าน & ติดต่อ 📌</button>
         </div>
 
-        <!-- บริการทำเว็บไซต์ร้านค้า -->
-        <div class="card">
-            <h2>🌐 ทำเว็บไซต์ร้านเริ่มต้น 129.-</h2>
-            <ul class="features-list">
-                <li>มีเทมเพลตให้เลือกมากกว่า 50+</li>
-                <li>มีทั้งแนวน่ารัก พาสเทล แนวมืด !</li>
-                <li>รองาน 4-8 ชั่วโมง</li>
-                <li>รันงานตามคิว ถ้าช่วงนั้นติดคิวจะแจ้งก่อนค่ะ</li>
-            </ul>
-        </div>
+        <!-- หน้ากระดาษสมุดโน้ต -->
+        <div class="notebook-page">
 
-        <!-- บริการงานป้ายต่าง ๆ แบ่งหมวดหมู่แบบไดอารี่ -->
-        <div class="card">
-            <h2>🎨 งานป้าย</h2>
-            
-            <div class="sub-section-box">
-                <div class="sub-section-title">✨ (ป้ายเติมเกม&ส่งของขวัญ)</div>
-                <ul class="features-list">
-                    <li>เรทที่ใส่ 1-10 ราคา 59.-</li>
-                    <li>เรทที่ใส่ 11-20 ราคา 69.-</li>
-                    <li>เรทที่ใส่ 21-25 ราคา 79.-</li>
-                    <li>เรทที่ใส่ 26-35 ราคา 89.-</li>
-                </ul>
-            </div>
+            <!-- ================= หน้าที่ 1: หน้าหลัก ================= -->
+            <div id="main-page" class="page-content active">
+                <header>
+                    <div class="washi-tape-header"></div>
+                    <div class="logo-container">
+                        <img src="IMG_0545.jpeg" alt="zenithyshop Logo">
+                    </div>
+                    <h1>zenithyshop</h1>
+                    <div class="tagline">
+                        zenity รับทำเว็บไซต์ร้าน / เติมเกมidentity v / ทำป้ายต่าง ๆ open 9:00-23:00 น.
+                    </div>
+                </header>
 
-            <div class="sub-section-box">
-                <div class="sub-section-title">✨ (ป้ายเครดิต)</div>
-                <ul class="features-list">
-                    <li>1 ตัวละคร 50.-</li>
-                    <li>มากกว่า 1 ตัวละคร บวกเพิ่มตัวละ 5฿</li>
-                </ul>
-            </div>
-
-            <div class="sub-section-box">
-                <div class="sub-section-title">✨ (ป้ายไอดี&ป้ายบัญชี)</div>
-                <ul class="features-list">
-                    <li>ตกแต่งปกติ 69.-</li>
-                    <li>ตกแต่งเยอะ 79.-</li>
-                </ul>
-            </div>
-
-            <div class="sub-section-box">
-                <div class="sub-section-title">✨ (ป้ายเช่าไอดี)</div>
-                <ul class="features-list">
-                    <li>แค่หัวป้าย 59.-</li>
-                    <li>100-250 สกินละ 1฿</li>
-                    <li>250 สกินขึ้นไป สกินละ 0.8฿</li>
-                    <li><strong>ฟรี :</strong> ประดับ ห้อง แรงค์ สัตว์เลี้ยง ยอดเติม ของจิปาถะ</li>
-                    <li>ลูกค้าที่ยอดเรียงสกิน 100 ขึ้นไป ฟรีหัวป้าย !</li>
-                </ul>
-            </div>
-
-            <div class="sub-section-box">
-                <div class="sub-section-title">📋 เพิ่มเติม</div>
-                <ul class="features-list">
-                    <li>บรีฟตัวละครและโทนสีได้ตามต้องการ</li>
-                    <li>รองาน 1-2 วัน (งานเร่ง +10฿ )</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- กฎของร้านค้า -->
-        <div class="card">
-            <h2>📍 กฎของร้าน 📍</h2>
-            <ul class="rules-list">
-                <li>ถ้าโอนเงินแล้วทางร้านไม่คืนเงินทุกกรณีนะคะ</li>
-                <li>แจ้งไอดีผิดทางร้านไม่รับผิดชอบทุกกรณี</li>
-                <li>ผ่อนชำระส่งยอดไม่ครบไม่ต่อเนื่องยึดยอดทันที</li>
-                <li>งานป้ายยกเลิกไม่คืนเงินทุกกรณี</li>
-                <li>ส่งงาน/ลูกค้าเช็คงานแล้ว แต่ขอแก้งานทีหลังทางร้านคิดจุดละ 20฿</li>
-                <li>เว็บไซต์มีปัญหาแก้ไขให้ฟรี ถ้าต้องการเปลี่ยนข้อมูลคิดจุดละ 20฿</li>
-            </ul>
-        </div>
-
-        <!-- ช่องทางการติดต่อ -->
-        <div class="card">
-            <h2>📱 ช่องทางติดต่อ</h2>
-            <div class="contact-buttons">
-                <!-- ปุ่ม Facebook ก็มีเส้นประวิ่งตอนHoverด้วยครับ -->
-                <a href="https://www.facebook.com/profile.php?id=61554192600355" class="contact-btn-fb" target="_blank">
-                    Facebook : Zenithyshop
-                </a>
-                <div class="line-wrapper">
-                    <a href="https://lin.ee/qihwQGM" target="_blank">
-                        <img src="https://scdn.line-apps.com/n/line_add_friends/btn/th.png" alt="เพิ่มเพื่อน" height="36" border="0">
+                <!-- กลุ่มปุ่มกดลิงก์ (มีเส้นประวิ่งเฉพาะตอนเมาส์ชี้) -->
+                <div class="badges-grid">
+                    <a href="https://drive.google.com/drive/folders/1_XMpP9EC2Yqq2-6cYfRn0fy8i9Q6cvoi" class="badge-item" target="_blank">
+                        <div class="badge-icon">🖼️</div>
+                        <div class="badge-title">ตัวอย่างงานป้าย</div>
+                    </a>
+                    <a href="https://m.facebook.com/story.php?story_fbid=pfbid0VoVRA4MbGu79CbqBREGD8jcxavv6HzJ2F9jcyvVCUrLxEPSRoFtNQNA44yM83zs9l&id=61586611223621" class="badge-item" target="_blank">
+                        <div class="badge-icon">💰</div>
+                        <div class="badge-title">เรทเติมกระดุม</div>
+                    </a>
+                    <a href="https://drive.google.com/drive/mobile/folders/1fj024BhkgC1ctJeiwyZUG3USteSdzWzr" class="badge-item" target="_blank">
+                        <div class="badge-icon">📑</div>
+                        <div class="badge-title">เทมเพลตเว็บ</div>
                     </a>
                 </div>
+
+                <div class="card">
+                    <h2>🌐 ทำเว็บไซต์ร้านเริ่มต้น 129.-</h2>
+                    <ul class="features-list">
+                        <li>มีเทมเพลตให้เลือกมากกว่า 50+</li>
+                        <li>มีทั้งแนวน่ารัก พาสเทล แนวมืด !</li>
+                        <li>รองาน 4-8 ชั่วโมง</li>
+                        <li>รันงานตามคิว ถ้าช่วงนั้นติดคิวจะแจ้งก่อนค่ะ</li>
+                    </ul>
+                </div>
             </div>
-        </div>
 
-        <!-- บล็อกการรับประกันสไตล์การ์ดแผ่นเล็ก -->
-        <div class="warranty">
-            📍มีรับประกันเว็บ 1 เดือน เว็บมีปัญหาแจ้งได้ตลอดค่ะ
-        </div>
+            <!-- ================= หน้าที่ 2: เรทงานป้าย ================= -->
+            <div id="price-page" class="page-content">
+                <div class="card">
+                    <h2>🎨 รายละเอียดงานป้าย</h2>
+                    
+                    <div class="sub-section-box">
+                        <div class="sub-section-title">✨ ป้ายเติมเกม & ส่งของขวัญ</div>
+                        <ul class="features-list">
+                            <li>เรทที่ใส่ 1-10 ราคา 59.-</li>
+                            <li>เรทที่ใส่ 11-20 ราคา 69.-</li>
+                            <li>เรทที่ใส่ 21-25 ราคา 79.-</li>
+                            <li>เรทที่ใส่ 26-35 ราคา 89.-</li>
+                        </ul>
+                    </div>
 
+                    <div class="sub-section-box">
+                        <div class="sub-section-title">✨ ป้ายเครดิต</div>
+                        <ul class="features-list">
+                            <li>1 ตัวละคร 50.-</li>
+                            <li>มากกว่า 1 ตัวละคร บวกเพิ่มตัวละ 5฿</li>
+                        </ul>
+                    </div>
+
+                    <div class="sub-section-box">
+                        <div class="sub-section-title">✨ ป้ายไอดี & ป้ายบัญชี</div>
+                        <ul class="features-list">
+                            <li>ตกแต่งปกติ 69.-</li>
+                            <li>ตกแต่งเยอะ 79.-</li>
+                        </ul>
+                    </div>
+
+                    <div class="sub-section-box">
+                        <div class="sub-section-title">✨ ป้ายเช่าไอดี</div>
+                        <ul class="features-list">
+                            <li>แค่หัวป้าย 59.-</li>
+                            <li>100-250 สกินละ 1฿</li>
+                            <li>250 สกินขึ้นไป สกินละ 0.8฿</li>
+                            <li><strong>ฟรี :</strong> ประดับ ห้อง แรงค์ สัตว์เลี้ยง ยอดเติม ของจิปาถะ</li>
+                            <li>ลูกค้าที่ยอดเรียงสกิน 100 ขึ้นไป ฟรีหัวป้าย !</li>
+                        </ul>
+                    </div>
+
+                    <div class="sub-section-box">
+                        <div class="sub-section-title">📋 ข้อมูลเพิ่มเติม</div>
+                        <ul class="features-list">
+                            <li>บรีฟตัวละครและโทนสีได้ตามต้องการ</li>
+                            <li>รองาน 1-2 วัน (งานเร่ง +10฿ )</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= หน้าที่ 3: กฎร้าน & ติดต่อ ================= -->
+            <div id="rules-page" class="page-content">
+                <div class="card">
+                    <h2>📍 กฎของร้าน 📍</h2>
+                    <ul class="rules-list">
+                        <li>ถ้าโอนเงินแล้วทางร้านไม่คืนเงินทุกกรณีนะคะ</li>
+                        <li>แจ้งไอดีผิดทางร้านไม่รับผิดชอบทุกกรณี</li>
+                        <li>ผ่อนชำระส่งยอดไม่ครบไม่ต่อเนื่องยึดยอดทันที</li>
+                        <li>งานป้ายยกเลิกไม่คืนเงินทุกกรณี</li>
+                        <li>ส่งงาน/ลูกค้าเช็คงานแล้ว แต่ขอแก้งานทีหลังทางร้านคิดจุดละ 20฿</li>
+                        <li>เว็บไซต์มีปัญหาแก้ไขให้ฟรี ถ้าต้องการเปลี่ยนข้อมูลคิดจุดละ 20฿</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h2>📱 ช่องทางติดต่อ</h2>
+                    <div class="contact-buttons">
+                        <a href="https://www.facebook.com/profile.php?id=61554192600355" class="contact-btn-fb" target="_blank">
+                            Facebook : Zenithyshop
+                        </a>
+                        <div class="line-wrapper">
+                            <a href="https://lin.ee/qihwQGM" target="_blank">
+                                <img src="https://scdn.line-apps.com/n/line_add_friends/btn/th.png" alt="เพิ่มเพื่อน" height="36" border="0">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="warranty">
+                    📍มีรับประกันเว็บ 1 เดือน เว็บมีปัญหาแจ้งได้ตลอดค่ะ
+                </div>
+            </div>
+
+        </div>
     </div>
+
+    <!-- โค้ดสคริปต์สลับหน้าเมนูเพื่อความลื่นไหล -->
+    <script>
+        function switchPage(pageId, element) {
+            // ซ่อนข้อมูลทุกหน้าก่อน
+            const contents = document.querySelectorAll('.page-content');
+            contents.forEach(content => content.classList.remove('active'));
+            
+            // เอาสถานะ Active ออกจากปุ่มกดเก่าทุกปุ่ม
+            const tabs = document.querySelectorAll('.tab-btn');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // แสดงหน้าและเปิดสถานะปุ่มที่เลือกกด
+            document.getElementById(pageId).classList.add('active');
+            element.classList.add('active');
+        }
+    </script>
 
 </body>
 </html>
