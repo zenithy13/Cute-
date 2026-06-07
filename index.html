@@ -12,8 +12,8 @@
         :root {
             --notebook-bg: #fffdfc;
             --soft-blue: #e8f7fa;
-            --glow-color: rgba(232, 247, 250, 0.85);
-            --glow-pink: rgba(254, 235, 238, 0.85);
+            --glow-pink: rgba(254, 235, 238, 0.9);
+            --glow-blue: rgba(232, 247, 250, 0.95);
             --cute-brown: #76584e;
             --light-brown: #d7c4be;
             --pastel-pink: #fdebee;
@@ -28,22 +28,47 @@
             to { background-position: 20px 0, 100% 20px, 20px 100%, 0 20px; }
         }
 
-        @keyframes softGlow {
-            0% { filter: drop-shadow(0 0 15px var(--glow-color)) drop-shadow(0 0 8px var(--glow-pink)); }
-            50% { filter: drop-shadow(0 0 25px var(--glow-color)) drop-shadow(0 0 15px var(--glow-pink)); transform: translateY(-1px); }
-            100% { filter: drop-shadow(0 0 15px var(--glow-color)) drop-shadow(0 0 8px var(--glow-pink)); }
+        /* เอฟเฟกต์เต้นรำของออร่าฟุ้งรอบกรอบสมุด */
+        @keyframes ultraSoftGlow {
+            0% { 
+                box-shadow: 0 20px 50px rgba(118, 88, 78, 0.05),
+                            0 0 30px var(--glow-blue),
+                            0 0 50px var(--glow-pink);
+            }
+            50% { 
+                box-shadow: 0 25px 60px rgba(118, 88, 78, 0.08),
+                            0 0 45px var(--glow-pink),
+                            0 0 65px var(--glow-blue);
+                transform: translateY(-2px);
+            }
+            100% { 
+                box-shadow: 0 20px 50px rgba(118, 88, 78, 0.05),
+                            0 0 30px var(--glow-blue),
+                            0 0 50px var(--glow-pink);
+            }
         }
 
-        @keyframes floatStar {
-            0% { transform: translateY(0px) rotate(0deg); opacity: 0.8; }
-            50% { transform: translateY(-8px) rotate(15deg); opacity: 1; }
-            100% { transform: translateY(0px) rotate(0deg); opacity: 0.8; }
+        /* แอนิเมชันฝนดาวโปรยปรายลงมา */
+        @keyframes starRain {
+            0% {
+                transform: translateY(-50px) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.9;
+            }
+            90% {
+                opacity: 0.9;
+            }
+            100% {
+                transform: translateY(105vh) rotate(360deg);
+                opacity: 0;
+            }
         }
 
-        @keyframes wiggle {
-            0%, 100% { transform: rotate(0deg); }
-            25% { transform: rotate(-8deg) scale(1.15); }
-            75% { transform: rotate(8deg) scale(1.15); }
+        @keyframes fadeInPage {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
         }
 
         * {
@@ -60,127 +85,132 @@
                 linear-gradient(rgba(118, 88, 78, 0.02) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(118, 88, 78, 0.02) 1px, transparent 1px);
             background-size: 20px 20px;
-            padding: 80px 15px 80px;
+            padding: 90px 15px 80px;
             position: relative;
             overflow-x: hidden;
+            min-height: 100vh;
         }
 
-        /* --- ดาวมินิมอลเวกเตอร์เนื้อเนียน (CSS Stars) โปรยหนาแน่นขึ้น --- */
-        .vector-star {
-            position: absolute;
-            width: 0;
-            height: 0;
-            border-right: 12px solid transparent;
-            border-bottom: 8px solid var(--pastel-yellow);
-            border-left: 12px solid transparent;
-            transform: rotate(35deg);
-            cursor: pointer;
-            animation: floatStar 4s ease-in-out infinite;
-            filter: drop-shadow(0 0 8px rgba(255, 252, 227, 0.8));
+        /* --- ระบบฝนดาวมินิมอลร่วงหล่นจากท้องฟ้า (Star Rain Container) --- */
+        .star-rain-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* ห้ามบังปุ่มกดในเว็บ */
             z-index: 1;
+            overflow: hidden;
         }
-        .vector-star:before {
-            border-bottom: 8px solid var(--pastel-yellow);
-            border-left: 4px solid transparent;
-            border-right: 4px solid transparent;
+
+        .rain-star {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-right: 10px solid transparent;
+            border-bottom: 7px solid var(--pastel-yellow);
+            border-left: 10px solid transparent;
+            animation: starRain linear infinite;
+        }
+        .rain-star:before {
+            border-bottom: 7px solid var(--pastel-yellow);
+            border-left: 3px solid transparent;
+            border-right: 3px solid transparent;
             position: absolute;
             height: 0;
             width: 0;
-            top: -6px;
-            left: -9px;
+            top: -5px;
+            left: -7px;
             display: block;
             content: '';
             transform: rotate(-35deg);
         }
-        .vector-star:after {
+        .rain-star:after {
             position: absolute;
             display: block;
             top: 0;
-            left: -12px;
+            left: -10px;
             width: 0;
             height: 0;
-            border-right: 12px solid transparent;
-            border-bottom: 8px solid var(--pastel-yellow);
-            border-left: 12px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 7px solid var(--pastel-yellow);
+            border-left: 10px solid transparent;
             transform: rotate(-70deg);
             content: '';
         }
-        .vector-star:hover { animation: wiggle 0.4s ease-in-out infinite; }
-        
-        .star-pink, .star-pink:before, .star-pink:after { border-bottom-color: var(--pastel-pink) !important; filter: drop-shadow(0 0 8px rgba(254, 235, 238, 0.8)); }
-        .star-blue, .star-blue:before, .star-blue:after { border-bottom-color: var(--soft-blue) !important; filter: drop-shadow(0 0 8px rgba(232, 247, 250, 0.8)); }
 
-        /* การกระจายฝูงดาวแบบโปรยปรายรอบทิศทาง */
-        .vst-1 { top: 20px; left: 5%; transform: scale(1.1); animation-delay: 0s; }
-        .vst-2 { top: 90px; right: 6%; transform: scale(0.8); animation-delay: 0.5s; }
-        .vst-3 { top: 260px; left: 4%; transform: scale(0.9); animation-delay: 1.2s; }
-        .vst-4 { top: 400px; right: 3%; transform: scale(1.2); animation-delay: 0.3s; }
-        .vst-5 { top: 580px; left: 6%; transform: scale(0.7); animation-delay: 1.8s; }
-        .vst-6 { top: 720px; right: 5%; transform: scale(1); animation-delay: 0.9s; }
-        .vst-7 { bottom: 180px; left: 3%; transform: scale(1.1); animation-delay: 0.6s; }
-        .vst-8 { bottom: 40px; right: 8%; transform: scale(0.8); animation-delay: 1.5s; }
+        /* สลับโทนสีพาสเทลให้สายฝนดาว */
+        .r-pink, .r-pink:before, .r-pink:after { border-bottom-color: var(--pastel-pink) !important; }
+        .r-blue, .r-blue:before, .r-blue:after { border-bottom-color: var(--soft-blue) !important; }
 
-        /* --- โครงสร้างตัวเล่มสมุดโน้ตพร้อมเอฟเฟกต์ฟุ้ง --- */
+        /* --- โครงสร้างตัวเล่มสมุดโน้ตพร้อมเงาเรืองแสงฟุ้งขั้นสุด --- */
         .notebook-wrapper {
             max-width: 540px;
             margin: 0 auto;
             position: relative;
-            animation: softGlow 5s ease-in-out infinite;
+            z-index: 2;
+            animation: ultraSoftGlow 6s ease-in-out infinite;
+            border-radius: 32px;
         }
 
-        /* --- แถบเมนูเลือกหน้าด้านบนสุด (Top Navigation Tabs) --- */
+        /* --- แถบเมนูแบบป้าย木ไม้ไอติมแคปซูลนอนเชื่อมต่อด้านบน --- */
         .notebook-tabs {
             display: flex;
-            gap: 4px;
+            justify-content: center;
+            gap: 10px;
             position: absolute;
-            top: -42px;
-            left: 20px;
+            top: -46px;
+            left: 0;
+            width: 100%;
             z-index: 2;
         }
 
         .tab-btn {
-            background-color: #e5dacb;
+            background-color: var(--white);
             border: 3px solid var(--white);
             border-bottom: none;
-            padding: 8px 20px 14px;
-            border-radius: 16px 16px 0 0;
-            font-size: 0.9rem;
+            padding: 10px 24px;
+            border-radius: 20px 20px 0 0;
+            font-size: 0.95rem;
             font-weight: 500;
             cursor: pointer;
-            transition: all 0.25s ease;
-            transform: translateY(4px);
-            box-shadow: inset 0 -5px 10px rgba(0,0,0,0.03);
+            box-shadow: 0 -4px 10px rgba(118, 88, 78, 0.04);
+            transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.2);
+            transform: translateY(6px);
+            opacity: 0.85;
         }
 
-        /* สลับสีพาสเทลนุ่ม ๆ ให้แต่ละแท็บ */
+        /* สีพาสเทลประจำแต่ละเมนู */
         .tab-btn:nth-child(1) { background-color: var(--soft-blue); }
         .tab-btn:nth-child(2) { background-color: var(--pastel-pink); }
         .tab-btn:nth-child(3) { background-color: var(--pastel-yellow); }
 
-        /* แถบเมนูที่ถูกกดเลือก จะเด้งเชื่อมต่อเข้ากับขอบสมุดโน้ต */
+        /* เมนูที่ถูกเลือกจะเด้งกระโดดขยายขึ้นมาเด่นชัด */
         .tab-btn.active {
-            transform: translateY(0px);
+            transform: translateY(0px) scale(1.04);
             font-weight: 600;
-            padding-bottom: 16px;
+            opacity: 1;
             z-index: 4;
-            box-shadow: 0 -4px 12px rgba(118, 88, 78, 0.05);
+            border-color: rgba(118, 88, 78, 0.15);
+            border-bottom: none;
+            box-shadow: 0 -6px 15px rgba(118, 88, 78, 0.08);
         }
 
+        /* หน้ากระดาษเนื้อหาหลัก */
         .notebook-page {
             background-color: var(--notebook-bg);
             border-radius: 32px;
             padding: 35px 22px;
-            box-shadow: 0 20px 45px rgba(118, 88, 78, 0.06), inset 0 0 25px rgba(253, 235, 238, 0.2);
             border: 4px solid var(--white);
             position: relative;
             z-index: 3;
         }
 
-        /* ระบบสลับหน้ากระดาษ */
+        /* ระบบเปิด-ปิดสลับหน้าแผ่นงาน */
         .page-content { display: none; }
         .page-content.active {
             display: block;
-            animation: floatStar 0.4s ease-out reverse;
+            animation: fadeInPage 0.4s ease-out forwards;
         }
 
         /* --- ส่วนหัวเว็บบล็อก --- */
@@ -192,7 +222,7 @@
             border: 3px solid var(--white);
             position: relative;
             margin-bottom: 30px;
-            box-shadow: 0 8px 20px rgba(232, 247, 250, 0.5);
+            box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.6);
         }
 
         .washi-tape-header {
@@ -262,7 +292,7 @@
 
         .badge-item:hover {
             transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 8px 20px var(--glow-color);
+            box-shadow: 0 8px 20px var(--glow-blue);
             background-image: 
                 linear-gradient(to right, var(--cute-brown) 50%, transparent 50%), 
                 linear-gradient(to bottom, var(--cute-brown) 50%, transparent 50%), 
@@ -347,7 +377,7 @@
             color: #d89b9b;
         }
 
-        /* --- ช่องทางติดต่อแบบปรับปรุงใหม่ ดีไซน์คลีนแต่ฟุ้งน่ารัก --- */
+        /* --- โซนปุ่มติดต่อดีไซน์สติกเกอร์นุ่มฟูฟุ้งกระจาย --- */
         .contact-container {
             display: flex;
             flex-direction: column;
@@ -375,7 +405,7 @@
         }
         .btn-cute-fb:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 22px rgba(143, 165, 207, 0.35);
+            box-shadow: 0 10px 25px rgba(143, 165, 207, 0.45);
             background-image: 
                 linear-gradient(to right, #8fa5cf 50%, transparent 50%), 
                 linear-gradient(to bottom, #8fa5cf 50%, transparent 50%), 
@@ -392,10 +422,10 @@
         }
         .btn-cute-line:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 22px rgba(188, 226, 202, 0.35);
+            box-shadow: 0 10px 25px rgba(135, 211, 243, 0.45);
         }
         .btn-cute-line img { transition: transform 0.25s; }
-        .btn-cute-line:hover img { transform: scale(1.1); }
+        .btn-cute-line:hover img { transform: scale(1.08); }
 
         .warranty {
             text-align: center;
@@ -410,27 +440,20 @@
 </head>
 <body>
 
-    <!-- ฝูงดาวตกแต่งรอบนอก (หนาแน่นขึ้น ไม่มีลายขอบ สลับสีพาสเทลฟุ้ง ๆ) -->
-    <div class="vector-star vst-1"></div>
-    <div class="vector-star vst-2 star-pink"></div>
-    <div class="vector-star vst-3 star-blue"></div>
-    <div class="vector-star vst-4"></div>
-    <div class="vector-star vst-5 star-pink"></div>
-    <div class="vector-star vst-6 star-blue"></div>
-    <div class="vector-star vst-7"></div>
-    <div class="vector-star vst-8 star-pink"></div>
+    <!-- พื้นหลังฝนดาวพาสเทลโปรยปรายลงมาไม่รู้จบ -->
+    <div class="star-rain-container" id="starRainBg"></div>
 
     <!-- โครงสร้างสมุดโน้ต -->
     <div class="notebook-wrapper">
         
-        <!-- แถบเมนูคั่นหน้าด้านบนสุด (Top Tabs) กดเปลี่ยนแผ่นงาน -->
+        <!-- แถบเมนูป้ายแท็บโค้งมนด้านบนสุดสลับสีพาสเทล -->
         <div class="notebook-tabs">
             <button class="tab-btn active" onclick="switchPage('main-page', this)">หน้าแรก</button>
             <button class="tab-btn" onclick="switchPage('price-page', this)">เรทงานป้าย</button>
             <button class="tab-btn" onclick="switchPage('rules-page', this)">กฎร้าน & ติดต่อ</button>
         </div>
 
-        <!-- ตัวเล่มเนื้อหาด้านใน -->
+        <!-- หน้าแผ่นงานด้านใน -->
         <div class="notebook-page">
 
             <!-- ================= หน้าหลัก ================= -->
@@ -563,8 +586,9 @@
         </div>
     </div>
 
-    <!-- สคริปต์สลับหน้าเมนู -->
+    <!-- สคริปต์ระบบสลับหน้าเมนู & สร้างฝนดาวพาสเทลโปรยปรายอัตโนมัติ -->
     <script>
+        // ฟังก์ชันสำหรับกดสลับหน้าเมนู
         function switchPage(pageId, element) {
             const contents = document.querySelectorAll('.page-content');
             contents.forEach(content => content.classList.remove('active'));
@@ -575,6 +599,38 @@
             document.getElementById(pageId).classList.add('active');
             element.classList.add('active');
         }
+
+        // ระบบ Generate เม็ดฝนดาวพาสเทลแบบสุ่มตำแหน่งและความเร็ว
+        function createStarRain() {
+            const container = document.getElementById('starRainBg');
+            const starCount = 45; // จำนวนเม็ดฝนดาวบนหน้าจอ สามารถปรับเพิ่ม/ลดได้ตามต้องการ
+            const colors = ['', 'r-pink', 'r-blue']; // คละโทนสีเหลือง ชมพู ฟ้า
+
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('rain-star');
+                
+                // สุ่มสีพาสเทล
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                if (randomColor) star.classList.add(randomColor);
+
+                // สุ่มขนาด (Scale) ของดวงดาวให้มีตื้นลึกหนาบาง
+                const scale = 0.4 + Math.random() * 0.8;
+                
+                // สุ่มตำแหน่งพิกัดแนวนอนขอบจอ (0% - 95%)
+                star.style.left = `${Math.random() * 95}%`;
+                
+                // สุ่มเวลาดีเลย์เริ่มต้นไม่พร้อมกัน และสุ่มความเร็วร่วงหล่น (4 - 9 วินาที)
+                star.style.animationDelay = `${Math.random() * 8}s`;
+                star.style.animationDuration = `${5 + Math.random() * 5}s`;
+                star.style.transform = `scale(${scale})`;
+
+                container.appendChild(star);
+            }
+        }
+
+        // เริ่มรันระบบฝนดาวเมื่อหน้าเว็บโหลดเสร็จเรียบร้อย
+        window.addEventListener('DOMContentLoaded', createStarRain);
     </script>
 
 </body>
