@@ -3,44 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>zenithyshop</title>
+    <title>zenithyshop - Music Album Style</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2=family=Fredoka:wght@300..700&family=Mitr:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Mitr:wght@300;400;500;600&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --bg-base: #e1e8f0;
-            --glass-bg: rgba(245, 247, 250, 0.45);
-            --glass-card: rgba(255, 255, 255, 0.3);
-            --glass-border: rgba(255, 255, 255, 0.4);
-            --text-main: #3a4454;
-            --text-sub: #606f7b;
-            --music-blue: #7fa1be;
-            --black-star: rgba(26, 32, 44, 0.65);
-        }
-
-        /* --- Animations --- */
-        @keyframes vinylRotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        @keyframes blackStarRain {
-            0% { transform: translateY(-50px) rotate(0deg) scale(0); opacity: 0; }
-            10% { opacity: 0.5; transform: translateY(0px) rotate(45deg) scale(1); }
-            90% { opacity: 0.5; }
-            100% { transform: translateY(105vh) rotate(360deg) scale(0.6); opacity: 0; }
-        }
-
-        @keyframes panelFade {
-            from { opacity: 0; transform: translateY(6px); filter: blur(4px); }
-            to { opacity: 1; transform: translateY(0); filter: blur(0); }
-        }
-
-        @keyframes waveMotion {
-            0%, 100% { transform: scaleY(0.3); }
-            50% { transform: scaleY(1); }
+            /* โทนสีส้มน้ำตาลละมุน อบอุ่นถอดแบบมาจากภาพเรฟ */
+            --bg-gradient: radial-gradient(circle at 50% 30%, #e09043 0%, #a25c1f 50%, #4a2405 100%);
+            --glass-bg: rgba(255, 255, 255, 0.12);
+            --glass-border: rgba(255, 255, 255, 0.22);
+            --glass-blur: blur(25px);
+            --text-light: #ffffff;
+            --text-dim: rgba(255, 255, 255, 0.65);
+            --accent-gold: #ffd29d;
         }
 
         * {
@@ -48,557 +25,494 @@
             margin: 0;
             padding: 0;
             font-family: 'Fredoka', 'Mitr', sans-serif;
-            color: var(--text-main);
+            -webkit-user-select: none;
+            user-select: none;
         }
 
         body {
-            background-color: var(--bg-base);
-            background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.4) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.4) 1px, transparent 1px);
-            background-size: 40px 40px;
+            background: var(--bg-gradient);
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px;
             overflow: hidden;
+            padding: 20px;
             position: relative;
         }
 
-        /* --- เอฟเฟกต์ฝนดาวตกสีดำ --- */
-        .dark-star-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+        /* เอฟเฟกต์แสง Vignette มืดรอบขอบจอเพื่อให้ตรงกลางเด่นแบบในรูป */
+        body::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, transparent 40%, rgba(0,0,0,0.4) 100%);
             pointer-events: none;
             z-index: 1;
         }
-        .black-star {
-            position: absolute;
-            width: 15px;
-            height: 15px;
-            background-color: var(--black-star);
-            clip-path: polygon(50% 0%, 63% 37%, 100% 50%, 63% 63%, 50% 100%, 37% 63%, 0% 50%, 37% 37%);
-            animation: blackStarRain linear infinite;
-        }
 
-        /* --- ตัวแผงเครื่องเล่นเพลง Glassmorphism บอร์ดใหญ่ --- */
-        .player-dashboard {
+        /* --- โซนเมนูกลาง: 3D Album Carousel --- */
+        .carousel-container {
             width: 100%;
-            max-width: 1080px;
-            height: 82vh;
-            min-height: 600px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 36px;
-            padding: 40px;
-            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.05);
+            max-width: 1000px;
+            height: 420px;
             display: flex;
-            gap: 45px;
+            align-items: center;
+            justify-content: center;
             position: relative;
+            perspective: 1200px; /* สร้างมิติความลึกตื้นหนาบางแบบ 3D */
             z-index: 2;
-            align-items: center;
+            margin-bottom: 40px;
         }
 
-        /* --- ฝั่งซ้าย: เครื่องเล่นแผ่นเสียง (Turntable) --- */
-        .player-left-turntable {
-            flex: 0 0 45%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.25);
+        /* โครงสร้างการ์ดกระจกแต่ละใบ */
+        .album-card {
+            position: absolute;
+            width: 280px;
+            height: 380px;
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
             border-radius: 24px;
-            padding: 30px 20px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            position: relative;
-            box-shadow: inset 0 0 15px rgba(255,255,255,0.2);
-        }
-
-        /* โครงหมุนและแกนแผ่นเสียง */
-        .vinyl-deck {
-            position: relative;
-            width: 250px;
-            height: 250px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3), 
+                        inset 0 1px 0 rgba(255,255,255,0.2);
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), 
+                        opacity 0.6s ease, 
+                        filter 0.6s ease;
             cursor: pointer;
+            transform-style: preserve-3d;
         }
 
-        /* แผ่นเสียงไวนิล */
-        .vinyl-disk {
-            width: 240px;
-            height: 240px;
-            background: radial-gradient(circle, #2a323d 18%, #151a22 19%, #2a323d 23%, #181e26 45%, #2a323d 46%, #12161c 70%, #0d1117 100%);
-            border-radius: 50%;
-            box-shadow: 0 12px 28px rgba(0,0,0,0.25), inset 0 0 12px rgba(0,0,0,0.6);
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: vinylRotate 14s linear infinite;
-            transition: animation-play-state 0.3s ease;
-        }
-
-        /* แกนกลางแผ่นเสียง */
-        .vinyl-center {
-            width: 65px;
-            height: 65px;
-            background: rgba(255, 255, 255, 0.85);
-            border-radius: 50%;
-            border: 4px solid var(--music-blue);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .vinyl-dot { width: 8px; height: 8px; background-color: #151a22; border-radius: 50%; }
-
-        /* หัวเข็มแผ่นเสียง (Tonearm) */
-        .tonearm {
-            position: absolute;
-            top: -10px;
-            right: 15px;
-            width: 60px;
-            height: 140px;
-            background: transparent;
-            border-right: 4px solid #b0bec5;
-            border-top: 4px solid #b0bec5;
-            border-radius: 0 20px 0 0;
-            transform-origin: 40px 10px;
-            transform: rotate(22deg);
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            pointer-events: none;
-            z-index: 4;
-        }
-        /* หัวอ่านเข็ม */
-        .tonearm::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            right: -8px;
-            width: 12px;
-            height: 22px;
-            background-color: #455a64;
-            border-radius: 2px;
-            transform: rotate(-15deg);
-        }
-        /* ฐานหัวเข็ม */
-        .tonearm-base {
-            position: absolute;
-            top: 15px;
-            right: 30px;
-            width: 28px;
-            height: 28px;
-            background: #cfd8dc;
-            border-radius: 50%;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
-            z-index: 5;
-        }
-
-        /* สถานะเมื่อแผ่นเสียงหยุดหมุน (หัวเข็มยกออก) */
-        .paused .vinyl-disk { animation-play-state: paused; }
-        .paused .tonearm { transform: rotate(0deg); }
-
-        /* แผงควบคุมสวิตช์มินิมอลด้านล่างแผ่นเสียง */
-        .deck-controls {
-            display: flex;
-            align-items: center;
-            gap: 25px;
-            margin-top: 15px;
-            background: rgba(255,255,255,0.2);
-            padding: 8px 20px;
-            border-radius: 30px;
-            border: 1px solid var(--glass-border);
-        }
-        .control-knob {
-            width: 14px;
-            height: 14px;
-            background: #b0bec5;
-            border-radius: 50%;
-            box-shadow: inset 1px 1px 2px white, 1px 1px 3px rgba(0,0,0,0.15);
-        }
-        .control-led {
-            width: 8px;
-            height: 8px;
-            background-color: #81c784;
-            border-radius: 50%;
-            box-shadow: 0 0 8px #81c784;
-            transition: all 0.3s ease;
-        }
-        .paused .control-led { background-color: #e57373; box-shadow: 0 0 8px #e57373; }
-
-        /* กล่องข้อมูลแทร็กและคลื่นเสียง */
-        .track-info-box { text-align: center; width: 100%; margin-top: 15px; }
-        .track-info-box h1 { font-size: 2.1rem; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 4px; }
-        .track-artist { font-size: 0.85rem; color: var(--music-blue); font-weight: 600; letter-spacing: 1.5px; margin-bottom: 15px; }
-
-        /* ตัวจำลองคลื่นวิทยุ/ดนตรีวิ่งพริ้ว */
-        .audio-wave {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 3px;
-            height: 20px;
-        }
-        .wave-bar {
-            width: 3px;
-            height: 100%;
-            background-color: var(--music-blue);
-            border-radius: 2px;
-            animation: waveMotion 1.2s ease-in-out infinite;
-            transform-origin: bottom;
-        }
-        .paused .wave-bar { animation-play-state: paused; transform: scaleY(0.3); }
-        .wave-bar:nth-child(2) { animation-delay: 0.15s; }
-        .wave-bar:nth-child(3) { animation-delay: 0.3s; }
-        .wave-bar:nth-child(4) { animation-delay: 0.45s; }
-        .wave-bar:nth-child(5) { animation-delay: 0.6s; }
-
-        /* --- ฝั่งขวา: แผงเนื้อหาบอร์ดบราวเซอร์ข้อมูล --- */
-        .player-right-content {
-            flex: 1;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .playlist-navbar {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 25px;
-            background: rgba(0, 0, 0, 0.03);
-            padding: 6px;
+        /* หัวการ์ด: จำลองเป็นหน้าปกอาร์ตเวิร์ก */
+        .album-cover-placeholder {
+            width: 100%;
+            height: 160px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(0,0,0,0.2));
             border-radius: 16px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255,255,255,0.1);
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--accent-gold);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            letter-spacing: 1px;
         }
 
-        .nav-tab {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            background: transparent;
-            font-size: 0.88rem;
+        .album-card h2 {
+            color: var(--text-light);
+            font-size: 1.15rem;
             font-weight: 600;
-            cursor: pointer;
-            border-radius: 12px;
-            transition: all 0.2s ease;
-            color: var(--text-sub);
+            margin-bottom: 8px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+            padding-bottom: 6px;
         }
 
-        .nav-tab.active {
-            background: var(--glass-card);
-            color: var(--text-main);
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.01);
-        }
-
-        .content-scroller {
+        /* โซนข้อความข้างใน สกรอลล์อ่านนุ่ม ๆ */
+        .album-content {
             flex: 1;
             overflow-y: auto;
-            padding-right: 8px;
+            padding-right: 4px;
         }
-        .content-scroller::-webkit-scrollbar { width: 4px; }
-        .content-scroller::-webkit-scrollbar-track { background: transparent; }
-        .content-scroller::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 10px; }
+        .album-content::-webkit-scrollbar { width: 3px; }
+        .album-content::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
 
-        .page-panel { display: none; }
-        .page-panel.active {
-            display: block;
-            animation: panelFade 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-        }
-
-        .playlist-card {
-            background: var(--glass-card);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 24px;
-            margin-bottom: 16px;
-        }
-
-        .playlist-card h2 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 15px;
-            border-bottom: 1px solid rgba(0,0,0,0.06);
-            padding-bottom: 8px;
-        }
-
-        .item-list { list-style: none; }
-        .item-list li {
+        .album-content ul { list-style: none; }
+        .album-content li {
+            color: var(--text-dim);
+            font-size: 0.82rem;
+            line-height: 1.5;
+            margin-bottom: 8px;
             position: relative;
-            padding-left: 20px;
-            margin-bottom: 10px;
-            font-size: 0.88rem;
-            line-height: 1.6;
-            color: var(--text-sub);
+            padding-left: 14px;
         }
-        .item-list li::before {
-            content: "•";
+        .album-content li::before {
+            content: "✦";
             position: absolute;
-            left: 4px;
-            color: var(--music-blue);
-            font-size: 1.2rem;
-            top: -2px;
+            left: 0;
+            color: var(--accent-gold);
+            font-size: 0.7rem;
+            top: 1px;
         }
 
-        .music-row-link {
+        /* ปุ่มลิงก์สไตล์แถบเพลงบาง ๆ น่ากด */
+        .album-link {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            background: var(--glass-card);
-            border: 1px solid var(--glass-border);
-            padding: 18px 24px;
-            border-radius: 16px;
+            align-items: center;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 8px 12px;
+            border-radius: 10px;
             text-decoration: none;
-            margin-bottom: 12px;
-            transition: all 0.25s ease;
+            margin-top: 6px;
+            transition: background 0.2s;
         }
-        .music-row-link:hover {
-            background: rgba(255, 255, 255, 0.55);
-            transform: translateX(4px);
-        }
-        .row-title { font-size: 0.9rem; font-weight: 500; }
-        .row-action { font-size: 0.78rem; color: var(--music-blue); font-weight: 600; }
+        .album-link:hover { background: rgba(255,255,255,0.18); }
+        .album-link span { color: var(--text-light); font-size: 0.75rem; }
+        .album-link .action { color: var(--accent-gold); font-weight: 600; }
 
-        .btn-stack { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
-        .capsule-btn {
+        /* ปุ่มติดต่อแบบปุ่มแคปซูลใส */
+        .album-btn-stack { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+        .album-btn {
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 16px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.88rem;
-            border: 1px solid var(--glass-border);
-            background: var(--glass-card);
-            transition: all 0.2s ease;
-        }
-        .btn-fb { color: #3b5998; }
-        .btn-line { color: #00b900; }
-        .capsule-btn:hover { background: rgba(255, 255, 255, 0.6); transform: translateY(-2px); }
-
-        .notice-bar {
-            text-align: center;
-            font-size: 0.8rem;
-            color: var(--text-sub);
-            padding: 14px;
+            padding: 10px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.15);
             border-radius: 14px;
-            margin-top: 18px;
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px dashed rgba(0,0,0,0.06);
+            color: var(--text-light);
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .album-btn:hover { background: var(--text-light); color: #4a2405; }
+
+        /* ----------------------------------------------------
+           จัดการตำแหน่งและองศาความเอียง 3D (Coverflow Effect)
+        ---------------------------------------------------- */
+        
+        /* ใบซ้ายสุด */
+        .album-card.far-left {
+            transform: translateX(-240px) translateZ(-150px) rotateY(45deg);
+            z-index: 10;
+            opacity: 0.4;
+            filter: blur(2px);
+        }
+        
+        /* ใบซ้ายถัดมา */
+        .album-card.left {
+            transform: translateX(-140px) translateZ(-80px) rotateY(30deg);
+            z-index: 20;
+            opacity: 0.75;
+            filter: blur(1px);
         }
 
-        /* Responsive */
-        @media (max-width: 850px) {
-            body { overflow-y: auto; padding: 20px 12px; }
-            .player-dashboard { flex-direction: column; height: auto; padding: 30px 20px; gap: 30px; }
-            .player-left-turntable { flex: none; width: 100%; padding: 30px 15px; }
-            .vinyl-disk { width: 190px; height: 190px; }
-            .vinyl-deck { width: 200px; height: 200px; }
-            .tonearm { right: -5px; scale: 0.85; }
+        /* ใบตรงกลาง เด่นสุด ใหญ่สุด ชัดสุด */
+        .album-card.center {
+            transform: translateX(0) translateZ(80px) rotateY(0deg);
+            z-index: 30;
+            opacity: 1;
+            filter: blur(0);
+            border-color: rgba(255, 255, 255, 0.45);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.45), 0 0 20px rgba(255,210,157,0.1);
+        }
+
+        /* ใบขวาถัดไป */
+        .album-card.right {
+            transform: translateX(140px) translateZ(-80px) rotateY(-30deg);
+            z-index: 20;
+            opacity: 0.75;
+            filter: blur(1px);
+        }
+
+        /* ใบขวาสุด */
+        .album-card.far-right {
+            transform: translateX(240px) translateZ(-150px) rotateY(-45deg);
+            z-index: 10;
+            opacity: 0.4;
+            filter: blur(2px);
+        }
+
+
+        /* --- โซนล่าง: แผงควบคุมยาวใต้การ์ด (Frosted Control Bar) --- */
+        .music-control-bar {
+            width: 100%;
+            max-width: 780px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 40px;
+            padding: 14px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+            z-index: 2;
+        }
+
+        /* ปุ่มเล่นเพลง ฝั่งซ้าย */
+        .playback-buttons {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+        }
+        .icon-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.15s;
+        }
+        .icon-btn:hover { transform: scale(1.12); }
+        .icon-btn:active { transform: scale(0.95); }
+        
+        .icon-btn svg {
+            fill: var(--text-light);
+            width: 20px;
+            height: 20px;
+        }
+        .icon-btn.play-pause svg { width: 24px; height: 24px; }
+
+        /* ตัวแสดงชื่อแผ่น/แท็บที่เลือกตรงกลางหลอด */
+        .current-track-status {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 6px 20px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.08);
+            min-width: 240px;
+        }
+        .mini-cover {
+            width: 32px;
+            height: 32px;
+            background: var(--accent-gold);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.8rem;
+            color: #4a2405;
+        }
+        .track-metadata {
+            display: flex;
+            flex-direction: column;
+        }
+        .track-metadata .title {
+            color: var(--text-light);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .track-metadata .artist {
+            color: var(--text-dim);
+            font-size: 0.72rem;
+        }
+
+        /* ฝั่งขวา: เมนูปุ่มกดเสริม ยกระดับความกริบ */
+        .utility-buttons {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+        .utility-buttons svg {
+            fill: var(--text-dim);
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            transition: fill 0.2s;
+        }
+        .utility-buttons svg:hover { fill: var(--text-light); }
+
+        /* จุดตอบสนองหน้าจอมือถือ */
+        @media (max-width: 768px) {
+            .carousel-container { height: 400px; }
+            .album-card { width: 230px; height: 350px; }
+            .album-card.far-left, .album-card.far-right { display: none; }
+            .album-card.left { transform: translateX(-100px) translateZ(-50px) rotateY(25deg); opacity: 0.6; }
+            .album-card.right { transform: translateX(100px) translateZ(-50px) rotateY(-25deg); opacity: 0.6; }
+            
+            .music-control-bar { padding: 12px 20px; width: 92%; }
+            .current-track-status { min-width: 140px; }
+            .utility-buttons { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <!-- สายฝนดาวตกสีดำอินดี้ -->
-    <div class="dark-star-container" id="blackStarField"></div>
-
-    <!-- บอร์ดเครื่องเล่นเพลงแบบกระจกฝ้าโปร่งแสง -->
-    <div class="player-dashboard" id="playerContainer">
+    <!-- === โซนบน: 3D Coverflow Album Carousel === -->
+    <div class="carousel-container">
         
-        <!-- === ฝั่งซ้าย: เครื่องเล่นแผ่นเสียงย้อนยุค (Retro Turntable) === -->
-        <div class="player-left-turntable">
-            <div class="tonearm-base"></div>
-            <div class="tonearm"></div>
-            
-            <!-- แผ่นเสียงที่กดคลิกเพื่อเล่น-หยุดได้ -->
-            <div class="vinyl-deck" onclick="togglePlayback()">
-                <div class="vinyl-disk">
-                    <div class="vinyl-center">
-                        <div class="vinyl-dot"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- สวิตช์/ไฟเลนส์จำลองบนแผงควบคุม -->
-            <div class="deck-controls">
-                <div class="control-knob"></div>
-                <div class="control-led"></div>
-                <div class="control-knob"></div>
-            </div>
-
-            <div class="track-info-box">
-                <h1>zenithyshop</h1>
-                <div class="track-artist" id="trackCode">TRACK : HOME_PAGES</div>
-                
-                <!-- แถบระลอกคลื่นดนตรีวิ่งพริ้ว -->
-                <div class="audio-wave">
-                    <div class="wave-bar"></div>
-                    <div class="wave-bar"></div>
-                    <div class="wave-bar"></div>
-                    <div class="wave-bar"></div>
-                    <div class="wave-bar"></div>
-                </div>
+        <!-- แผ่นที่ 1: หน้าแรก HOME -->
+        <div class="album-card far-left" id="card-0" onclick="clickSelectCard(0)">
+            <div class="album-cover-placeholder">✨ 01</div>
+            <h2>ABOUT US</h2>
+            <div class="album-content">
+                <ul>
+                    <li>รับทำเว็บไซต์ร้านค้า / เติมกระดุมเกม Identity V / ทำป้ายทุกชนิด</li>
+                    <li>เวลาทำการระบบบอร์ด : 9:00 น. - 23:00 น.</li>
+                </ul>
+                <div style="margin-top: 10px;"></div>
+                <h2>WEB DESIGN</h2>
+                <ul>
+                    <li>มีดีไซน์เทมเพลตมาตรฐานให้เลือกมากกว่า 50+ สไตล์</li>
+                    <li>งานด่วนจัดส่งไวใน 4-8 ชั่วโมง</li>
+                </ul>
             </div>
         </div>
 
-        <!-- === ฝั่งขวา: แท็บบราวเซอร์บอร์ดเนื้อหาร้านค้า === -->
-        <div class="player-right-content">
-            
-            <div class="playlist-navbar">
-                <button class="nav-tab active" onclick="switchTab('tab-main', 'HOME_PAGES', this)">HOME</button>
-                <button class="nav-tab" onclick="switchTab('tab-price', 'PRICE_LIST', this)">PRICES</button>
-                <button class="nav-tab" onclick="switchTab('tab-rules', 'TERMS_SHOP', this)">RULES</button>
+        <!-- แผ่นที่ 2: เมนู LINKS แหล่งรวมทางไปต่อ -->
+        <div class="album-card left" id="card-1" onclick="clickSelectCard(1)">
+            <div class="album-cover-placeholder">🔗 02</div>
+            <h2>QUICK LINKS</h2>
+            <div class="album-content" style="display: flex; flex-direction: column; gap: 4px;">
+                <a href="https://drive.google.com/drive/folders/1_XMpP9EC2Yqq2-6cYfRn0fy8i9Q6cvoi" class="album-link" target="_blank">
+                    <span>01. ดูพอร์ตโฟลิโองานป้าย</span>
+                    <span class="action">OPEN</span>
+                </a>
+                <a href="https://m.facebook.com/story.php?story_fbid=pfbid0VoVRA4MbGu79CbqBREGD8jcxavv6HzJ2F9jcyvVCUrLxEPSRoFtNQNA44yM83zs9l&id=61586611223621" class="album-link" target="_blank">
+                    <span>02. เรทราคากระดุมเกม</span>
+                    <span class="action">CHECK</span>
+                </a>
+                <a href="https://drive.google.com/drive/mobile/folders/1fj024BhkgC1ctJeiwyZUG3USteSdzWzr" class="album-link" target="_blank">
+                    <span>03. ดูเทมเพลตเว็บตัวอย่าง</span>
+                    <span class="action">VIEW</span>
+                </a>
             </div>
+        </div>
 
-            <div class="content-scroller">
+        <!-- แผ่นที่ 3: ตารางราคา PRICES (ตั้งต้นตรงกลางเด่น ๆ) -->
+        <div class="album-card center" id="card-2" onclick="clickSelectCard(2)">
+            <div class="album-cover-placeholder">💰 03</div>
+            <h2>PRICE LIST</h2>
+            <div class="album-content">
+                <h2>ป้ายเติมเกม & ของขวัญ</h2>
+                <ul>
+                    <li>ลงตาราง 1-10 ราคา 59.-</li>
+                    <li>ลงตาราง 11-20 ราคา 69.-</li>
+                    <li>ลงตาราง 21-35 ราคา 89.-</li>
+                </ul>
+                <h2 style="margin-top: 10px;">ป้ายเครดิต & บัญชี</h2>
+                <ul>
+                    <li>ป้ายเครดิตเริ่มต้น 50.-</li>
+                    <li>ป้ายบัญชีตกแต่งพิเศษ 79.-</li>
+                </ul>
+            </div>
+        </div>
 
-                <!-- หน้าที่ 1: หน้าแรกข้อมูลบริการ -->
-                <div id="tab-main" class="page-panel active">
-                    <div class="playlist-card">
-                        <h2>ABOUT OUR SHOP</h2>
-                        <ul class="item-list">
-                            <li>รับทำเว็บไซต์ร้านค้า / เติมกระดุมเกม Identity V / ทำงานป้ายทุกรูปแบบ</li>
-                            <li>เวลาเปิดทำการของระบบบอร์ด : 9:00 น. - 23:00 น.</li>
-                        </ul>
-                    </div>
+        <!-- แผ่นที่ 4: กฎเกณฑ์ RULES -->
+        <div class="album-card right" id="card-3" onclick="clickSelectCard(3)">
+            <div class="album-cover-placeholder">📝 04</div>
+            <h2>SHOP RULES</h2>
+            <div class="album-content">
+                <ul>
+                    <li>โอนยอดเรียบร้อยแล้ว ไม่คืนเงินทุกกรณี</li>
+                    <li>หากลูกค้าแจ้งไอดีผิด ร้านไม่รับผิดชอบ</li>
+                    <li>งานป้ายส่งมอบแล้ว สั่งแก้ย้อนหลังจุดละ 20.-</li>
+                </ul>
+            </div>
+        </div>
 
-                    <div class="playlist-card">
-                        <h2>WEBSITE SERVICE (เริ่มต้น 129.-)</h2>
-                        <ul class="item-list">
-                            <li>มีดีไซน์เทมเพลตมาตรฐานให้เลือกชมมากกว่า 50+ สไตล์</li>
-                            <li>จัดทำตามบรีฟได้ทุกโทนสี (พาสเทล มินิมอล โหมดมืดสตรีท)</li>
-                            <li>ระยะเวลาดำเนินการจัดส่งงานด่วนภายใน 4-8 ชั่วโมง</li>
-                            <li>รันคิวงานอย่างเป็นระบบ (หากติดงานชิ้นอื่นจะแจ้งให้ทราบล่วงหน้าทันที)</li>
-                        </ul>
-                    </div>
-
-                    <a href="https://drive.google.com/drive/folders/1_XMpP9EC2Yqq2-6cYfRn0fy8i9Q6cvoi" class="music-row-link" target="_blank">
-                        <span class="row-title">01. ดูตัวอย่างพอร์ตโฟลิโองานป้ายทั้งหมด</span>
-                        <span class="row-action">OPEN GALLERY</span>
-                    </a>
-                    <a href="https://m.facebook.com/story.php?story_fbid=pfbid0VoVRA4MbGu79CbqBREGD8jcxavv6HzJ2F9jcyvVCUrLxEPSRoFtNQNA44yM83zs9l&id=61586611223621" class="music-row-link" target="_blank">
-                        <span class="row-title">02. ตรวจสอบเรทราคากระดุมเกม Identity V</span>
-                        <span class="row-action">CHECK PRICE</span>
-                    </a>
-                    <a href="https://drive.google.com/drive/mobile/folders/1fj024BhkgC1ctJeiwyZUG3USteSdzWzr" class="music-row-link" target="_blank">
-                        <span class="row-title">03. เลือกดูตัวอย่างเทมเพลตโครงสร้างเว็บ</span>
-                        <span class="row-action">VIEW DEMO</span>
-                    </a>
+        <!-- แผ่นที่ 5: ช่องทางติดต่อ CONTACT -->
+        <div class="album-card far-right" id="card-4" onclick="clickSelectCard(4)">
+            <div class="album-cover-placeholder">💬 05</div>
+            <h2>CONTACT ME</h2>
+            <div class="album-content">
+                <ul>
+                    <li>ระะบบรับประกันดูแลความเสถียรเว็บฟรี 1 เดือนเต็ม</li>
+                </ul>
+                <div class="album-btn-stack">
+                    <a href="https://www.facebook.com/profile.php?id=61554192600355" class="album-btn" target="_blank">FACEBOOK PAGE</a>
+                    <a href="https://lin.ee/qihwQGM" class="album-btn" target="_blank">LINE OFFICIAL</a>
                 </div>
-
-                <!-- หน้าที่ 2: ตารางเรทราคา -->
-                <div id="tab-price" class="page-panel">
-                    <div class="playlist-card">
-                        <h2>ป้ายเติมเกม & ส่งของขวัญ</h2>
-                        <ul class="item-list">
-                            <li>จำนวนเรทที่ลงตาราง 1-10 ราคา 59.-</li>
-                            <li>จำนวนเรทที่ลงตาราง 11-20 ราคา 69.-</li>
-                            <li>จำนวนเรทที่ลงตาราง 21-25 ราคา 79.-</li>
-                            <li>จำนวนเรทที่ลงตาราง 26-35 ราคา 89.-</li>
-                        </ul>
-                    </div>
-
-                    <div class="playlist-card">
-                        <h2>ป้ายเครดิต & บัญชีไอดี</h2>
-                        <ul class="item-list">
-                            <li>ป้ายเครดิต (เริ่มต้น 1 ตัวละคร) ราคา 50.- (บวกเพิ่มตัวละครละ 5.-)</li>
-                            <li>ป้ายข้อมูลไอดี & ป้ายช่องทางบัญชี แบบคลีนปกติ ราคา 69.-</li>
-                            <li>ป้ายข้อมูลไอดี & ป้ายช่องทางบัญชี แบบตกแต่งพิเศษ ราคา 79.-</li>
-                        </ul>
-                    </div>
-
-                    <div class="playlist-card">
-                        <h2>ป้ายเรทเช่าไอดี</h2>
-                        <ul class="item-list">
-                            <li>ออกแบบเฉพาะหัวป้ายหลัก ราคา 59.-</li>
-                            <li>สกินจำนวน 100-250 คิดเรทสกินละ 1.-</li>
-                            <li>สกินจำนวน 250 ขึ้นไป คิดเรทสกินละ 0.8.-</li>
-                            <li>ตกแต่งรายละเอียดห้อง แรงค์ สัตว์เลี้ยง และยอดเติมฟรีทั้งหมด</li>
-                            <li>สิทธิพิเศษ: ลูกค้าที่มียอดเรียงสกินตั้งแต่ 100 ขึ้นไป ฟรีค่าหัวป้ายทันที</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- หน้าที่ 3: กฎกติการ้านค้า -->
-                <div id="tab-rules" class="page-panel">
-                    <div class="playlist-card">
-                        <h2>SHOP AGREEMENT</h2>
-                        <ul class="item-list">
-                            <li>เมื่อระบบทำรายการและโอนยอดเรียบร้อยแล้ว ไม่สามารถขอคืนเงินได้ทุกกรณี</li>
-                            <li>กรุณาตรวจสอบรายละเอียดความถูกต้องของไอดี หากแจ้งผิดทางร้านไม่สามารถรับผิดชอบได้</li>
-                            <li>กรณีเปิดบิลผ่อนชำระ หากขาดการส่งยอดต่อเนื่องตามกำหนด ขอยึดเงินมัดจำทันที</li>
-                            <li>งานป้ายทุกรูปแบบหลังจากสรุปและส่งมอบงานแล้ว หากสั่งแก้ไขภายหลังคิดจุดละ 20.-</li>
-                        </ul>
-                    </div>
-
-                    <div class="btn-stack">
-                        <a href="https://www.facebook.com/profile.php?id=61554192600355" class="capsule-btn btn-fb" target="_blank">
-                            FACEBOOK : ZENITHYSHOP
-                        </a>
-                        <a href="https://lin.ee/qihwQGM" class="capsule-btn btn-line" target="_blank">
-                            LINE OFFICIAL ACCOUNT
-                        </a>
-                    </div>
-
-                    <div class="notice-bar">
-                        WARRANTY: มีระบบรับประกันดูแลความเสถียรของเว็บไซต์ให้ฟรี 1 เดือนเต็ม
-                    </div>
-                </div>
-
             </div>
         </div>
 
     </div>
 
+    <!-- === โซนล่าง: แผงควบคุมใต้การ์ด (Frosted Control Bar) === -->
+    <div class="music-control-bar">
+        
+        <!-- ปุ่มย้อนกลับ-เดินหน้า สลับแผ่นการ์ดเล่นเพลง -->
+        <div class="playback-buttons">
+            <button class="icon-btn" onclick="slideCarousel(-1)">
+                <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+            </button>
+            <button class="icon-btn play-pause">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+            </button>
+            <button class="icon-btn" onclick="slideCarousel(1)">
+                <svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6zm9-12v12h2V6z"/></svg>
+            </button>
+        </div>
+
+        <!-- ตัวป้ายสถานะระบุหน้าเว็บที่กำลังเปิดดูอยู่ปัจจุบัน -->
+        <div class="current-track-status">
+            <div class="mini-cover" id="miniTag">03</div>
+            <div class="track-metadata">
+                <span class="title" id="trackTitle">PRICE LIST</span>
+                <span class="artist">zenithyshop • Album Panel</span>
+            </div>
+        </div>
+
+        <!-- ไอคอนเสริมความหรูหราด้านขวาของแผงคุมแบบภาพเรฟ -->
+        <div class="utility-buttons">
+            <!-- ไอคอนเนื้อร้อง -->
+            <svg viewBox="0 0 24 24"><path d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 14H5V5h14v12zM7 7h10v2H7zm0 4h10v2H7zm0 4h7v2H7z"/></svg>
+            <!-- ไอคอนคิวเพลง -->
+            <svg viewBox="0 0 24 24"><path d="M3 13h12v-2H3v2zm0 4h12v-2H3v2zm0-8h16V7H3v2zm16 4h2v-2h-2v2zm0 4h2v-2h-2v2z"/></svg>
+            <!-- ไอคอนลำโพงเสียง -->
+            <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+        </div>
+
+    </div>
+
+    <!-- สคริปต์สลับหมุนตำแหน่งการ์ดแอนิเมชันแบบสไตล์ Coverflow -->
     <script>
-        // ฟังก์ชันสลับเล่น-หยุดแผ่นเสียงย้อนยุค
-        function togglePlayback() {
-            const container = document.getElementById('playerContainer');
-            container.classList.toggle('paused');
-        }
+        // ข้อมูลหัวข้อเพื่อเปลี่ยนชื่อแทร็กเวลาการ์ดหมุน
+        const trackNames = [
+            { title: "ABOUT US", cover: "01" },
+            { title: "QUICK LINKS", cover: "02" },
+            { title: "PRICE LIST", cover: "03" },
+            { title: "SHOP RULES", cover: "04" },
+            { title: "CONTACT ME", cover: "05" }
+        ];
 
-        // ฟังก์ชันสลับแท็บเมนูบอร์ดข้อมูล
-        function switchTab(tabId, codeName, element) {
-            const panels = document.querySelectorAll('.page-panel');
-            panels.forEach(panel => panel.classList.remove('active'));
-            
-            const tabs = document.querySelectorAll('.nav-tab');
-            tabs.forEach(tab => tab.classList.remove('active'));
-            
-            document.getElementById(tabId).classList.add('active');
-            element.classList.add('active');
+        let currentIndex = 2; // เริ่มต้นที่หน้าราคา (การ์ดใบที่ 3 ดัชนีคือ 2)
+        const totalCards = 5;
+        const classes = ['far-left', 'left', 'center', 'right', 'far-right'];
 
-            document.getElementById('trackCode').innerText = `TRACK : ${codeName}`;
-        }
-
-        // ฟังก์ชันสุ่มและโปรยดาวตกสีดำ
-        function createBlackStars() {
-            const container = document.getElementById('blackStarField');
-            const starCount = 35;
-
-            for (let i = 0; i < starCount; i++) {
-                const star = document.createElement('div');
-                star.classList.add('black-star');
+        function updateCarousel() {
+            for (let i = 0; i < totalCards; i++) {
+                const card = document.getElementById(`card-${i}`);
                 
-                star.style.left = `${Math.random() * 95}%`;
-                star.style.animationDelay = `${Math.random() * 6}s`;
-                star.style.animationDuration = `${6 + Math.random() * 5}s`;
-                star.style.transform = `scale(${0.35 + Math.random() * 0.7})`;
+                // คำนวณหาลำดับคลาส 3D ให้กับการ์ดแต่ละใบตามระยะห่างจาก currentIndex
+                let classIndex = (i - currentIndex + 2);
+                
+                // จัดการวนลูปตำแหน่งกรณีค่าหลุดกรอบขอบล่างหรือขอบบน
+                if (classIndex < 0) classIndex = 0;
+                if (classIndex > 4) classIndex = 4;
 
-                container.appendChild(star);
+                // ล้างคลาสเก่าออกทั้งหมดแล้วใส่คลาสแสดงมุมเอียง 3D ใบใหม่เข้าไป
+                classes.forEach(cls => card.classList.remove(cls));
+                card.classList.add(classes[classIndex]);
             }
+
+            // อัปเดตข้อมูลแทร็กเสียงดนตรีบน Control bar ด้านล่างด้วย
+            document.getElementById('trackTitle').innerText = trackNames[currentIndex].title;
+            document.getElementById('miniTag').innerText = trackNames[currentIndex].cover;
         }
 
-        window.addEventListener('DOMContentLoaded', createBlackStars);
+        // ฟังก์ชันเมื่อกดลูกศร ย้อนกลับ/เดินหน้า ที่แผงควบคุมด้านล่าง
+        function slideCarousel(direction) {
+            currentIndex += direction;
+            if (currentIndex < 0) currentIndex = 0;
+            if (currentIndex > totalCards - 1) currentIndex = totalCards - 1;
+            updateCarousel();
+        }
+
+        // ฟังก์ชันเมื่อคลิกจิ้มเลือกแผ่นการ์ดนั้นตรง ๆ เลย
+        function clickSelectCard(index) {
+            currentIndex = index;
+            updateCarousel();
+        }
+
+        // ตั้งค่าตำแหน่งเริ่มต้นตอนรันเว็บครั้งแรก
+        updateCarousel();
     </script>
 </body>
 </html>
