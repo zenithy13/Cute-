@@ -3,308 +3,438 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>zenithyshop - DOSSIER</title>
+    <title>zenithyshop - DETECTIVE CASE FILE</title>
     <style>
-        /* นำเข้าฟอนต์สไตล์พิมพ์ดีดและฟอนต์แนวขรึม/น่ารักเพื่อให้เข้ากับธีม */
         @import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=Sarabun:wght@300;400;700&family=Chakra+Petch:wght@500;700&display=swap');
 
-        * {
+        *, *::before, *::after {
             box-sizing: border-box;
-            margin: 0;
-            padding: 0;
         }
 
         body {
-            /* พื้นหลังไล่เฉดสีมืดขอบดำ มู้ดเหมือนห้องสืบสวนตามภาพเรฟ */
-            background: radial-gradient(circle, #3e352f 0%, #1a1310 100%);
-            color: #f4eae1;
+            margin: 0;
+            padding: 40px 20px;
+            /* พื้นหลังโต๊ะไม้ทำงานสีเข้มผสมมู้ดห้องสืบสวน */
+            background: radial-gradient(circle at center, #2c3539 0%, #111618 100%);
+            color: #e2d7cc;
             font-family: 'Sarabun', sans-serif;
             min-height: 100vh;
-            padding: 40px 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* โครงสร้างหลักแบ่งฝั่งซ้าย-ขวา แบบในภาพ */
-        .dossier-container {
-            display: grid;
-            grid-template-columns: 1fr 1.3fr;
-            gap: 40px;
-            max-width: 1200px;
-            width: 100%;
-            align-items: start;
-        }
-
-        /* ==================== ฝั่งซ้าย: DOSSIER & PROFILE ==================== */
-        .profile-side {
-            padding: 20px;
-        }
-
-        .main-title {
-            font-family: 'Special Elite', serif;
-            font-size: 3.5rem;
-            letter-spacing: 3px;
-            color: #ffffff;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
-            margin-bottom: 25px;
-            text-transform: uppercase;
-        }
-
-        .logo-container {
-            width: 200px;
-            height: 200px;
-            background-color: #2b221e;
-            border: 4px solid #52433c;
-            border-radius: 8px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.7);
-            margin-bottom: 30px;
-            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
             position: relative;
+            overflow-x: hidden;
         }
 
-        /* จำลองรูปโลโก้เนื่องจากเป็นรูปภายในเครื่องของคุณ */
+        /* โครงสร้างกระดานสืบสวนขนาดใหญ่ (Investigative Board) */
+        .board-container {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 50px;
+            max-width: 1300px;
+            width: 100%;
+            background: #1e1916;
+            border: 16px solid #140f0d; /* กรอบไม้กระดาน */
+            border-radius: 4px;
+            padding: 40px;
+            box-shadow: 0 30px 70px rgba(0,0,0,0.8), inset 0 0 100px rgba(0,0,0,0.9);
+            position: relative;
+        }
+
+        /* แนวด้ายแดงเชื่อมโยงคดี (Detective Red String Effect) */
+        .board-container::before {
+            content: "";
+            position: absolute;
+            top: 10%;
+            left: 15%;
+            width: 40%;
+            height: 2px;
+            background: rgba(184, 30, 30, 0.7);
+            transform: rotate(15deg);
+            z-index: 1;
+            pointer-events: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        /* ==================== ฝั่งซ้าย: DOSSIER BOARD ==================== */
+        .dossier-left {
+            position: relative;
+            z-index: 2;
+        }
+
+        .main-header {
+            font-family: 'Special Elite', serif;
+            font-size: 3.8rem;
+            color: #ffffff;
+            letter-spacing: 5px;
+            margin: 0 0 5px 0;
+            text-shadow: 3px 3px 0px #7a1d1d, 5px 5px 15px rgba(0,0,0,0.8);
+            text-transform: uppercase;
+        }
+
+        .sub-header-tag {
+            font-family: 'Chakra Petch', sans-serif;
+            font-size: 0.85rem;
+            color: #6da9c7; /* สีฟ้าอ่อนแนวเทคนิค/พิมพ์เขียว */
+            background: rgba(109, 169, 199, 0.1);
+            padding: 3px 10px;
+            border-radius: 3px;
+            display: inline-block;
+            margin-bottom: 30px;
+            border: 1px solid rgba(109, 169, 199, 0.3);
+            letter-spacing: 1px;
+        }
+
+        /* กรอบโลโก้สไตล์รูปโพลารอยด์คดีเก่า */
+        .polaroid-frame {
+            background: #f4eee1;
+            padding: 15px 15px 40px 15px;
+            width: 240px;
+            box-shadow: 5px 15px 25px rgba(0,0,0,0.6), -2px 2px 10px rgba(0,0,0,0.4);
+            transform: rotate(-3deg);
+            position: relative;
+            margin-bottom: 35px;
+            border: 1px solid #dcd3c1;
+        }
+
+        /* หมุดสีแดงปักรูปโพลารอยด์ */
+        .polaroid-frame::before {
+            content: "📍";
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.5rem;
+            z-index: 5;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .logo-box {
+            width: 100%;
+            height: 210px;
+            background: #221d1a;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #cbc2b0;
+        }
+
         .logo-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
-        .logo-placeholder {
+        .logo-fallback {
             font-family: 'Chakra Petch', sans-serif;
+            font-size: 0.85rem;
+            color: #7c6d64;
             text-align: center;
-            font-size: 0.9rem;
-            color: #a08c83;
-            padding: 10px;
+            padding: 15px;
         }
 
-        .intro-text {
-            font-size: 1.1rem;
+        /* ข้อความโปรยสไตล์แฟ้มรายงานสีน้ำตาลอ่อน */
+        .profile-report {
+            background: #eae1d4;
+            color: #2e2620;
+            padding: 25px;
+            border-radius: 4px;
+            box-shadow: 3px 8px 15px rgba(0,0,0,0.4);
+            border-left: 6px solid #6da9c7; /* แถบสีฟ้าอ่อนนำสายตา */
+            font-size: 1.05rem;
             line-height: 1.8;
-            color: #d1bfb5;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 20px;
-            border-left: 3px solid #a08c83;
-            border-radius: 0 8px 8px 0;
-            margin-bottom: 30px;
-            white-space: pre-line; /* รองรับการเว้นบรรทัด */
+            margin-bottom: 40px;
+            position: relative;
         }
 
-        /* ปุ่มนำทางด้านล่างซ้ายเลียนแบบ UI เกม */
-        .ui-buttons {
-            display: flex;
-            gap: 20px;
-            font-family: 'Chakra Petch', sans-serif;
+        /* จำลองรอยตรายางแสตมป์คดี */
+        .profile-report::after {
+            content: "CONFIDENTIAL";
+            position: absolute;
+            bottom: 10px;
+            right: 15px;
+            font-family: 'Special Elite', serif;
             font-size: 0.9rem;
+            color: rgba(184, 30, 30, 0.25);
+            transform: rotate(-10deg);
+            border: 2px dashed rgba(184, 30, 30, 0.25);
+            padding: 2px 8px;
         }
 
-        .ui-btn {
+        .shop-name-tag {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #111;
+            border-bottom: 2px solid #6da9c7;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        /* เมนูปุ่มจำลอง UI คอนโซลเกมด้านล่างซ้าย */
+        .ui-controller-mimic {
+            display: flex;
+            gap: 25px;
+            font-family: 'Chakra Petch', sans-serif;
+            font-size: 0.85rem;
+            color: #a4968c;
+        }
+
+        .ui-action {
             display: flex;
             align-items: center;
             gap: 8px;
-            color: #bfaea5;
         }
 
-        .icon-circle {
-            width: 24px;
-            height: 24px;
+        .btn-cross { color: #6da9c7; font-size: 1.2rem; }
+        .btn-b-circle {
+            width: 22px;
+            height: 22px;
             border-radius: 50%;
-            background: #2b221e;
-            border: 2px solid #bfaea5;
+            background: #8e2b2b;
+            color: #fff;
             display: flex;
             justify-content: center;
             align-items: center;
             font-weight: bold;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
+            border: 1px solid #ff7b7b;
         }
 
-        .icon-cross {
-            font-size: 1.1rem;
-            color: #bfaea5;
-        }
-
-        /* ==================== ฝั่งขวา: SKETCHBOOK / NOTEBOOK ==================== */
-        .notebook {
-            background-color: #e6dfd3; /* สีเนื้อกระดาษเก่าแบบในรูป */
-            color: #2b251f;
-            border-radius: 6px;
-            padding: 35px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.8), inset 0 0 40px rgba(0,0,0,0.1);
+        /* ==================== ฝั่งขวา: EVIDENCE NOTEBOOK ==================== */
+        .notebook-right {
+            background: #fdfbf7; /* เนื้อกระดาษสีน้ำตาลอ่อนนวลตา */
+            color: #2b2520;
+            padding: 40px;
+            border-radius: 4px;
+            box-shadow: 10px 20px 40px rgba(0,0,0,0.6), inset 0 0 30px rgba(180,160,140,0.15);
             position: relative;
-            border: 1px solid #c2b9a7;
+            border: 1px solid #e3decb;
         }
 
-        /* ตกแต่งคลิปหนีบกระดาษด้านบนและด้านข้างแบบในเรฟ */
-        .notebook::before {
-            content: "📎";
+        /* ของตกแต่ง: คลิปหนีบกระดาษโลหะดำด้านข้าง */
+        .binder-clip {
             position: absolute;
-            top: -15px;
-            left: 40px;
-            font-size: 2rem;
-            transform: rotate(-15deg);
-            opacity: 0.8;
+            left: -22px;
+            top: 150px;
+            width: 35px;
+            height: 45px;
+            background: #222;
+            border-radius: 3px;
+            box-shadow: -2px 5px 10px rgba(0,0,0,0.5);
         }
-        
-        .notebook::after {
-            content: "📁";
+        .binder-clip::before {
+            content: "";
             position: absolute;
-            bottom: 20px;
-            right: -15px;
-            font-size: 1.8rem;
-            filter: grayscale(30%);
-            opacity: 0.7;
+            right: -10px;
+            top: 12px;
+            width: 15px;
+            height: 20px;
+            border: 2px solid #888;
+            border-left: none;
+            border-radius: 0 4px 4px 0;
         }
 
-        .notebook-header {
+        /* ของตกแต่ง: เทปใสแปะมุมกระดาษ */
+        .washi-tape-top {
+            position: absolute;
+            top: -12px;
+            right: 40px;
+            width: 100px;
+            height: 28px;
+            background: rgba(214, 203, 175, 0.5);
+            transform: rotate(5deg);
+            backdrop-filter: blur(1px);
+            border-left: 2px dashed rgba(0,0,0,0.1);
+            border-right: 2px dashed rgba(0,0,0,0.1);
+        }
+
+        .notebook-main-title {
             font-family: 'Special Elite', serif;
-            font-size: 1.8rem;
+            font-size: 1.9rem;
             text-align: center;
-            border-bottom: 2px dashed #9c9281;
+            color: #443b33;
+            border-bottom: 2px dashed #b5ab96;
             padding-bottom: 15px;
-            margin-bottom: 25px;
-            letter-spacing: 2px;
-            color: #4a4035;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+            position: relative;
+        }
+        /* รอยพิมพ์นิ้วมือจำลองข้างหัวข้อ */
+        .notebook-main-title::before {
+            content: "👣"; 
+            position: absolute;
+            left: 15px;
+            top: -5px;
+            font-size: 1.5rem;
+            opacity: 0.15;
+            filter: grayscale(100%);
         }
 
-        .section-box {
-            background: rgba(255, 255, 255, 0.4);
-            border: 1px dashed #b5a996;
+        /* กล่องหมวดหมู่เนื้อหา (สไตล์แฟ้มประวัติ) */
+        .evidence-item {
+            background: rgba(244, 238, 225, 0.7);
+            border: 1px solid #d5cbaf;
             padding: 20px;
-            border-radius: 6px;
+            border-radius: 4px;
             margin-bottom: 25px;
+            position: relative;
         }
 
-        .section-title {
+        .evidence-label {
             font-family: 'Chakra Petch', sans-serif;
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             font-weight: 700;
-            color: #1e1915;
-            margin-bottom: 12px;
+            color: #1c1815;
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
-
-        .section-title::before {
-            content: "■";
-            color: #8c2525; /* จุดเน้นสีแดงเข้มแนวรอยหมึก */
-            font-size: 0.8rem;
-        }
-
-        /* สไตล์รายการข้อมูล */
-        .info-list {
-            list-style: none;
-        }
-
-        .info-list li {
-            margin-bottom: 8px;
-            line-height: 1.6;
-            font-size: 1rem;
-            padding-left: 15px;
-            position: relative;
-        }
-
-        .info-list li::before {
-            content: "•";
-            position: absolute;
-            left: 0;
-            color: #5c5144;
-        }
-
-        .price-highlight {
-            font-weight: bold;
-            color: #a62424;
-            background: rgba(166, 36, 36, 0.08);
+        /* แถบสีฟ้าอ่อนประทับตรานำหัวข้อสืบสวน */
+        .evidence-label::before {
+            content: "CASE FILE";
+            font-size: 0.65rem;
+            background: #6da9c7;
+            color: #fff;
             padding: 2px 6px;
-            border-radius: 4px;
+            border-radius: 2px;
+            font-family: monospace;
         }
 
-        /* ลิงก์ต่าง ๆ ตกแต่งให้เหมือนรอยปากกาเขียน */
-        .btn-link-group {
+        /* จัดแต่งกลุ่มปุ่มลิงก์เด่นๆ เป็นสีน้ำตาลคลาสสิกสลับฟ้า */
+        .link-investigation-box {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
             margin-top: 15px;
         }
 
-        .ink-link {
-            display: inline-block;
-            background: #3a312a;
-            color: #f7f3ed;
-            text-decoration: none;
-            padding: 10px 15px;
-            border-radius: 4px;
-            font-size: 0.95rem;
-            transition: all 0.2s;
+        .investigate-btn {
+            display: block;
             text-align: center;
+            background: #3e352f;
+            color: #f7f4ef;
+            text-decoration: none;
+            padding: 12px 20px;
             font-weight: bold;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+            font-size: 0.95rem;
+            border-radius: 4px;
+            border: 1px solid #2b2420;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+            transition: all 0.2s ease;
         }
-
-        .ink-link:hover {
-            background: #594c41;
+        .investigate-btn:hover {
+            background: #544840;
             transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+        }
+        .btn-blue-accent {
+            background: #4a7791;
+            border-color: #35586d;
+        }
+        .btn-blue-accent:hover {
+            background: #598cb1;
         }
 
-        /* โซนกฎของร้านเน้นสีสไตล์เอกสารเตือนภัย */
-        .rules-box {
-            background: rgba(214, 186, 171, 0.4);
-            border: 1px solid #c9a38f;
-            border-left: 5px solid #a62424;
+        /* รายการข้อมูลขีดแดชสไตล์ลายมือบันทึก */
+        .clue-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .clue-list li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 10px;
+            line-height: 1.6;
+            font-size: 0.98rem;
+        }
+        .clue-list li::before {
+            content: "—";
+            position: absolute;
+            left: 0;
+            color: #8e7a68;
+            font-weight: bold;
         }
 
-        .rules-box li {
-            color: #4a231b;
+        /* ตัวเน้นราคา/ข้อมูลสำคัญ (สีแดงคดีชวนสังเกต) */
+        .red-clue {
+            color: #b81e1e;
+            font-weight: bold;
+            background: rgba(184, 30, 30, 0.06);
+            padding: 1px 5px;
+            border-radius: 3px;
+            border-bottom: 1px dashed #b81e1e;
         }
 
-        /* ช่องทางติดต่อ */
-        .contact-section {
-            border-top: 2px dashed #9c9281;
+        /* ตกแต่งโซนกฎเหล็กของร้าน (สไตล์เอกสารคำเตือนสีส้มอิฐ/น้ำตาลเข้ม) */
+        .restriction-zone {
+            background: #f2ebe1;
+            border: 1px solid #d9cebe;
+            border-left: 5px solid #b81e1e;
+        }
+        .restriction-title {
+            color: #b81e1e;
+            font-weight: bold;
+            font-size: 1.15rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* ช่องทางติดต่อด้านล่างกระดาษ */
+        .contact-footer {
+            border-top: 2px dashed #c5bba4;
+            margin-top: 35px;
             padding-top: 20px;
         }
-
-        .contact-links {
+        .contact-grid {
             display: flex;
             flex-direction: column;
             gap: 15px;
-            margin-top: 12px;
+            margin-top: 15px;
         }
-
-        .social-item {
+        .contact-row {
             display: flex;
             align-items: center;
+            flex-wrap: wrap;
             gap: 10px;
+            font-size: 1rem;
         }
-
-        .fb-link {
+        .fb-clue-link {
             color: #1b4f72;
             font-weight: bold;
             text-decoration: underline;
         }
-
-        .fb-link:hover {
-            color: #2874a6;
+        .fb-clue-link:hover {
+            color: #4a7791;
         }
 
-        /* Responsive สำหรับมือถือ */
-        @media (max-width: 850px) {
-            .dossier-container {
+        /* ปรับแต่งการแสดงผลบนจอโทรศัพท์มือถือ */
+        @media (max-width: 900px) {
+            .board-container {
                 grid-template-columns: 1fr;
+                padding: 20px;
+                border-width: 8px;
             }
-            body {
-                padding: 20px 10px;
+            .board-container::before {
+                display: none; /* เอาด้ายแดงออกบนจอเล็กเพื่อไม่ให้บดบังตัวอักษร */
             }
-            .main-title {
-                font-size: 2.5rem;
+            .polaroid-frame {
+                margin: 0 auto 30px auto;
+            }
+            .main-header {
+                font-size: 2.8rem;
                 text-align: center;
             }
-            .logo-container {
-                margin: 0 auto 25px auto;
+            .sub-header-tag {
+                display: block;
+                text-align: center;
             }
-            .ui-buttons {
+            .ui-controller-mimic {
                 justify-content: center;
             }
         }
@@ -312,126 +442,128 @@
 </head>
 <body>
 
-    <div class="dossier-container">
+    <div class="board-container">
         
-        <div class="profile-side">
-            <h1 class="main-title">Dossier</h1>
+        <div class="dossier-left">
+            <h1 class="main-header">Dossier</h1>
+            <div class="sub-header-tag">CASE NO. #615541926 - CLUE DATABASE</div>
             
-            <div class="logo-container">
-                <img src="IMG_0545.jpeg" alt="zenithyshop Logo" class="logo-img" onerror="this.style.display='none'; document.getElementById('logo-placeholder').style.display='block';">
-                <div id="logo-placeholder" class="logo-placeholder" style="display:none;">
-                    <strong>[ รูปโลโก้ร้าน ]</strong><br>IMG_0545.jpeg<br>(ไม่พบไฟล์รูปในโฟลเดอร์)
+            <div class="polaroid-frame">
+                <div class="logo-box">
+                    <img src="IMG_0545.jpeg" alt="zenithyshop Logo" class="logo-img" onerror="this.style.display='none'; document.getElementById('fallback-text').style.display='block';">
+                    <div id="fallback-text" class="logo-fallback" style="display:none;">
+                        <strong>[ LOGO FILE ]</strong><br>IMG_0545.jpeg<br>(วางไฟล์นี้คู่กับไฟล์เว็บเพื่อแสดงรูป)
+                    </div>
                 </div>
             </div>
 
-            <div class="intro-text">
-                <strong>ชื่อร้าน: zenithyshop</strong>
-                zenithy รับทำเว็บไซต์ร้าน / เติมเกมidentity v / ทำป้ายต่าง ๆ 
-                เปิดบริการ: 9:00 - 23:00 น.
+            <div class="profile-report">
+                <span class="shop-name-tag">TARGET: zenithyshop</span>
+                <strong>คำโปรยปฏิบัติการ:</strong> zenithy รับทำเว็บไซต์ร้าน / เติมเกมidentity v / ทำป้ายต่าง ๆ<br>
+                <strong>TIME WINDOW:</strong> open 9:00 - 23:00 น.
             </div>
 
-            <div class="ui-buttons">
-                <div class="ui-btn">
-                    <span class="icon-cross">✙</span> <span>Next/Previous SKETCH</span>
-                </div>
-                <div class="ui-btn">
-                    <div class="icon-circle">B</div> <span>Go BACK</span>
-                </div>
+            <div class="ui-controller-mimic">
+                <div class="ui-action"><span class="btn-cross">✙</span> Next/Previous SKETCH</div>
+                <div class="ui-action"><div class="btn-b-circle">B</div> Go BACK</div>
             </div>
         </div>
 
-        <div class="notebook">
-            <div class="notebook-header">DETAILS & SERVICES</div>
+        <div class="notebook-right">
+            <div class="binder-clip"></div>
+            <div class="washi-tape-top"></div>
+            
+            <div class="notebook-main-title">EVIDENCE & INFOMATION</div>
 
-            <div class="section-box" style="background: rgba(255,255,255,0.6);">
-                <div class="section-title">ลิงก์ผลงานและเทมเพลต</div>
-                <div class="btn-link-group">
-                    <a href="https://drive.google.com/drive/folders/1_XMpP9EC2Yqq2-6cYfRn0fy8i9Q6cvoi" target="_blank" class="ink-link">📂 ตัวอย่างงานป้ายคลิกลิงก์</a>
-                    <a href="https://m.facebook.com/story.php?story_fbid=pfbid0VoVRA4MbGu79CbqBREGD8jcxavv6HzJ2F9jcyvVCUrLxEPSRoFtNQNA44yM83zs9l&id=61586611223621" target="_blank" class="ink-link">💎 เรทเติมกระดุม</a>
-                    <a href="https://drive.google.com/drive/mobile/folders/1fj024BhkgC1ctJeiwyZUG3USteSdzWzr" target="_blank" class="ink-link">📝 ดูเทมเพลตทั้งหมด</a>
+            <div class="evidence-item" style="background: rgba(109, 169, 199, 0.08); border-color: #a9c6d5;">
+                <div class="evidence-label" style="color: #2e4d5e;">DATA LINKS / คลังข้อมูลภายนอก</div>
+                <div class="link-investigation-box">
+                    <a href="https://drive.google.com/drive/folders/1_XMpP9EC2Yqq2-6cYfRn0fy8i9Q6cvoi" target="_blank" class="investigate-btn btn-blue-accent">📁 ตรวจสอบคลัง: ตัวอย่างงานป้ายคลิกลิงก์</a>
+                    <a href="https://m.facebook.com/story.php?story_fbid=pfbid0VoVRA4MbGu79CbqBREGD8jcxavv6HzJ2F9jcyvVCUrLxEPSRoFtNQNA44yM83zs9l&id=61586611223621" target="_blank" class="investigate-btn">💎 เช็คอัตรา: เรทเติมกระดุม</a>
+                    <a href="https://drive.google.com/drive/mobile/folders/1fj024BhkgC1ctJeiwyZUG3USteSdzWzr" target="_blank" class="investigate-btn btn-blue-accent">📝 รหัสชุดข้อมูล: เทมเพลตทั้งหมด</a>
                 </div>
             </div>
 
-            <div class="section-box">
-                <div class="section-title">ทำเว็บไซต์ร้านเริ่มต้น 129.-</div>
-                <ul class="info-list">
-                    <li>มีเทมเพลตให้เลือกมากกว่า <span class="price-highlight">50+</span></li>
-                    <li>มีทั้งแนวน่ารัก พาสเทล แนวมืด !</li>
-                    <li>รองาน <span class="price-highlight">4-8 ชั่วโมง</span></li>
-                    <li>รันงานตามคิว ถ้าช่วงนั้นติดคิวจะแจ้งก่อนค่ะ</li>
+            <div class="evidence-item">
+                <div class="evidence-label">ทำเว็บไซต์ร้านเริ่มต้น 129.-</div>
+                <ul class="clue-list">
+                    <li>มีเทมเพลตให้เลือกมากกว่า <span class="red-clue">50+</span> รูปแบบ</li>
+                    <li>มีครอบคลุมทั้ง <span class="red-clue">แนวน่ารัก พาสเทล แนวมืด !</span></li>
+                    <li>ระยะเวลาดำเนินการ: <span class="red-clue">รองาน 4-8 ชั่วโมง</span></li>
+                    <li>การจัดส่ง: รันงานตามคิว ถ้าช่วงนั้นติดคิวจะแจ้งให้ทราบก่อนค่ะ</li>
                 </ul>
             </div>
 
-            <div class="section-box">
-                <div class="section-title">งานป้ายต่าง ๆ</div>
+            <div class="evidence-item">
+                <div class="evidence-label">งานป้าย (DATA DESIGN)</div>
                 
                 <div style="margin-bottom: 12px;">
                     <strong>• ป้ายเติมเกม & ส่งของขวัญ</strong>
-                    <ul class="info-list" style="padding-left: 15px; margin-top: 5px;">
-                        <li>เรทที่ใส่ 1-10 ราคา <span class="price-highlight">59.-</span></li>
-                        <li>เรทที่ใส่ 11-20 ราคา <span class="price-highlight">69.-</span></li>
-                        <li>เรทที่ใส่ 21-25 ราคา <span class="price-highlight">79.-</span></li>
-                        <li>เรทที่ใส่ 26-35 ราคา <span class="price-highlight">89.-</span></li>
+                    <ul class="clue-list" style="padding-left: 15px; margin-top: 5px;">
+                        <li>เรทที่ใส่ 1-10 ราคา <span class="red-clue">59.-</span></li>
+                        <li>เรทที่ใส่ 11-20 ราคา <span class="red-clue">69.-</span></li>
+                        <li>เรทที่ใส่ 21-25 ราคา <span class="red-clue">79.-</span></li>
+                        <li>เรทที่ใส่ 26-35 ราคา <span class="red-clue">89.-</span></li>
                     </ul>
                 </div>
 
                 <div style="margin-bottom: 12px;">
                     <strong>• ป้ายเครดิต</strong>
-                    <ul class="info-list" style="padding-left: 15px; margin-top: 5px;">
-                        <li>1 ตัวละคร <span class="price-highlight">50.-</span></li>
-                        <li>มากกว่า 1 ตัวละคร บวกเพิ่มตัวละ <span class="price-highlight">5฿</span></li>
+                    <ul class="clue-list" style="padding-left: 15px; margin-top: 5px;">
+                        <li>1 ตัวละคร ราคา <span class="red-clue">50.-</span></li>
+                        <li>มากกว่า 1 ตัวละคร บวกเพิ่มตัวละ <span class="red-clue">5฿</span></li>
                     </ul>
                 </div>
 
                 <div style="margin-bottom: 12px;">
                     <strong>• ป้ายไอดี & ป้ายบัญชี</strong>
-                    <ul class="info-list" style="padding-left: 15px; margin-top: 5px;">
-                        <li>ตกแต่งปกติ <span class="price-highlight">69.-</span></li>
-                        <li>ตกแต่งเยอะ <span class="price-highlight">79.-</span></li>
+                    <ul class="clue-list" style="padding-left: 15px; margin-top: 5px;">
+                        <li>ตกแต่งระดับปกติ ราคา <span class="red-clue">69.-</span></li>
+                        <li>ตกแต่งระดับเยอะ ราคา <span class="red-clue">79.-</span></li>
                     </ul>
                 </div>
 
                 <div style="margin-bottom: 12px;">
                     <strong>• ป้ายเช่าไอดี</strong>
-                    <ul class="info-list" style="padding-left: 15px; margin-top: 5px;">
-                        <li>แค่หัวป้าย <span class="price-highlight">59.-</span></li>
-                        <li>100-250 สกินละ <span class="price-highlight">1฿</span></li>
-                        <li>250 สกินขึ้นไป สกินละ <span class="price-highlight">0.8฿</span></li>
-                        <li style="color: #4a6b4a;"><strong>ฟรี :</strong> ประดับ ห้อง แรงค์ สัตว์เลี้ยง ยอดเติม ของจิปาถะ</li>
-                        <li style="color: #4a6b4a;">ลูกค้าที่ยอดเรียงสกิน 100 ขึ้นไป <strong>ฟรีหัวป้าย !</strong></li>
+                    <ul class="clue-list" style="padding-left: 15px; margin-top: 5px;">
+                        <li>เฉพาะหัวป้ายเท่านั้น ราคา <span class="red-clue">59.-</span></li>
+                        <li>จำนวน 100-250 สกิน คิดสกินละ <span class="red-clue">1฿</span></li>
+                        <li>จำนวน 250 สกินขึ้นไป คิดสกินละ <span class="red-clue">0.8฿</span></li>
+                        <li style="color: #275235;"><strong>สิทธิพิเศษ (ฟรี) :</strong> ประดับ ห้อง แรงค์ สัตว์เลี้ยง ยอดเติม ของจิปาถะ</li>
+                        <li style="color: #275235;">กรณีที่ลูกค้ามียอดเรียงสกิน 100 ขึ้นไป <span class="red-clue">ฟรีหัวป้าย !</span></li>
                     </ul>
                 </div>
 
-                <div style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed #b5a996;">
-                    <ul class="info-list">
-                        <li>บรีฟตัวละครและโทนสีได้ตามต้องการ</li>
-                        <li>รองาน 1-2 วัน (งานเร่ง <span class="price-highlight">+10฿</span>)</li>
+                <div style="margin-top: 15px; padding-top: 10px; border-top: 1px dashed #cbbfa7;">
+                    <ul class="clue-list">
+                        <li>สามารถระบุบรีฟตัวละครและโทนสีได้ตามต้องการ</li>
+                        <li>ระยะเวลาดำเนินการปกติ 1-2 วัน (กรณีงานด่วนพิเศษ/งานเร่ง <span class="red-clue">+10฿</span>)</li>
                     </ul>
                 </div>
             </div>
 
-            <div class="section-box rules-box">
-                <div class="section-title" style="color: #a62424;">📍 กฎของร้าน 📍</div>
-                <ul class="info-list">
-                    <li>ถ้าโอนเงินแล้วทางร้านไม่คืนเงินทุกกรณีนะคะ</li>
-                    <li>แจ้งไอดีผิดทางร้านไม่รับผิดชอบทุกกรณี</li>
-                    <li>ผ่อนชำระส่งยอดไม่ครบไม่ต่อเนื่องยึดยอดทันที</li>
-                    <li>งานป้ายยกเลิกไม่คืนเงินทุกกรณี</li>
-                    <li>ส่งงาน/ลูกค้าเช็คงานแล้ว แต่ขอแก้งานทีหลังทางร้านคิดจุดละ <span class="price-highlight">20฿</span></li>
-                    <li>เว็บไซต์มีปัญหาแก้ไขให้ฟรี ถ้าต้องการเปลี่ยนข้อมูลคิดจุดละ <span class="price-highlight">20฿</span></li>
+            <div class="evidence-item restriction-zone">
+                <div class="restriction-title">📍 กฎของร้าน (RESTRICTIONS) 📍</div>
+                <ul class="clue-list">
+                    <li>ถ้าโอนเงินเรียบร้อยแล้ว ทางร้านจะไม่คืนเงินให้ในทุกกรณีนะคะ</li>
+                    <li>หากแจ้งข้อมูลไอดีผิดพลาด ทางร้านไม่ขอรับผิดชอบในทุกกรณี</li>
+                    <li>กรณีผ่อนชำระ หากส่งยอดไม่ครบถ้วนหรือไม่ต่อเนื่อง จะถูกยึดยอดทันที</li>
+                    <li>สำหรับงานป้าย หากสั่งยกเลิกงานจะไม่คืนเงินให้ในทุกกรณี</li>
+                    <li>หลังจากส่งงาน/ลูกค้าเช็คงานเรียบร้อยแล้ว หากขอแก้ไขงานในภายหลัง ทางร้านคิดจุดละ <span class="red-clue">20฿</span></li>
+                    <li>ระบบเว็บไซต์มีปัญหาขัดข้องแก้ไขให้ฟรี แต่หากต้องการเปลี่ยนเนื้อหา/ข้อมูลภายหลัง คิดจุดละ <span class="red-clue">20฿</span></li>
                 </ul>
             </div>
 
-            <div class="contact-section">
-                <div class="section-title">📱 ช่องทางติดต่อ</div>
-                <div class="contact-links">
-                    <div class="social-item">
-                        <strong>Facebook :</strong> 
-                        <a href="https://www.facebook.com/profile.php?id=61554192600355" target="_blank" class="fb-link">คลิกที่นี่เพื่อไปที่ Facebook โปรไฟล์</a>
+            <div class="contact-footer">
+                <div class="evidence-label">📱 ช่องทางติดต่อ (COMMUNICATION)</div>
+                <div class="contact-grid">
+                    <div class="contact-row">
+                        <strong>Facebook:</strong> 
+                        <a href="https://www.facebook.com/profile.php?id=61554192600355" target="_blank" class="fb-clue-link">คลิกที่นี่เพื่อตรวจสอบโปรไฟล์ Facebook</a>
                     </div>
-                    <div class="social-item" style="margin-top: 5px;">
-                        <strong>Line :</strong> 
-                        <a href="https://lin.ee/qihwQGM" target="_blank">
+                    <div class="contact-row">
+                        <strong>Line:</strong> 
+                        <a href="https://lin.ee/qihwQGM" target="_blank" style="display: inline-block; vertical-align: middle;">
                             <img src="https://scdn.line-apps.com/n/line_add_friends/btn/th.png" alt="เพิ่มเพื่อน" height="36" border="0">
                         </a>
                     </div>
