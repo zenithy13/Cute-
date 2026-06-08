@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>zenithyshop - INTERACTIVE CASE FILE</title>
+    <title>zenithyshop - CUTE INTERACTIVE CASE FILE</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=Sarabun:wght@300;400;700&family=Chakra+Petch:wght@500;700&display=swap');
 
@@ -14,7 +14,8 @@
         body {
             margin: 0;
             padding: 40px 20px;
-            background: radial-gradient(circle at center, #232c30 0%, #0d1112 100%);
+            /* พื้นหลังโทนห้องทำงานสลัว ๆ แต่ซอฟต์ลง */
+            background: radial-gradient(circle at center, #2d363b 0%, #12181b 100%);
             color: #e2d7cc;
             font-family: 'Sarabun', sans-serif;
             min-height: 100vh;
@@ -25,50 +26,41 @@
             overflow-x: hidden;
         }
 
-        /* ---------------- แอนิเมชันหลัก (Animations) ---------------- */
-        @keyframes floatEffect {
+        /* ---------------- แอนิเมชันน่ารักๆ แบบสมูท (Smooth & Cute Animations) ---------------- */
+        @keyframes smoothFloat {
             0% { transform: rotate(-3deg) translateY(0px); }
-            50% { transform: rotate(-2deg) translateY(-8px); }
+            50% { transform: rotate(-1deg) translateY(-6px); }
             100% { transform: rotate(-3deg) translateY(0px); }
         }
 
-        @keyframes clipFloat {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-5px); }
-            100% { transform: translateY(0px); }
+        @keyframes cuteBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
         }
 
-        @keyframes stringSwing {
+        @keyframes stringWave {
             0% { transform: rotate(14deg); }
-            50% { transform: rotate(16deg); }
+            50% { transform: rotate(15.5deg); }
             100% { transform: rotate(14deg); }
         }
 
-        @keyframes pinWiggle {
-            0% { transform: translateX(-50%) rotate(0deg); }
-            20% { transform: translateX(-50%) rotate(8deg); }
-            40% { transform: translateX(-50%) rotate(-6deg); }
-            60% { transform: translateX(-50%) rotate(4deg); }
-            80% { transform: translateX(-50%) rotate(-2deg); }
-            100% { transform: translateX(-50%) rotate(0deg); }
-        }
-
-        /* โครงสร้างกระดานหลัก */
+        /* โครงสร้างกระดานหลัก - ปรับให้มุมมนและมีเงาฟุ้งซอฟต์ */
         .board-container {
             display: grid;
             grid-template-columns: 1fr 1.3fr;
             gap: 40px;
             max-width: 1250px;
             width: 100%;
-            background: #1c1714;
-            border: 16px solid #120d0b;
-            border-radius: 4px;
+            background: #1d1815;
+            border: 14px solid #140f0d;
+            border-radius: 24px; /* ลบเหลี่ยมกระดานหลัก */
             padding: 40px;
-            box-shadow: 0 30px 70px rgba(0,0,0,0.9), inset 0 0 100px rgba(0,0,0,0.9);
+            /* เพิ่มเงาฟุ้งนุ่มๆ รอบกระดาน */
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(109, 169, 199, 0.05), inset 0 0 80px rgba(0,0,0,0.8);
             position: relative;
         }
 
-        /* ด้ายแดงเชื่อมโยงคดีสั่นไหวได้ */
+        /* เส้นด้ายโยงคดีแบบนุ่มนวล */
         .board-container::before {
             content: "";
             position: absolute;
@@ -76,12 +68,12 @@
             left: 18%;
             width: 35%;
             height: 2px;
-            background: rgba(184, 30, 30, 0.75);
+            background: rgba(200, 50, 50, 0.6);
             transform-origin: left center;
-            animation: stringSwing 4s ease-in-out infinite;
+            animation: stringWave 4s ease-in-out infinite;
             z-index: 1;
             pointer-events: none;
-            box-shadow: 0 3px 5px rgba(0,0,0,0.6);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.5);
         }
 
         /* ==================== ฝั่งซ้าย: DOSSIER BOARD ==================== */
@@ -96,60 +88,63 @@
             color: #ffffff;
             letter-spacing: 5px;
             margin: 0 0 5px 0;
-            text-shadow: 3px 3px 0px #7a1d1d, 5px 5px 15px rgba(0,0,0,0.8);
+            text-shadow: 3px 3px 0px #8e2b2b, 5px 5px 20px rgba(0,0,0,0.6);
             text-transform: uppercase;
         }
 
         .sub-header-tag {
             font-family: 'Chakra Petch', sans-serif;
             font-size: 0.85rem;
-            color: #6da9c7;
-            background: rgba(109, 169, 199, 0.1);
-            padding: 3px 10px;
-            border-radius: 3px;
+            color: #8cc3de; /* ฟ้าพาสเทลน่ารักขึ้น */
+            background: rgba(140, 195, 222, 0.12);
+            padding: 4px 14px;
+            border-radius: 20px; /* มนกลม */
             display: inline-block;
             margin-bottom: 30px;
-            border: 1px solid rgba(109, 169, 199, 0.3);
+            border: 1px solid rgba(140, 195, 222, 0.25);
             letter-spacing: 1px;
         }
 
-        /* กรอบโพลารอยด์ขยับลอยได้ */
+        /* โพลารอยด์มุมมน ขยับสมูท */
         .polaroid-frame {
-            background: #f4eee1;
-            padding: 15px 15px 40px 15px;
+            background: #f7f3e9;
+            padding: 15px 15px 35px 15px;
             width: 230px;
-            box-shadow: 5px 15px 25px rgba(0,0,0,0.6);
+            border-radius: 16px; /* ปรับรูปทรงโพลารอยด์ให้มนน่ารัก */
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5), 0 0 15px rgba(255,255,255,0.02);
             position: relative;
             margin-bottom: 35px;
-            border: 1px solid #dcd3c1;
-            animation: floatEffect 5s ease-in-out infinite;
+            border: 1px solid #e5dec9;
+            animation: smoothFloat 6s ease-in-out infinite;
             cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .polaroid-frame:hover {
+            transform: scale(1.04) rotate(0deg) !important;
         }
 
-        /* หมุดสั่นได้เวลาเอาเมาส์ชี้โพลารอยด์ */
+        /* เปลี่ยนจากหมุดเหล็กเป็นหมุดหัวใจคิ้วท์ๆ */
         .polaroid-frame::before {
-            content: "📍";
+            content: "❤️";
             position: absolute;
-            top: -15px;
+            top: -12px;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 1.6rem;
+            font-size: 1.3rem;
             z-index: 5;
-            transition: transform 0.2s;
-        }
-        .polaroid-frame:hover::before {
-            animation: pinWiggle 0.5s ease-in-out infinite;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
         }
 
         .logo-box {
             width: 100%;
             height: 200px;
-            background: #221d1a;
+            background: #25201d;
             overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
-            border: 1px solid #cbc2b0;
+            border-radius: 10px; /* โลโก้มุมมน */
+            border: 1px solid #e3decb;
         }
 
         .logo-img {
@@ -161,18 +156,19 @@
         .logo-fallback {
             font-family: 'Chakra Petch', sans-serif;
             font-size: 0.8rem;
-            color: #7c6d64;
+            color: #8a7c73;
             text-align: center;
             padding: 10px;
         }
 
+        /* แฟ้มรายงานสีครีมนุ่มนวล ขอบฟุ้ง */
         .profile-report {
-            background: #eae1d4;
-            color: #2e2620;
+            background: #ebe4d8;
+            color: #332a24;
             padding: 25px;
-            border-radius: 4px;
-            box-shadow: 3px 8px 15px rgba(0,0,0,0.4);
-            border-left: 6px solid #6da9c7;
+            border-radius: 18px; /* มนฟุ้ง */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3), 0 0 20px rgba(140, 195, 222, 0.03);
+            border-left: 6px solid #8cc3de; /* ฟ้าพาสเทล */
             font-size: 1.05rem;
             line-height: 1.8;
             margin-bottom: 40px;
@@ -180,33 +176,34 @@
             transition: transform 0.3s;
         }
         .profile-report:hover {
-            transform: scale(1.02);
+            transform: translateY(-2px);
         }
 
         .profile-report::after {
-            content: "CONFIDENTIAL";
+            content: "TOP SECRET🐾";
             position: absolute;
-            bottom: 10px;
+            bottom: 12px;
             right: 15px;
-            font-family: 'Special Elite', serif;
-            font-size: 0.85rem;
-            color: rgba(184, 30, 30, 0.2);
-            transform: rotate(-10deg);
-            border: 2px dashed rgba(184, 30, 30, 0.2);
+            font-family: 'Chakra Petch', sans-serif;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: rgba(142, 43, 43, 0.25);
+            transform: rotate(-8deg);
+            border: 2px dashed rgba(142, 43, 43, 0.25);
             padding: 2px 8px;
+            border-radius: 5px;
         }
 
         .shop-name-tag {
             font-size: 1.3rem;
             font-weight: bold;
-            color: #111;
-            border-bottom: 2px solid #6da9c7;
+            color: #1a1a1a;
+            border-bottom: 2px solid #8cc3de;
             padding-bottom: 5px;
             margin-bottom: 10px;
             display: block;
         }
 
-        /* เมนูปุ่มด้านล่างขยับได้เมื่อชี้ */
         .ui-controller-mimic {
             display: flex;
             gap: 25px;
@@ -220,39 +217,40 @@
             align-items: center;
             gap: 8px;
             cursor: pointer;
-            transition: color 0.2s;
+            transition: color 0.2s, transform 0.2s;
         }
         .ui-action:hover {
             color: #ffffff;
+            transform: scale(1.05);
         }
 
-        .btn-cross { color: #6da9c7; font-size: 1.2rem; }
+        .btn-cross { color: #8cc3de; font-size: 1.2rem; }
         .btn-b-circle {
             width: 22px;
             height: 22px;
             border-radius: 50%;
-            background: #8e2b2b;
+            background: #b54545;
             color: #fff;
             display: flex;
             justify-content: center;
             align-items: center;
             font-weight: bold;
             font-size: 0.7rem;
-            border: 1px solid #ff7b7b;
+            border: 1px solid #ffa3a3;
         }
 
-        /* ==================== ฝั่งขวา: FILE FOLDER & TABS (แฟ้มเมนูเลือกได้) ==================== */
+        /* ==================== ฝั่งขวา: FILE FOLDER & INTERACTIVE TABS ==================== */
         .folder-system {
             display: flex;
             flex-direction: column;
             position: relative;
         }
 
-        /* กลุ่มแถบแท็บเมนู (สไตล์ป้ายยื่นแฟ้มคดี) */
+        /* เมนูแท็บแฟ้มแบบมนสมูท ไม่เหลี่ยม */
         .folder-tabs {
             display: flex;
-            gap: 5px;
-            padding-left: 15px;
+            gap: 8px;
+            padding-left: 20px;
             position: relative;
             z-index: 2;
         }
@@ -261,145 +259,140 @@
             font-family: 'Chakra Petch', sans-serif;
             font-size: 0.95rem;
             font-weight: bold;
-            background: #d4caa7; /* สีน้ำตาลอ่อนหม่นของตัวแฟ้ม */
-            color: #54493d;
-            border: 1px solid #b5ab88;
+            background: #cfc5a4;
+            color: #594f43;
+            border: 1px solid #bdae84;
             border-bottom: none;
-            padding: 10px 18px;
-            border-radius: 6px 6px 0 0;
+            padding: 12px 22px;
+            border-radius: 16px 16px 0 0; /* เปลี่ยนให้โค้งมนน่ารัก */
             cursor: pointer;
-            transition: all 0.25s ease;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             position: relative;
-            top: 2px;
+            top: 4px;
         }
 
-        /* เอฟเฟกต์ยกตัวของแท็บเมื่อ Hover และเมื่อ Active */
         .tab-btn:hover {
-            background: #e5dcba;
+            background: #ded5b4;
             color: #2b251f;
-            top: -2px;
-            padding-bottom: 12px;
-        }
-
-        .tab-btn.active-tab {
-            background: #fdfbf7; /* สีเดียวกับเนื้อกระดาษภายใน */
-            color: #1c1815;
-            border-color: #cbd4c5;
-            border-bottom: 2px solid #fdfbf7;
             top: 0px;
-            padding-bottom: 12px;
+            padding-bottom: 16px;
+        }
+
+        /* เมื่อแท็บถูกเลือก เปิดกระดาษขอบฟุ้งมนซอฟต์ */
+        .tab-btn.active-tab {
+            background: #faf8f2;
+            color: #1e1915;
+            border-color: #cbd4c5;
+            border-bottom: 3px solid #faf8f2;
+            top: 1px;
+            padding-bottom: 15px;
             z-index: 5;
-            box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 -5px 15px rgba(140, 195, 222, 0.06);
         }
 
-        /* สีกระดุมสัญญลักษณ์บนแท็บ */
-        .tab-btn::before {
-            content: "📁 ";
-            font-size: 0.9rem;
-            opacity: 0.7;
-        }
-        .tab-btn.active-tab::before {
-            content: "📖 ";
-            opacity: 1;
-        }
-
-        /* หน้ากระดาษเอกสารคดีหลัก */
+        /* หน้ากระดาษเอกสารคดีหลัก - ลบเหลี่ยม + เติมเงาฟุ้งละมุน */
         .notebook-right {
-            background: #fdfbf7;
+            background: #faf8f2;
             color: #2b2520;
             padding: 40px;
-            border-radius: 0 4px 4px 4px;
-            box-shadow: 10px 20px 40px rgba(0,0,0,0.6), inset 0 0 30px rgba(180,160,140,0.15);
+            border-radius: 24px; /* ลบความเหลี่ยมให้มนสมูท */
+            /* เพิ่มมัลติเลเยอร์เงาให้ดูฟุ้งซอฟต์ลึกสวยงาม */
+            box-shadow: 0 20px 45px rgba(0,0,0,0.5), 0 0 30px rgba(184,167,143,0.1), inset 0 0 25px rgba(0,0,0,0.02);
             position: relative;
-            border: 1px solid #cbd4c5;
+            border: 1px solid #ebd9c5;
             margin-top: -1px;
             z-index: 1;
             min-height: 580px;
         }
 
-        /* คลิปหนีบกระดาษลอยสั่นได้เบาๆ */
+        /* คลิปหนีบกระดาษน่ารักๆ ขยับดึ๋งได้ */
         .binder-clip {
             position: absolute;
-            left: -22px;
-            top: 80px;
-            width: 35px;
-            height: 45px;
-            background: #222;
-            border-radius: 3px;
-            box-shadow: -2px 5px 10px rgba(0,0,0,0.5);
-            animation: clipFloat 4s ease-in-out infinite;
+            left: -15px;
+            top: 70px;
+            width: 30px;
+            height: 40px;
+            background: #333;
+            border-radius: 6px;
+            box-shadow: -2px 5px 12px rgba(0,0,0,0.4);
+            animation: cuteBounce 3s ease-in-out infinite;
         }
         .binder-clip::before {
             content: "";
             position: absolute;
-            right: -10px;
-            top: 12px;
-            width: 15px;
-            height: 20px;
-            border: 2px solid #888;
+            right: -8px;
+            top: 10px;
+            width: 12px;
+            height: 18px;
+            border: 2px solid #aaa;
             border-left: none;
-            border-radius: 0 4px 4px 0;
+            border-radius: 0 6px 6px 0;
         }
 
-        /* ควบคุมการเปิด-ปิดเนื้อหาหน้าแฟ้ม */
+        /* ควบคุมการสลับหน้าแฟ้ม */
         .folder-page {
-            display: none; /* ปิดหน้าอื่นไว้ก่อน */
+            display: none;
         }
         .folder-page.active-page {
-            display: block; /* เปิดเฉพาะหน้าที่มีคลาสนี้ */
-            animation: pageFadeIn 0.4s ease-out forwards;
+            display: block;
+            animation: cuteFadeIn 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
         }
 
-        @keyframes pageFadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes cuteFadeIn {
+            from { opacity: 0; transform: scale(0.98) translateY(5px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
         }
 
         .notebook-main-title {
             font-family: 'Special Elite', serif;
             font-size: 1.8rem;
             text-align: center;
-            color: #443b33;
-            border-bottom: 2px dashed #b5ab96;
+            color: #4a4036;
+            border-bottom: 2px dashed #cfc5af;
             padding-bottom: 15px;
             margin-bottom: 25px;
             letter-spacing: 1px;
         }
 
-        /* กล่องหลักฐาน/เบาะแส */
+        /* กล่องหลักฐานเบาะแส มนละมุนฟุ้ง */
         .evidence-item {
-            background: rgba(244, 238, 225, 0.7);
-            border: 1px solid #d5cbaf;
-            padding: 20px;
-            border-radius: 4px;
+            background: rgba(24cfb9, 243, 232, 0.45);
+            background: rgba(24dfb5, 245, 235, 0.5);
+            background: #f4eee1;
+            border: 1px solid #dfd6be;
+            padding: 22px;
+            border-radius: 16px; /* ขอบกล่องย่อยมนสวย */
             margin-bottom: 20px;
-            transition: background 0.2s, transform 0.2s;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
         }
         .evidence-item:hover {
-            background: rgba(244, 238, 225, 0.9);
-            transform: translateX(4px);
+            background: #f7f2e7;
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 8px 20px rgba(184,167,143,0.15);
         }
 
         .evidence-label {
             font-family: 'Chakra Petch', sans-serif;
             font-size: 1.2rem;
             font-weight: 700;
-            color: #1c1815;
+            color: #241e1a;
             margin-bottom: 12px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
         .evidence-label::before {
-            content: "FILE";
+            content: "CLUE";
             font-size: 0.65rem;
-            background: #4a7791;
-            color: #fff;
-            padding: 2px 6px;
-            border-radius: 2px;
+            background: #8cc3de; /* ฟ้าพาสเทล */
+            color: #243d4a;
+            font-weight: bold;
+            padding: 3px 8px;
+            border-radius: 10px; /* แท็กโค้งมน */
         }
 
-        /* กลุ่มปุ่มลิงก์สืบสวน ขยับและกดเด้งได้ (Active effect) */
+        /* ปุ่มลิงก์ขยับได้ละมุนตา */
         .link-investigation-box {
             display: flex;
             flex-direction: column;
@@ -409,33 +402,33 @@
         .investigate-btn {
             display: block;
             text-align: center;
-            background: #3e352f;
-            color: #f7f4ef;
+            background: #453b34;
+            color: #faf7f2;
             text-decoration: none;
             padding: 14px 20px;
             font-weight: bold;
             font-size: 0.98rem;
-            border-radius: 4px;
-            border: 1px solid #2b2420;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
-            transition: all 0.2s;
+            border-radius: 12px; /* ลบเหลี่ยมปุ่ม */
+            border: 1px solid #332b26;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
         .investigate-btn:hover {
-            background: #544840;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.25);
-            text-shadow: 0 0 5px rgba(255,255,255,0.3);
+            background: #54483f;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+            transform: translateY(-2px);
         }
         .investigate-btn:active {
-            transform: translateY(2px);
+            transform: translateY(1px);
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .btn-blue-accent {
-            background: #426e87;
-            border-color: #2f5266;
+            background: #5587a1;
+            border-color: #3f667d;
         }
         .btn-blue-accent:hover {
-            background: #51839e;
+            background: #6497b3;
         }
 
         .clue-list {
@@ -449,37 +442,40 @@
             margin-bottom: 10px;
             line-height: 1.6;
         }
+        /* เปลี่ยนขีดธรรมดาให้ดูอ่อนโยนน่ารักขึ้น */
         .clue-list li::before {
-            content: "—";
+            content: "✨";
             position: absolute;
             left: 0;
-            color: #8e7a68;
-            font-weight: bold;
+            font-size: 0.8rem;
+            top: 2px;
+            opacity: 0.8;
         }
 
+        /* ข้อมูลสำคัญเน้นสีแดงซอฟต์ */
         .red-clue {
-            color: #b81e1e;
+            color: #c23434;
             font-weight: bold;
-            background: rgba(184, 30, 30, 0.05);
-            padding: 1px 5px;
-            border-radius: 3px;
-            border-bottom: 1px dashed #b81e1e;
+            background: rgba(194, 52, 52, 0.05);
+            padding: 2px 6px;
+            border-radius: 6px;
+            border-bottom: 1px dashed #c23434;
         }
 
-        /* โซนกฎเหล็ก */
+        /* โซนกฎเหล็กขอบฟุ้งมน */
         .restriction-zone {
-            background: #f4eae1;
-            border: 1px solid #ded3c5;
-            border-left: 5px solid #b81e1e;
+            background: #f7ede4;
+            border: 1px solid #ebd9cb;
+            border-left: 6px solid #c23434;
+            border-radius: 16px;
         }
-        .restriction-title {
-            color: #b81e1e;
-            font-weight: bold;
-            font-size: 1.15rem;
-            margin-bottom: 12px;
+        .restriction-zone li::before {
+            content: "❌"; /* เปลี่ยนเป็นกากบาทเพื่อความชัดเจน */
+            font-size: 0.75rem;
+            top: 2px;
         }
 
-        /* ติดต่อ */
+        /* ช่องทางติดต่อ */
         .contact-grid {
             display: flex;
             flex-direction: column;
@@ -492,24 +488,25 @@
             gap: 10px;
         }
         .fb-clue-link {
-            color: #1b4f72;
+            color: #225673;
             font-weight: bold;
             text-decoration: underline;
             transition: color 0.2s;
         }
         .fb-clue-link:hover {
-            color: #4a7791;
+            color: #5587a1;
         }
 
-        /* แป้นพิมพ์ดีดจำลองสลักข้อความท้ายเว็บ */
         .typewriter-footer {
-            font-family: 'Special Elite', serif;
-            font-size: 0.8rem;
+            font-family: 'Chakra Petch', sans-serif;
+            font-weight: bold;
+            font-size: 0.85rem;
             text-align: center;
-            color: #8a7c73;
+            color: #9c8e84;
             margin-top: 30px;
-            border-top: 1px dashed #cbd4c5;
+            border-top: 1px dashed #cfc5af;
             padding-top: 15px;
+            letter-spacing: 1px;
         }
 
         @media (max-width: 900px) {
@@ -517,16 +514,23 @@
                 grid-template-columns: 1fr;
                 padding: 20px;
                 border-width: 8px;
+                border-radius: 16px;
             }
             .board-container::before {
                 display: none;
             }
             .folder-tabs {
                 flex-wrap: wrap;
+                padding-left: 5px;
             }
             .tab-btn {
                 font-size: 0.85rem;
-                padding: 8px 12px;
+                padding: 10px 14px;
+                border-radius: 12px 12px 0 0;
+            }
+            .notebook-right {
+                border-radius: 16px;
+                padding: 25px;
             }
             .polaroid-frame {
                 margin: 0 auto 30px auto;
@@ -549,21 +553,21 @@
         
         <div class="dossier-left">
             <h1 class="main-header">Dossier</h1>
-            <div class="sub-header-tag">CASE FILE DATABASE • ACTIVE</div>
+            <div class="sub-header-tag">✨ CUTE DETECTIVE REPORT ✨</div>
             
-            <div class="polaroid-frame" title="คลิกเพื่อรีเฟรชรูปภาพ">
+            <div class="polaroid-frame">
                 <div class="logo-box">
                     <img src="IMG_0545.jpeg" alt="zenithyshop Logo" class="logo-img" onerror="this.style.display='none'; document.getElementById('fallback-text').style.display='block';">
                     <div id="fallback-text" class="logo-fallback" style="display:none;">
-                        <strong>[ LOGO FILE ]</strong><br>IMG_0545.jpeg<br>(วางไฟล์รูปไว้ที่เดียวกับโค้ด)
+                        <strong>[ LOGO FILE ]</strong><br>IMG_0545.jpeg<br>(วางไฟล์รูปไว้คู่กับโค้ดเว็บ)
                     </div>
                 </div>
             </div>
 
             <div class="profile-report">
                 <span class="shop-name-tag">TARGET: zenithyshop</span>
-                <strong>รายละเอียด:</strong> zenithy รับทำเว็บไซต์ร้าน / เติมเกมidentity v / ทำป้ายต่าง ๆ<br>
-                <strong>OPERATION TIME:</strong> open 9:00 - 23:00 น.
+                <strong>คำโปรยร้าน:</strong> zenithy รับทำเว็บไซต์ร้าน / เติมเกมidentity v / ทำป้ายต่าง ๆ<br>
+                <strong>OPERATION HOUR:</strong> open 9:00 - 23:00 น.
             </div>
 
             <div class="ui-controller-mimic">
@@ -575,9 +579,9 @@
         <div class="folder-system">
             
             <div class="folder-tabs">
-                <button class="tab-btn active-tab" onclick="switchFolder(event, 'page-links')">คลังลิงก์ผลงาน</button>
-                <button class="tab-btn" onclick="switchFolder(event, 'page-services')">บริการ & เรทราคา</button>
-                <button class="tab-btn" onclick="switchFolder(event, 'page-rules')">กฎร้าน & ช่องทางติดต่อ</button>
+                <button class="tab-btn active-tab" onclick="switchFolder(event, 'page-links')">🐾 คลังลิงก์ผลงาน</button>
+                <button class="tab-btn" onclick="switchFolder(event, 'page-services')">🧸 บริการ & เรทราคา</button>
+                <button class="tab-btn" onclick="switchFolder(event, 'page-rules')">✉️ กฎร้าน & ติดต่อ</button>
             </div>
 
             <div class="notebook-right">
@@ -585,8 +589,8 @@
                 
                 <div id="page-links" class="folder-page active-page">
                     <div class="notebook-main-title">DATA CLUES & TEMPLATES</div>
-                    <div class="evidence-item" style="background: rgba(109, 169, 199, 0.05); border-color: #abbec9;">
-                        <div class="evidence-label" style="color: #2b4554;">ตรวจสอบข้อมูลภายนอก (EXTERNAL CLUES)</div>
+                    <div class="evidence-item" style="background: rgba(140, 195, 222, 0.05); border-color: #bdced6;">
+                        <div class="evidence-label" style="color: #29424f;">ตรวจสอบข้อมูลภายนอก (EXTERNAL CLUES)</div>
                         <div class="link-investigation-box">
                             <a href="https://drive.google.com/drive/folders/1_XMpP9EC2Yqq2-6cYfRn0fy8i9Q6cvoi" target="_blank" class="investigate-btn btn-blue-accent">📂 ตรวจสอบคลัง: ตัวอย่างงานป้ายคลิกลิงก์</a>
                             <a href="https://m.facebook.com/story.php?story_fbid=pfbid0VoVRA4MbGu79CbqBREGD8jcxavv6HzJ2F9jcyvVCUrLxEPSRoFtNQNA44yM83zs9l&id=61586611223621" target="_blank" class="investigate-btn">💎 เช็คอัตราตลาด: เรทเติมกระดุม</a>
@@ -611,7 +615,7 @@
                     <div class="evidence-item">
                         <div class="evidence-label">งานป้ายประเภทต่างๆ (GRAPHIC DATA)</div>
                         
-                        <div style="margin-bottom: 12px;">
+                        <div style="margin-bottom: 15px;">
                             <strong>• ป้ายเติมเกม & ส่งของขวัญ</strong>
                             <ul class="clue-list" style="padding-left: 15px; margin-top: 5px;">
                                 <li>เรทที่ใส่ 1-10 ราคา <span class="red-clue">59.-</span></li>
@@ -621,7 +625,7 @@
                             </ul>
                         </div>
 
-                        <div style="margin-bottom: 12px;">
+                        <div style="margin-bottom: 15px;">
                             <strong>• ป้ายเครดิต</strong>
                             <ul class="clue-list" style="padding-left: 15px; margin-top: 5px;">
                                 <li>ส่งงาน 1 ตัวละคร ราคา <span class="red-clue">50.-</span></li>
@@ -629,7 +633,7 @@
                             </ul>
                         </div>
 
-                        <div style="margin-bottom: 12px;">
+                        <div style="margin-bottom: 15px;">
                             <strong>• ป้ายไอดี & ป้ายบัญชี</strong>
                             <ul class="clue-list" style="padding-left: 15px; margin-top: 5px;">
                                 <li>ระดับตกแต่งปกติ ราคา <span class="red-clue">69.-</span></li>
@@ -637,18 +641,18 @@
                             </ul>
                         </div>
 
-                        <div style="margin-bottom: 12px;">
+                        <div style="margin-bottom: 15px;">
                             <strong>• ป้ายเช่าไอดี</strong>
                             <ul class="clue-list" style="padding-left: 15px; margin-top: 5px;">
                                 <li>เฉพาะส่วนหัวป้าย ราคา <span class="red-clue">59.-</span></li>
                                 <li>ความจุ 100-250 สกิน คิดสกินละ <span class="red-clue">1฿</span></li>
                                 <li>ความจุ 250 สกินขึ้นไป คิดสกินละ <span class="red-clue">0.8฿</span></li>
-                                <li style="color: #2d5437;"><strong>ออปชันเสริมฟรี:</strong> ประดับ ห้อง แรงค์ สัตว์เลี้ยง ยอดเติม ของจิปาถะ</li>
-                                <li style="color: #2d5437;">ผู้เช่าที่ยอดเรียงสกิน 100 ขึ้นไป <span class="red-clue">ฟรีหัวป้าย !</span></li>
+                                <li style="color: #3b5c42;"><strong>ออปชันเสริมฟรี:</strong> ประดับ ห้อง แรงค์ สัตว์เลี้ยง ยอดเติม ของจิปาถะ</li>
+                                <li style="color: #3b5c42;">ผู้เช่าที่ยอดเรียงสกิน 100 ขึ้นไป <span class="red-clue">ฟรีหัวป้าย !</span></li>
                             </ul>
                         </div>
 
-                        <div style="margin-top: 15px; padding-top: 10px; border-top: 1px dashed #cbbfa7;">
+                        <div style="margin-top: 15px; padding-top: 12px; border-top: 1px dashed #cfc5af;">
                             <ul class="clue-list">
                                 <li>สามารถบรีฟตัวละครและคุมโทนสีได้ตามใจชอบ</li>
                                 <li>ระยะเวลารองานปกติ 1-2 วัน (ต้องการเคสเร่งด่วนพิเศษ <span class="red-clue">+10฿</span>)</li>
@@ -661,19 +665,19 @@
                     <div class="notebook-main-title">RESTRICTIONS & CONTACT</div>
                     
                     <div class="evidence-item restriction-zone">
-                        <div class="evidence-label" style="color: #b81e1e;">📍 กฎข้อบังคับของร้าน 📍</div>
+                        <div class="evidence-label" style="color: #c23434;">📍 กฎข้อบังคับของร้าน 📍</div>
                         <ul class="clue-list">
                             <li>หากโอนเงินเรียบร้อยแล้ว ทางร้านงดคืนเงินให้ในทุกกรณีนะคะ</li>
                             <li>แจ้งข้อมูลไอดีผิดพลาด ทางร้านไม่ขอรับผิดชอบใดๆ ทุกกรณี</li>
                             <li>การผ่อนชำระ หากส่งยอดไม่ครบถ้วนหรือไม่ต่อเนื่อง จะถูกยึดยอดทันที</li>
-                            <li>งานประเภทป้าย หากสั่งยกเลิกงานกลางคัน จะไม่มีการคืนเงินทุกกรณี</li>
+                            <li>สำหรับงานป้าย หากสั่งยกเลิกงานกลางคัน จะไม่มีการคืนเงินทุกกรณี</li>
                             <li>เมื่อส่งงานให้ตรวจเช็คแล้ว แต่ขอสั่งแก้ไขงานทีหลัง คิดจุดละ <span class="red-clue">20฿</span></li>
-                            <li>ระบบเว็บไซต์ขัดข้องแก้ไขให้ฟรี แต่หากขอเปลี่ยนตัวข้อมูลเนื้อหาคิดจุดละ <span class="red-clue">20฿</span></li>
+                            <li>ระบบเว็บไซต์มีปัญหาแก้ไขให้ฟรี แต่หากขอเปลี่ยนตัวข้อมูลเนื้อหาคิดจุดละ <span class="red-clue">20฿</span></li>
                         </ul>
                     </div>
 
-                    <div class="evidence-item" style="background: #edf3f5; border-color: #b8cbd4;">
-                        <div class="evidence-label" style="color: #204052;">📱 ช่องทางการสื่อสารลับ</div>
+                    <div class="evidence-item" style="background: #eef4f7; border-color: #bad2db;">
+                        <div class="evidence-label" style="color: #224354;">📱 ช่องทางการติดต่อ</div>
                         <div class="contact-grid">
                             <div class="contact-row">
                                 <strong>Facebook:</strong> 
@@ -690,7 +694,7 @@
                 </div>
 
                 <div class="typewriter-footer">
-                    END OF DOSSIER DATA — ZENITHYSHOP RECORDED.
+                    🐾 ZENITHYSHOP CASE RECORDED WITH LOVE 🐾
                 </div>
 
             </div>
@@ -700,22 +704,17 @@
 
     <script>
         function switchFolder(event, pageId) {
-            // 1. ซ่อนหน้าแฟ้มคดีทั้งหมดก่อน
             const pages = document.getElementsByClassName('folder-page');
             for (let i = 0; i < pages.length; i++) {
                 pages[i].classList.remove('active-page');
             }
 
-            // 2. เอาสถานะ "แท็บที่เลือก" ออกจากทุกปุ่ม
             const tabs = document.getElementsByClassName('tab-btn');
             for (let i = 0; i < tabs.length; i++) {
                 tabs[i].classList.remove('active-tab');
             }
 
-            // 3. เปิดหน้าแฟ้มคดีที่ผู้ใช้เลือกกด
             document.getElementById(pageId).classList.add('active-page');
-
-            // 4. ใส่สถานะไฮไลท์สีให้แท็บที่พึ่งกดไป
             event.currentTarget.classList.add('active-tab');
         }
     </script>
