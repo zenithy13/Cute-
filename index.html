@@ -2,86 +2,51 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <title>zenithyshop</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>zenithyshop | iOS Style</title>
     <style>
-        body {
-            margin: 0; padding: 0;
-            background: #e8f7fa url('IMG_2086') no-repeat center center fixed;
-            background-size: cover;
-            font-family: 'Kanit', sans-serif;
-            color: #333;
-        }
-        /* จำลองหน้าจอ Desktop */
-        .desktop { padding: 20px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-        
-        /* สไตล์ Folder */
-        .folder { width: 100px; text-align: center; cursor: pointer; }
-        .folder-icon { width: 80px; height: 80px; background: #64b5f6; border-radius: 10px; margin: auto; }
-        
-        /* ใส่เนื้อหาใน Folder (ข้อมูลร้าน) */
-        .content-box { background: rgba(255,255,255,0.9); padding: 20px; border-radius: 15px; max-width: 500px; margin: 50px auto; }
+        body { margin: 0; background: #000; font-family: sans-serif; color: white; display: flex; justify-content: center; min-height: 100vh; }
+        .ios-screen { width: 100%; max-width: 400px; padding: 20px; background: linear-gradient(to bottom, #333, #000); border-radius: 40px; }
 
-        /* Dock ด้านล่าง */
-        .dock {
-            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-            background: rgba(255,255,255,0.3); backdrop-filter: blur(10px);
-            padding: 10px 20px; border-radius: 20px; display: flex; gap: 15px;
-        }
+        /* Widget สไตล์ iOS */
+        .widget { background: rgba(255,255,255,0.1); backdrop-filter: blur(20px); border-radius: 25px; padding: 20px; margin-bottom: 20px; }
+        
+        /* App Icon Style */
+        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
+        .icon { text-align: center; font-size: 12px; }
+        .icon-box { width: 60px; height: 60px; background: #444; border-radius: 15px; margin: 0 auto 5px; display: flex; align-items: center; justify-content: center; }
+
+        .btn-link { display: block; background: #222; color: #fff; padding: 10px; border-radius: 10px; text-decoration: none; margin-top: 10px; font-size: 14px; text-align: center; border: 1px solid #444; }
     </style>
 </head>
 <body>
 
-<div class="desktop">
-    <!-- โฟลเดอร์ข้อมูลร้าน -->
-    <div class="folder">
-        <div class="folder-icon"></div>
-        <p>zenithyshop.info</p>
+<div class="ios-screen">
+    <div class="widget">
+        <h2 style="margin-top:0">zenithyshop</h2>
+        <p style="font-size: 14px;">zenithy รับทำเว็บไซต์ร้านค้าสำหรับร้านปล่อยเช่า/ร้านทำป้าย/ร้านเติมเกม identity v * รอบทดลอง *</p>
     </div>
-</div>
 
-<div class="content-box">
-    <h1><img src="IMG_0545.jpeg" width="50" style="vertical-align:middle"> zenithyshop</h1>
-    <p><strong>คำโปรย:</strong> zenithy รับทำเว็บไซต์ร้านค้าสำหรับร้านปล่อยเช่า/ร้านทำป้าย/ร้านเติมเกม identity v * รอบทดลอง *</p>
-    
-    <h3>Price Rate</h3>
-    <ul>
-        <li>เว็บไซต์บัญชี: 99.-</li>
-        <li>เว็บไซต์รวมลิงก์ผลงาน: 129.-</li>
-        <li>เว็บไซต์เรทราคา: 129.-</li>
-        <li>เรทราคา+รวมลิงก์: 149.-</li>
-        <li>ออกแบบใหม่ (ไม่ถูกใจเทมเพลต): 189.-</li>
-    </ul>
-
-    <h3>เว็บไซต์ทำอะไรได้บ้าง ❔⬇️</h3>
-    <ul>
-        <li>สามารถใส่รวมลิงก์ผลงานป้าย/ลิงก์โพสต์รวมไอดีปล่อยเช่า/ลิงก์เช็คคิวต่างๆ ไว้ในเว็บไซต์เดียว !</li>
-        <li>ใส่เรทราคาทำป้าย/เรทดันไอดี/ อื่น ๆ</li>
-        <li>ใส่ลิงก์ช่องทางการติดต่อ ได้ทั้ง Line / Facebook / Instagram / อื่นๆ</li>
-        <li>เว็บบัญชี (สามารถคัดลอกเลขบัญชีได้) และใส่รูปสำหรับแสกนได้เช่นกัน</li>
-    </ul>
-
-    <p><strong>*️⃣ มีเทมเพลตให้เลือกถึง 50+ แบบ 🔥</strong></p>
-    
-    <p><a href="https://drive.google.com/drive/mobile/folders/1fj024BhkgC1ctJeiwyZUG3USteSdzWzr">ตัวอย่างเทมเพลตคลิกลิงก์</a></p>
-    <p><a href="https://drive.google.com/drive/folders/16FFEJUwVLDIjmbSZEPM3x_SkLzVkl4CO">ตัวอย่างงาน website</a></p>
-
-    <p>📍 <strong>มีรับประกันเว็บ 1 เดือน เว็บมีปัญหาแจ้งได้ตลอดค่ะ</strong></p>
-
-    <h3>📱 ช่องทางติดต่อ</h3>
-    <p>Facebook : <a href="https://www.facebook.com/profile.php?id=61554192600355">Facebook</a></p>
-    <p>Line : <a href="https://lin.ee/qihwQGM"><img src="https://scdn.line-apps.com/n/line_add_friends/btn/th.png" alt="เพิ่มเพื่อน" height="36"></a></p>
-    
-    <!-- วางรูปเสริม -->
-    <div style="display:flex; gap:10px; margin-top:20px;">
-        <img src="IMG_2088" width="80">
-        <img src="IMG_2089" width="80">
-        <img src="IMG_2090" width="80">
+    <div class="widget">
+        <h3 style="margin-top:0">Price Rate</h3>
+        <ul style="font-size: 13px;">
+            <li>บัญชี: 99.- | ลิงก์งาน: 129.-</li>
+            <li>เรทราคา: 129.- | เรท+ลิงก์: 149.-</li>
+            <li>ออกแบบใหม่: 189.-</li>
+        </ul>
     </div>
-</div>
 
-<div class="dock">
-    <!-- ไอคอนจำลอง Dock -->
-    <span>📁</span><span>🌐</span><span>📧</span><span>💬</span>
+    <div class="grid">
+        <div class="icon"><div class="icon-box">📂</div>เทมเพลต</div>
+        <div class="icon"><div class="icon-box">🌐</div>ตัวอย่างงาน</div>
+        <div class="icon"><div class="icon-box">💬</div>Line</div>
+        <div class="icon"><div class="icon-box">👥</div>FB</div>
+    </div>
+
+    <div style="margin-top:20px; text-align:center;">
+        <p style="font-size: 12px;">🔒 มีรับประกันเว็บ 1 เดือน แจ้งได้ตลอดค่ะ</p>
+        <a href="https://lin.ee/qihwQGM" class="btn-link">เพิ่มเพื่อนทาง Line</a>
+    </div>
 </div>
 
 </body>
