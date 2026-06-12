@@ -2,79 +2,87 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>zenithyshop - Official</title>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+    <title>zenithyshop</title>
     <style>
-        :root { --accent: #826659; --star: #8a99ad; }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Kanit', sans-serif; background: #f2f4f7; overflow-x: hidden; }
+        body {
+            margin: 0; padding: 0;
+            background: #e8f7fa url('IMG_2086') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Kanit', sans-serif;
+            color: #333;
+        }
+        /* จำลองหน้าจอ Desktop */
+        .desktop { padding: 20px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        
+        /* สไตล์ Folder */
+        .folder { width: 100px; text-align: center; cursor: pointer; }
+        .folder-icon { width: 80px; height: 80px; background: #64b5f6; border-radius: 10px; margin: auto; }
+        
+        /* ใส่เนื้อหาใน Folder (ข้อมูลร้าน) */
+        .content-box { background: rgba(255,255,255,0.9); padding: 20px; border-radius: 15px; max-width: 500px; margin: 50px auto; }
 
-        /* ดาวโปรยแบบสมูท ไม่ทับปุ่ม */
-        .stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
-        .star { position: absolute; color: var(--star); animation: fall linear infinite; opacity: 0.5; }
-        @keyframes fall { 0% { transform: translateY(-10vh); } 100% { transform: translateY(110vh); } }
-
-        /* ID Card หรูหรา */
-        .section { position: relative; z-index: 2; width: 100%; height: 100vh; display: flex; align-items: center; justify-content: center; }
-        .id-card { background: white; width: 90%; max-width: 500px; padding: 40px; border-radius: 25px; box-shadow: 0 20px 40px rgba(0,0,0,0.15); text-align: center; border: 1px solid #eee; }
-        .id-card h1 { font-family: 'Playfair Display', serif; color: var(--accent); margin-bottom: 20px; }
-        .id-card p { margin: 10px 0; color: #555; }
-        .btn-next { margin-top: 30px; background: var(--accent); color: white; padding: 12px 30px; border-radius: 50px; cursor: pointer; border: none; font-weight: bold; }
-
-        /* หน้าข้อมูล */
-        .content { padding: 40px 20px; max-width: 600px; margin: 0 auto; }
-        .card-box { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-        h2 { color: var(--accent); border-bottom: 2px solid var(--accent); margin: 25px 0 15px; }
-        .btn-link { display: block; padding: 15px; margin: 10px 0; background: #f8f9fa; border: 1px solid #ddd; border-radius: 12px; text-decoration: none; color: #333; text-align: center; font-weight: 600; }
-        .btn-link:hover { background: var(--accent); color: white; }
+        /* Dock ด้านล่าง */
+        .dock {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            background: rgba(255,255,255,0.3); backdrop-filter: blur(10px);
+            padding: 10px 20px; border-radius: 20px; display: flex; gap: 15px;
+        }
     </style>
 </head>
 <body>
 
-    <div class="stars" id="stars"></div>
-    <script>
-        for(let i=0; i<20; i++){
-            let s = document.createElement('div');
-            s.className = 'star'; s.innerHTML = '★';
-            s.style.left = Math.random()*100 + '%';
-            s.style.fontSize = (Math.random()*15 + 15) + 'px';
-            s.style.animationDuration = (Math.random()*8 + 10) + 's';
-            document.getElementById('stars').appendChild(s);
-        }
-    </script>
-
-    <div class="section">
-        <div class="id-card">
-            <h1>The Sweet Boy</h1>
-            <p><strong>ID CARD:</strong> zenithyshop</p>
-            <p>Date of birth: 15 / 09 / 2003</p>
-            <p><em>"By registering to 'the Sweet Boy club' you agree to open up your heart, show us your soul &lt;3"</em></p>
-            <button class="btn-next" onclick="document.getElementById('main').scrollIntoView({behavior:'smooth'})">NEXT PAGE ➔</button>
-        </div>
+<div class="desktop">
+    <!-- โฟลเดอร์ข้อมูลร้าน -->
+    <div class="folder">
+        <div class="folder-icon"></div>
+        <p>zenithyshop.info</p>
     </div>
+</div>
 
-    <div id="main" class="content">
-        <div class="card-box">
-            <h2>PERSONAL 🏷️</h2>
-            <p>zenithy รับทำเว็บไซต์ร้านค้าสำหรับร้านปล่อยเช่า ร้านทำป้าย ร้านเติมเกม identity v รอบทดลอง 🫶🏻✨</p>
+<div class="content-box">
+    <h1><img src="IMG_0545.jpeg" width="50" style="vertical-align:middle"> zenithyshop</h1>
+    <p><strong>คำโปรย:</strong> zenithy รับทำเว็บไซต์ร้านค้าสำหรับร้านปล่อยเช่า/ร้านทำป้าย/ร้านเติมเกม identity v * รอบทดลอง *</p>
+    
+    <h3>Price Rate</h3>
+    <ul>
+        <li>เว็บไซต์บัญชี: 99.-</li>
+        <li>เว็บไซต์รวมลิงก์ผลงาน: 129.-</li>
+        <li>เว็บไซต์เรทราคา: 129.-</li>
+        <li>เรทราคา+รวมลิงก์: 149.-</li>
+        <li>ออกแบบใหม่ (ไม่ถูกใจเทมเพลต): 189.-</li>
+    </ul>
 
-            <h2>PRICE RATE</h2>
-            <ul>
-                <li>เว็บไซต์บัญชี: 99.-</li>
-                <li>เว็บไซต์รวมลิงก์ผลงาน: 129.-</li>
-                <li>เว็บไซต์เรทราคา: 129.-</li>
-                <li>เรทราคา และ รวมลิงก์: 149.-</li>
-            </ul>
+    <h3>เว็บไซต์ทำอะไรได้บ้าง ❔⬇️</h3>
+    <ul>
+        <li>สามารถใส่รวมลิงก์ผลงานป้าย/ลิงก์โพสต์รวมไอดีปล่อยเช่า/ลิงก์เช็คคิวต่างๆ ไว้ในเว็บไซต์เดียว !</li>
+        <li>ใส่เรทราคาทำป้าย/เรทดันไอดี/ อื่น ๆ</li>
+        <li>ใส่ลิงก์ช่องทางการติดต่อ ได้ทั้ง Line / Facebook / Instagram / อื่นๆ</li>
+        <li>เว็บบัญชี (สามารถคัดลอกเลขบัญชีได้) และใส่รูปสำหรับแสกนได้เช่นกัน</li>
+    </ul>
 
-            <h2>CONTACT 📥</h2>
-            <a href="fb://profile/61554192600355" class="btn-link">Facebook (เปิดในแอป)</a>
-            <a href="https://lin.ee/qihwQGM" class="btn-link">LINE Official</a>
+    <p><strong>*️⃣ มีเทมเพลตให้เลือกถึง 50+ แบบ 🔥</strong></p>
+    
+    <p><a href="https://drive.google.com/drive/mobile/folders/1fj024BhkgC1ctJeiwyZUG3USteSdzWzr">ตัวอย่างเทมเพลตคลิกลิงก์</a></p>
+    <p><a href="https://drive.google.com/drive/folders/16FFEJUwVLDIjmbSZEPM3x_SkLzVkl4CO">ตัวอย่างงาน website</a></p>
 
-            <h2>PORTFOLIO 📂</h2>
-            <a href="https://drive.google.com/drive/mobile/folders/1fj024BhkgC1ctJeiwyZUG3USteSdzWzr" class="btn-link">ดูเทมเพลตทั้งหมด (50+ แบบ)</a>
-            <a href="https://drive.google.com/drive/folders/16FFEJUwVLDIjmbSZEPM3x_SkLzVkl4CO" class="btn-link">ดูตัวอย่างเว็บไซต์สำเร็จ</a>
-        </div>
+    <p>📍 <strong>มีรับประกันเว็บ 1 เดือน เว็บมีปัญหาแจ้งได้ตลอดค่ะ</strong></p>
+
+    <h3>📱 ช่องทางติดต่อ</h3>
+    <p>Facebook : <a href="https://www.facebook.com/profile.php?id=61554192600355">Facebook</a></p>
+    <p>Line : <a href="https://lin.ee/qihwQGM"><img src="https://scdn.line-apps.com/n/line_add_friends/btn/th.png" alt="เพิ่มเพื่อน" height="36"></a></p>
+    
+    <!-- วางรูปเสริม -->
+    <div style="display:flex; gap:10px; margin-top:20px;">
+        <img src="IMG_2088" width="80">
+        <img src="IMG_2089" width="80">
+        <img src="IMG_2090" width="80">
     </div>
+</div>
+
+<div class="dock">
+    <!-- ไอคอนจำลอง Dock -->
+    <span>📁</span><span>🌐</span><span>📧</span><span>💬</span>
+</div>
+
 </body>
 </html>
