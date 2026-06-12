@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>zenithyshop</title>
-    <!-- Google Fonts: Noto Sans Thai Looped, Playfair Display, Montserrat -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai+Looped:wght@400;500;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
@@ -20,13 +19,16 @@
             --font-serif: 'Playfair Display', serif;
             --font-sans: 'Montserrat', sans-serif;
             
-            /* ปรับสีดาวห้าแฉกให้กลับมาเป็นสีเทาตามเดิม และปรับดาวตกให้เข้มขึ้นเพื่อให้มองเห็นชัดเจน */
-            --star-color: rgba(110, 125, 145, 0.85); 
+            /* สีดาวห้าแฉกสีเทา และปรับดาวตกให้เข้มขึ้นเพื่อให้มองเห็นชัดเจนลอยเหนือการ์ด */
+            --star-color: rgba(110, 125, 145, 0.9); 
             --star-gray-feature: #8a99ad; 
 
             /* สีปุ่มกด */
             --btn-blue: #dbeafe;       
             --btn-blue-text: #1e40af;
+            /* สีปุ่มไลน์ใหม่ สไตล์ฟุ้งแบบเฟสบุ๊ค */
+            --btn-line-bg: #e1fdf1;
+            --btn-line-text: #00b900;
         }
 
         * {
@@ -45,16 +47,16 @@
         }
 
         /* -----------------------------------------
-           BACKGROUND LAYER (ปรับให้ดาวตกเด่นขึ้นมาให้เห็นชัดเจน)
+           BACKGROUND LAYER (ดึงดาวออกลอยเหนือเนื้อหาทุกส่วนเพื่อให้เห็นชัดเจน)
         ----------------------------------------- */
         .star-bg-layer {
-            position: absolute;
+            position: fixed; /* ใช้ fixed ล็อกตำแหน่งไว้เหนือหน้าจอเสมอ */
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 1;
+            z-index: 20; /* ดันให้อยู่เหนือตัวการ์ดทั้งหมดเพื่อให้เห็นดาวตลอด */
             overflow: hidden;
         }
 
@@ -63,16 +65,16 @@
             color: var(--star-color);
             font-size: 28px;
             user-select: none;
-            animation: starRain 6s linear infinite;
+            animation: starRain 7s linear infinite;
             opacity: 0;
-            filter: drop-shadow(0 0 6px rgba(110, 125, 145, 0.4));
+            filter: drop-shadow(0 0 7px rgba(110, 125, 145, 0.5));
         }
 
         @keyframes starRain {
-            0% { transform: translateY(-5vh) rotate(0deg) scale(0.6); opacity: 0; }
-            12% { opacity: 1; }
-            88% { opacity: 1; }
-            100% { transform: translateY(105vh) rotate(120deg) scale(0.6); opacity: 0; }
+            0% { transform: translateY(-10vh) rotate(0deg) scale(0.6); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(110vh) rotate(120deg) scale(0.6); opacity: 0; }
         }
 
         /* -----------------------------------------
@@ -217,6 +219,7 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
+            z-index: 10; /* ต่ำกว่าดาวเพื่อให้ดาววิ่งผ่าน */
         }
 
         .scroll-btn:hover { transform: translateY(-3px); }
@@ -274,11 +277,10 @@
             font-weight: bold;
         }
 
-        /* ปรับแต่งส่วนจัดการปุ่ม Contact ให้รองรับปุ่มรูปแบบใหม่ */
+        /* ส่วนจัดการปุ่ม Contact ให้เป็นชุดเดียวกัน */
         .contact-buttons-container {
             display: flex;
             flex-direction: column;
-            align-items: center;
             gap: 16px;
         }
 
@@ -296,25 +298,36 @@
             width: 100%;
         }
 
-        .btn-blue-tone { background-color: var(--btn-blue); color: var(--btn-blue-text); box-shadow: 0 6px 15px rgba(30, 64, 175, 0.1); }
+        .btn-blue-tone { background-color: var(--btn-blue); color: var(--btn-blue-text); box-shadow: 0 6px 15px rgba(30, 64, 175, 0.08); }
         .btn-blue-tone:hover { transform: translateY(-2px); background-color: var(--btn-blue-text); color: #fff; }
 
-        /* จัดระเบียบปุ่ม Line รูปภาพ */
-        .line-add-wrapper {
+        /* 🔥 ปรับแต่งปุ่ม LINE ใหม่ ให้เป็นสไตล์เดียวกับเฟสบุ๊ค คลีน มินิมอล ฟุ้งๆ */
+        .btn-line-style {
+            background-color: var(--btn-line-bg);
+            color: var(--btn-line-text);
+            box-shadow: 0 6px 15px rgba(0, 185, 0, 0.06);
+            position: relative;
+        }
+        .btn-line-style:hover {
+            transform: translateY(-2px);
+            background-color: var(--btn-line-text);
+            color: #fff;
+        }
+        /* ใส่ไอคอนไลน์ */
+        .btn-line-style::before {
+            content: '';
             display: inline-block;
-            transition: transform 0.3s ease;
+            width: 18px;
+            height: 18px;
+            background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%2300b900"><path d="M24 10.304c0-5.232-5.383-9.486-12-9.486s-12 4.254-12 9.486c0 4.69 4.263 8.608 10.009 9.352l-2.023 3.691c-.131.238-.052.54.179.69.076.05.163.073.249.073.167 0 .329-.083.421-.24l2.251-4.103c.33.007.662.012.996.012 6.617 0 12-4.254 12-9.486zm-15.545 3.39h-1.637c-.381 0-.69-.309-.69-.691v-4.57c0-.381.309-.69.69-.69s.69.309.69.69v3.879h.947c.381 0 .69.309.69.691s-.309.69-.69.69zm2.71 0h-1.637c-.381 0-.69-.309-.69-.691v-4.57c0-.381.309-.69.69-.69s.69.309.69.69v4.57c0 .381-.309.691-.69.691zm4.12 0h-1.637c-.381 0-.69-.309-.69-.691v-4.57c0-.381.309-.69.69-.69s.69.309.69.69v3.298l2.253-3.711c.148-.243.43-.362.69-.296.26.065.45.281.479.54l.011 4.73c.001.381-.308.691-.689.691s-.691-.309-.691-.69l-.007-3.078-2.22 3.655c-.143.235-.386.353-.629.353-.105 0-.21-.023-.31-.071zm4.116 0h-1.637c-.381 0-.69-.309-.69-.691v-4.57c0-.381.309-.69.69-.69s.69.309.69.69v3.879h.947c.381 0 .69.309.69.691s-.309.69-.69.69z"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+            margin-right: 10px;
+            transition: filter 0.3s ease;
         }
-        .line-add-wrapper:hover {
-            transform: scale(1.05);
+        .btn-line-style:hover::before {
+            filter: brightness(0) invert(1);
         }
-        .line-add-wrapper img {
-            display: block;
-            height: 38px;
-            width: auto;
-        }
-
-        .btn-brown-tone { background-color: #f5ebe6; color: #78350f; box-shadow: 0 6px 15px rgba(120, 53, 15, 0.1); }
-        .btn-brown-tone:hover { transform: translateY(-2px); background-color: #78350f; color: #fff; }
 
         .left-photo-space { margin-top: auto; text-align: center; }
         .left-photo-space .photo-holder {
@@ -392,12 +405,16 @@
            📱 RESPONSIVE: รูปแบบมือถือ
         ----------------------------------------- */
         @media (max-width: 768px) {
+            /* ลำดับการซ้อนทับดาวบนมือถือ ดันให้ลอยเหนือตัวการ์ดเสมอ */
+            .star-bg-layer { z-index: 30; }
+
             .id-card { 
                 grid-template-columns: 1fr 1.5fr !important; 
                 gap: 15px; 
                 padding: 20px 12px; 
                 border-radius: 16px;
                 max-width: 100%;
+                z-index: 10;
             }
             .photo-box { max-width: 95px; }
             .signature-area { font-size: 8px; margin-top: 6px; }
@@ -407,7 +424,7 @@
             .info-row { font-size: 11px; margin-bottom: 6px; }
             .info-label { font-size: 11px; min-width: 65px; margin-right: 4px; }
             .card-footer-text { display: none; } 
-            .scroll-btn { padding: 11px 26px; font-size: 12px; margin-top: 15px; }
+            .scroll-btn { padding: 11px 26px; font-size: 12px; margin-top: 15px; z-index: 5; }
 
             .portfolio-container { 
                 padding: 12px 10px; 
@@ -418,6 +435,7 @@
                 grid-template-columns: 1fr; 
                 height: auto;
                 border-radius: 20px;
+                z-index: 10;
             }
 
             .left-column { 
@@ -475,30 +493,24 @@
 </head>
 <body>
 
-    <!-- =========================================
-         BACKGROUND LAYER (ระบบดาวตกสีเทาที่ปรับให้เห็นชัดเจนขึ้น)
-         ========================================= -->
     <div class="star-bg-layer" id="stars-container">
-        <div class="star-falling" style="left: 6%; animation-duration: 4.8s; animation-delay: 0s;">★</div>
-        <div class="star-falling" style="left: 18%; animation-duration: 6.2s; animation-delay: 1.5s;">★</div>
-        <div class="star-falling" style="left: 29%; animation-duration: 5.0s; animation-delay: 0.3s;">★</div>
-        <div class="star-falling" style="left: 44%; animation-duration: 7.5s; animation-delay: 2.8s;">★</div>
+        <div class="star-falling" style="left: 5%; animation-duration: 4.8s; animation-delay: 0s;">★</div>
+        <div class="star-falling" style="left: 15%; animation-duration: 6.2s; animation-delay: 1.5s;">★</div>
+        <div class="star-falling" style="left: 28%; animation-duration: 5.0s; animation-delay: 0.3s;">★</div>
+        <div class="star-falling" style="left: 42%; animation-duration: 7.5s; animation-delay: 2.8s;">★</div>
         <div class="star-falling" style="left: 57%; animation-duration: 5.4s; animation-delay: 0.9s;">★</div>
-        <div class="star-falling" style="left: 72%; animation-duration: 6.8s; animation-delay: 1.7s;">★</div>
-        <div class="star-falling" style="left: 86%; animation-duration: 5.9s; animation-delay: 0.5s;">★</div>
+        <div class="star-falling" style="left: 70%; animation-duration: 6.8s; animation-delay: 1.7s;">★</div>
+        <div class="star-falling" style="left: 85%; animation-duration: 5.9s; animation-delay: 0.5s;">★</div>
         <div class="star-falling" style="left: 94%; animation-duration: 6.4s; animation-delay: 2.2s;">★</div>
-        <div class="star-falling" style="left: 11%; animation-duration: 5.1s; animation-delay: 1.2s;">★</div>
-        <div class="star-falling" style="left: 24%; animation-duration: 5.7s; animation-delay: 0.6s;">★</div>
-        <div class="star-falling" style="left: 38%; animation-duration: 4.6s; animation-delay: 1.4s;">★</div>
-        <div class="star-falling" style="left: 51%; animation-duration: 7.1s; animation-delay: 0.1s;">★</div>
-        <div class="star-falling" style="left: 66%; animation-duration: 4.9s; animation-delay: 2.0s;">★</div>
+        <div class="star-falling" style="left: 10%; animation-duration: 5.1s; animation-delay: 1.2s;">★</div>
+        <div class="star-falling" style="left: 23%; animation-duration: 5.7s; animation-delay: 0.6s;">★</div>
+        <div class="star-falling" style="left: 36%; animation-duration: 4.6s; animation-delay: 1.4s;">★</div>
+        <div class="star-falling" style="left: 50%; animation-duration: 7.1s; animation-delay: 0.1s;">★</div>
+        <div class="star-falling" style="left: 65%; animation-duration: 4.9s; animation-delay: 2.0s;">★</div>
         <div class="star-falling" style="left: 80%; animation-duration: 6.3s; animation-delay: 1.0s;">★</div>
     </div>
 
 
-    <!-- =========================================
-         ส่วนที่ 1: บัตร ID CARD แนวนอน (ล็อกหน้าแรก)
-         ========================================= -->
     <section class="welcome-section" id="welcome-screen">
         <div class="id-card">
             <div class="card-photo-side">
@@ -529,13 +541,9 @@
     </section>
 
 
-    <!-- =========================================
-         ส่วนที่ 2: หน้าข้อมูลหลักผลงาน
-         ========================================= -->
     <section id="portfolio-page" class="portfolio-container">
         <div class="main-portfolio">
             
-            <!-- [คอมพิวเตอร์] คอลัมน์ซ้ายข้อมูลแบรนด์ และ ติดต่อด้านซ้าย -->
             <div class="left-column">
                 <div class="left-photo-space">
                     <div class="photo-holder">
@@ -555,14 +563,13 @@
                         <a href="https://www.facebook.com/profile.php?id=61554192600355" target="_blank" class="fluffy-btn btn-blue-tone">
                             Facebook
                         </a>
-                        <a href="https://lin.ee/qihwQGM" target="_blank" class="line-add-wrapper">
-                            <img src="https://scdn.line-apps.com/n/line_add_friends/btn/th.png" alt="เพิ่มเพื่อน" border="0">
+                        <a href="https://line.me/ti/p/LfBtdhlrVa" target="_blank" class="fluffy-btn btn-line-style">
+                            LINE
                         </a>
                     </div>
                 </div>
             </div>
 
-            <!-- คอลัมน์ขวา (รายละเอียดเรทราคาทั้งหมด) -->
             <div class="right-column">
                 <div>
                     <h2 class="content-block-title">PERSONAL 🏷️</h2>
@@ -617,15 +624,14 @@
                 </div>
             </div>
 
-            <!-- [มือถือ] โซนติดต่อดึงลงมาท้ายหน้าจอสุดตามบรีฟเดิิม พร้อมปุ่ม Line ใหม่ -->
             <div class="mobile-contact-footer">
                 <h3 class="content-block-title" style="border-left:none; padding-left:0; text-align:center; margin-bottom:5px;">CONTACT 📥</h3>
                 <div class="contact-buttons-container">
                     <a href="https://www.facebook.com/profile.php?id=61554192600355" target="_blank" class="fluffy-btn btn-blue-tone">
                         Facebook
                     </a>
-                    <a href="https://lin.ee/qihwQGM" target="_blank" class="line-add-wrapper">
-                        <img src="https://scdn.line-apps.com/n/line_add_friends/btn/th.png" alt="เพิ่มเพื่อน" border="0">
+                    <a href="https://line.me/ti/p/LfBtdhlrVa" target="_blank" class="fluffy-btn btn-line-style">
+                        LINE
                     </a>
                 </div>
             </div>
@@ -633,21 +639,22 @@
         </div>
     </section>
 
-    <!-- =========================================
-         SCRIPT ระบบสลับเพจ
-         ========================================= -->
     <script>
+        // บังคับคืนค่าหน้าแรกสุดทุกครั้งที่รีเฟรชเปิดเว็บขึ้นมาใหม่
         window.addEventListener('DOMContentLoaded', () => {
             window.scrollTo(0, 0);
         });
 
+        // สั่งเปลี่ยนหน้าจอเมื่อกดปุ่ม NEXT PAGE ➔ เท่านั้น
         function goToPortfolioPage() {
+            // ปลดล็อกเปิดสิทธิ์ให้เบราว์เซอร์เลื่อนตำแหน่งได้
             document.body.style.overflow = 'auto';
             document.documentElement.style.overflow = 'auto';
 
             const targetSection = document.getElementById('portfolio-page');
             targetSection.scrollIntoView({ behavior: 'smooth' });
 
+            // สกรอลล์เสร็จแล้วทำการล็อกสิทธิ์ป้องกันหน้าเลื่อนกลับเองบน PC
             if (window.innerWidth > 768) {
                 setTimeout(() => {
                     document.body.style.overflow = 'hidden';
