@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>zenithyshop</title>
+    <!-- Google Fonts: Mali (Thai), Playfair Display (Serif Title), Montserrat (Clean sans-serif) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Mali:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
@@ -19,8 +20,8 @@
             --font-serif: 'Playfair Display', serif;
             --font-sans: 'Montserrat', sans-serif;
             
-            /* สีดาวสีเทาเข้มเพื่อให้เห็นชัดเจนบนพื้นหลังขาว/ฟ้า */
-            --star-grey: #6b7280; 
+            /* สีดาวเทาเข้มสวยละมุน เห็นชัดเจนบนพื้นหลังขาว/ฟ้า */
+            --star-color: #718096; 
         }
 
         * {
@@ -38,7 +39,7 @@
         }
 
         /* -----------------------------------------
-           NEW FIXED BACKGROUND EFFECT (ก้อนเมฆสมจริง & ดาวโปรยสีเทาเห็นชัด)
+           BACKGROUND LAYER (ก้อนเมฆฟุ้งยักษ์ & ฝันรูปดาวโปรยปรายจำนวนมาก)
         ----------------------------------------- */
         .background-overlay {
             position: fixed;
@@ -47,99 +48,105 @@
             width: 100vw;
             height: 100vh;
             pointer-events: none;
-            z-index: 1; /* อยู่หลังเนื้อหาการ์ด แต่อยู่บนพื้นหลัง */
+            z-index: 1; /* อยู่ด้านหลังเนื้อหาหลัก แต่อยู่บนพื้นหลัง */
             overflow: hidden;
         }
 
-        /* ก้อนเมฆแบบสมจริง ปรับให้เห็นชัดขึ้นด้วยขอบฟุ้งสีขาวนวลตัดกับเลเยอร์หลัง */
+        /* ก้อนเมฆสมจริง ปรับให้ฟุ้งยักษ์ นุ่มละมุนสุดๆ */
         .cloud {
             position: absolute;
-            background: radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.7) 40%, rgba(232, 247, 250, 0.4) 60%, rgba(255,255,255,0) 80%);
-            filter: blur(15px);
+            background: radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.8) 30%, rgba(240, 252, 255, 0.5) 60%, rgba(255,255,255,0) 80%);
+            filter: blur(40px); /* เพิ่มความเบลอให้ฟุ้งนุ่มนวลสมจริง */
             border-radius: 50%;
             pointer-events: none;
             opacity: 0.85;
-            animation: cloudFloat 15s ease-in-out infinite alternate;
+            animation: cloudFloat 20s ease-in-out infinite alternate;
         }
 
         .cloud-top-left {
-            width: 450px;
-            height: 250px;
-            top: 5%;
-            left: -50px;
-            animation-duration: 12s;
+            width: 650px;
+            height: 350px;
+            top: -5%;
+            left: -100px;
+            animation-duration: 16s;
         }
 
         .cloud-mid-right {
-            width: 500px;
-            height: 300px;
-            top: 45%;
-            right: -80px;
-            animation-duration: 18s;
+            width: 700px;
+            height: 400px;
+            top: 40%;
+            right: -150px;
+            animation-duration: 22s;
         }
 
         .cloud-bottom-left {
-            width: 480px;
-            height: 280px;
-            bottom: 5%;
-            left: -60px;
-            animation-duration: 15s;
+            width: 650px;
+            height: 380px;
+            bottom: -5%;
+            left: -120px;
+            animation-duration: 18s;
         }
 
         @keyframes cloudFloat {
-            0% { transform: translate(0, 0) scale(1); opacity: 0.7; }
-            100% { transform: translate(40px, -20px) scale(1.1); opacity: 0.9; }
+            0% { transform: translate(0, 0) scale(0.95); opacity: 0.75; }
+            100% { transform: translate(50px, -30px) scale(1.05); opacity: 0.9; }
         }
 
-        /* ฝนดาวโปรยปรายสีเทาเห็นชัด (Twinkling Star Rain) */
-        .star-rain {
+        /* เอฟเฟกต์รูปดาวสี่แฉกโปรยปราย (Star Rain Element) */
+        .star-shape {
             position: absolute;
-            width: 5px;
-            height: 5px;
-            background: var(--star-grey);
-            border-radius: 50%;
-            /* เพิ่ม Shadow สีเทาอมฟ้าบางๆ ให้ดูละมุนวิบวับ */
-            box-shadow: 0 0 6px var(--star-grey), 0 0 12px rgba(107, 114, 128, 0.4);
+            color: var(--star-color);
+            font-size: 14px;
+            line-height: 1;
+            user-select: none;
+            pointer-events: none;
             opacity: 0;
-            animation: starFall linear infinite;
+            animation: starRainFall linear infinite;
+            text-shadow: 0 0 5px rgba(113, 128, 150, 0.3);
         }
 
-        /* กระจายฝนดาวตกนุ่มๆ ทั่วหน้าจอ สลับตำแหน่งและความเร็ว */
-        .star-rain:nth-child(1) { left: 8%; top: -20px; animation-duration: 7s; animation-delay: 0s; }
-        .star-rain:nth-child(2) { left: 22%; top: -20px; animation-duration: 9s; animation-delay: 2s; width: 6px; height: 6px; }
-        .star-rain:nth-child(3) { left: 35%; top: -20px; animation-duration: 6.5s; animation-delay: 4.5s; width: 4px; height: 4px; }
-        .star-rain:nth-child(4) { left: 48%; top: -20px; animation-duration: 11s; animation-delay: 1s; width: 5px; height: 5px; }
-        .star-rain:nth-child(5) { left: 62%; top: -20px; animation-duration: 8s; animation-delay: 3.5s; width: 6px; height: 6px; }
-        .star-rain:nth-child(6) { left: 78%; top: -20px; animation-duration: 10s; animation-delay: 5s; width: 4px; height: 4px; }
-        .star-rain:nth-child(7) { left: 90%; top: -20px; animation-duration: 7.5s; animation-delay: 1.5s; width: 5px; height: 5px; }
-        .star-rain:nth-child(8) { left: 15%; top: -20px; animation-duration: 8.5s; animation-delay: 3s; width: 5px; height: 5px; }
-        .star-rain:nth-child(9) { left: 42%; top: -20px; animation-duration: 7s; animation-delay: 5.5s; width: 6px; height: 6px; }
-        .star-rain:nth-child(10) { left: 55%; top: -20px; animation-duration: 9.5s; animation-delay: 2.5s; width: 4px; height: 4px; }
-        .star-rain:nth-child(11) { left: 70%; top: -20px; animation-duration: 8.2s; animation-delay: 0.8s; width: 5px; height: 5px; }
-        .star-rain:nth-child(12) { left: 85%; top: -20px; animation-duration: 10.5s; animation-delay: 4s; width: 6px; height: 6px; }
+        /* เพิ่มจำนวนดวงดาวให้เยอะและหนาตาขึ้น กระจายทั่วทั้งหน้าจอ */
+        .star-shape:nth-child(1) { left: 5%; top: -20px; animation-duration: 7s; animation-delay: 0s; font-size: 16px; }
+        .star-shape:nth-child(2) { left: 13%; top: -20px; animation-duration: 9.5s; animation-delay: 3s; font-size: 11px; }
+        .star-shape:nth-child(3) { left: 22%; top: -20px; animation-duration: 6.5s; animation-delay: 1.5s; font-size: 14px; }
+        .star-shape:nth-child(4) { left: 30%; top: -20px; animation-duration: 8s; animation-delay: 4.5s; font-size: 18px; }
+        .star-shape:nth-child(5) { left: 38%; top: -20px; animation-duration: 11s; animation-delay: 0.5s; font-size: 12px; }
+        .star-shape:nth-child(6) { left: 45%; top: -20px; animation-duration: 7.5s; animation-delay: 2.5s; font-size: 15px; }
+        .star-shape:nth-child(7) { left: 53%; top: -20px; animation-duration: 10s; animation-delay: 5s; font-size: 13px; }
+        .star-shape:nth-child(8) { left: 62%; top: -20px; animation-duration: 6s; animation-delay: 1.2s; font-size: 17px; }
+        .star-shape:nth-child(9) { left: 70%; top: -20px; animation-duration: 8.5s; animation-delay: 3.7s; font-size: 10px; }
+        .star-shape:nth-child(10) { left: 78%; top: -20px; animation-duration: 11.5s; animation-delay: 2s; font-size: 15px; }
+        .star-shape:nth-child(11) { left: 86%; top: -20px; animation-duration: 7.2s; animation-delay: 5.5s; font-size: 13px; }
+        .star-shape:nth-child(12) { left: 94%; top: -20px; animation-duration: 9s; animation-delay: 0.8s; font-size: 16px; }
+        .star-shape:nth-child(13) { left: 9%; top: -20px; animation-duration: 8.2s; animation-delay: 4s; font-size: 14px; }
+        .star-shape:nth-child(14) { left: 27%; top: -20px; animation-duration: 7s; animation-delay: 2.8s; font-size: 11px; }
+        .star-shape:nth-child(15) { left: 58%; top: -20px; animation-duration: 10.5s; animation-delay: 1.7s; font-size: 17px; }
+        .star-shape:nth-child(16) { left: 66%; top: -20px; animation-duration: 6.8s; animation-delay: 4.8s; font-size: 12px; }
+        .star-shape:nth-child(17) { left: 82%; top: -20px; animation-duration: 9.2s; animation-delay: 0.3s; font-size: 15px; }
+        .star-shape:nth-child(18) { left: 91%; top: -20px; animation-duration: 7.8s; animation-delay: 3.2s; font-size: 14px; }
 
-        @keyframes starFall {
+        @keyframes starRainFall {
             0% {
-                transform: translateY(0) scale(0.6);
+                transform: translateY(0) rotate(0deg) scale(0.6);
                 opacity: 0;
             }
             10% {
                 opacity: 0.8;
             }
-            30% {
-                opacity: 0.4; /* จำลองการระยิบระยับกะพริบระหว่างโปรยลงมา */
+            35% {
+                opacity: 0.3; /* เอฟเฟกต์กะพริบระยิบระยับตอนกำลังโปรยลงมา */
             }
-            50% {
-                opacity: 0.8;
+            55% {
+                opacity: 0.85;
             }
-            70% {
+            75% {
                 opacity: 0.4;
             }
             90% {
-                opacity: 0.7;
+                opacity: 0.75;
             }
             100% {
-                transform: translateY(105vh) scale(0.5);
+                transform: translateY(105vh) rotate(35deg) scale(0.6);
                 opacity: 0;
             }
         }
@@ -155,24 +162,24 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 30px 20px;
+            padding: 40px 20px;
             position: relative;
         }
 
         .id-card {
-            background-color: rgba(255, 255, 255, 0.85);
+            background-color: rgba(255, 255, 255, 0.88);
             border: 1px solid rgba(130, 102, 89, 0.25);
             border-radius: 28px;
             width: 100%;
             max-width: 800px;
             padding: 45px;
-            box-shadow: 0 20px 50px rgba(130, 102, 89, 0.06), inset 0 0 20px rgba(255, 255, 255, 0.5);
+            box-shadow: 0 20px 50px rgba(130, 102, 89, 0.05), inset 0 0 20px rgba(255, 255, 255, 0.6);
             display: grid;
             grid-template-columns: 1fr 1.4fr;
             gap: 40px;
             position: relative;
             z-index: 2;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
         }
 
         .photo-box {
@@ -284,7 +291,7 @@
             font-family: var(--font-sans);
         }
 
-        /* ปุ่มกดเปลี่ยนหน้าภาษาอังกฤษ */
+        /* ปุ่มกดเปลี่ยนหน้าภาษาอังกฤษตามที่ขอ */
         .scroll-btn {
             margin-top: 40px;
             background: linear-gradient(135deg, var(--accent-brown), #9a7d70);
@@ -313,32 +320,41 @@
         }
 
         /* -----------------------------------------
-           SECTION 2: RESUME/PORTFOLIO STYLE (รูปที่ 2)
+           SECTION 2: RESUME/PORTFOLIO NEW CLOUD STYLE (หน้าที่สองกรอบข้อความน่ารักฟุ้งๆ)
         ----------------------------------------- */
-        .main-portfolio {
+        .portfolio-container {
             min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+            position: relative;
+        }
+
+        .main-portfolio {
+            width: 100%;
             max-width: 950px;
-            margin: 60px auto;
-            background-color: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.04);
+            /* ปรับกรอบเนื้อหาให้เป็นสีขาวนวลแบบก้อนเมฆฟุ้งๆ พร้อมเงาฟูละมุน */
+            background-color: rgba(255, 255, 255, 0.92);
+            border: 2px dashed rgba(130, 102, 89, 0.25); /* เพิ่มเส้นขอบประน่ารักๆ */
+            border-radius: 40px; /* ปรับขอบให้มนโค้งนุ่มนวลฟุ้งๆ */
+            box-shadow: 0 30px 70px rgba(140, 180, 190, 0.15), 0 10px 30px rgba(0, 0, 0, 0.02); 
             display: grid;
             grid-template-columns: 1fr 1.6fr;
-            border-left: 12px solid var(--accent-brown);
-            border-radius: 0 20px 20px 0;
             overflow: hidden;
             position: relative;
             z-index: 2;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
         }
 
         /* คอลัมน์ซ้าย (Contact & Profile) */
         .left-column {
-            background-color: rgba(248, 250, 252, 0.85);
+            background-color: rgba(244, 251, 253, 0.75); /* ปรับสีหลังคาฝั่งซ้ายให้ฟุ้งเข้ากับเมฆ */
             padding: 50px 35px;
             display: flex;
             flex-direction: column;
             gap: 45px;
-            border-right: 1px solid rgba(0,0,0,0.03);
+            border-right: 2px dashed rgba(130, 102, 89, 0.15);
         }
 
         .brand-header {
@@ -401,9 +417,9 @@
             width: 100%;
             aspect-ratio: 1/1;
             background-color: #eef2f5;
-            border-radius: 16px;
+            border-radius: 20px;
             overflow: hidden;
-            border: 1px solid rgba(130, 102, 89, 0.1);
+            border: 1px solid rgba(130, 102, 89, 0.12);
             box-shadow: 0 8px 20px rgba(0,0,0,0.02);
         }
 
@@ -422,7 +438,7 @@
             letter-spacing: 2px;
         }
 
-        /* คอลัมน์ขวา (Content หลัก) */
+        /* คอลัมน์ขวา (Content หลักในกรอบฟุ้งๆ) */
         .right-column {
             padding: 50px;
             display: flex;
@@ -449,7 +465,7 @@
             color: var(--text-dark);
         }
 
-        /* ตารางเรทราคา */
+        /* ตารางเรทราคาในกล่องแบบน่ารัก */
         .price-table {
             width: 100%;
             border-collapse: collapse;
@@ -467,6 +483,7 @@
 
         .price-table tr:hover {
             background-color: var(--bg-blue);
+            border-radius: 8px;
         }
 
         .price-name {
@@ -480,7 +497,7 @@
             font-size: 16px;
         }
 
-        /* รายการฟีเจอร์ */
+        /* รายการฟีเจอร์เพิ่มลูกเล่นดาว ✦ */
         .feature-list {
             list-style: none;
         }
@@ -502,14 +519,15 @@
             font-size: 14px;
         }
 
-        /* กล่องลิงก์คลังตัวอย่าง */
+        /* กล่องลิงก์ไดรฟ์ทรงก้อนเมฆมนๆ */
         .drive-box {
             background-color: var(--bg-blue);
-            border-radius: 16px;
+            border-radius: 20px;
             padding: 24px;
             display: flex;
             flex-direction: column;
             gap: 18px;
+            border: 1px solid rgba(130, 102, 89, 0.08);
         }
 
         .drive-item {
@@ -545,11 +563,12 @@
             padding: 16px;
             font-size: 14.5px;
             font-weight: 700;
-            border-radius: 0 12px 12px 0;
+            border-radius: 12px;
             color: #664d03;
+            box-shadow: 0 5px 15px rgba(252, 196, 25, 0.1);
         }
 
-        /* Responsive */
+        /* Responsive สำหรับมือถือ */
         @media (max-width: 768px) {
             .id-card {
                 grid-template-columns: 1fr;
@@ -561,10 +580,12 @@
             }
             .main-portfolio {
                 grid-template-columns: 1fr;
-                border-left: none;
-                border-top: 12px solid var(--accent-brown);
-                border-radius: 0 0 20px 20px;
-                margin: 20px 10px;
+                border-radius: 30px;
+                margin: 10px;
+            }
+            .left-column {
+                border-right: none;
+                border-bottom: 2px dashed rgba(130, 102, 89, 0.15);
             }
             .left-column, .right-column {
                 padding: 35px 20px;
@@ -574,29 +595,44 @@
 </head>
 <body>
 
+    <!-- =========================================
+         BACKGROUND LAYER (ก้อนเมฆสมจริงยักษ์ & ฝนรูปดาวโปรยปรายหนาตา)
+         ========================================= -->
     <div class="background-overlay">
+        <!-- กลุ่มปุยเมฆยักษ์แบบสมจริง ขยับได้รอบหน้าเว็บ -->
         <div class="cloud cloud-top-left"></div>
         <div class="cloud cloud-mid-right"></div>
         <div class="cloud cloud-bottom-left"></div>
 
-        <div class="star-rain"></div>
-        <div class="star-rain"></div>
-        <div class="star-rain"></div>
-        <div class="star-rain"></div>
-        <div class="star-rain"></div>
-        <div class="star-rain"></div>
-        <div class="star-rain"></div>
-        <div class="star-rain"></div>
-        <div class="star-rain"></div>
-        <div class="star-rain"></div>
-        <div class="star-rain"></div>
-        <div class="star-rain"></div>
+        <!-- ฝันดาวตกแต่งรูปดาว (✦) สีเทาเข้มขยับได้เยอะจุใจตลอดยอดหน้าจอ -->
+        <div class="star-shape">✦</div>
+        <div class="star-shape">✦</div>
+        <div class="star-shape">✦</div>
+        <div class="star-shape">✦</div>
+        <div class="star-shape">✦</div>
+        <div class="star-shape">✦</div>
+        <div class="star-shape">✦</div>
+        <div class="star-shape">✦</div>
+        <div class="star-shape">✦</div>
+        <div class="star-shape">✦</div>
+        <div class="star-shape">✦</div>
+        <div class="star-shape">✦</div>
+        <div class="star-shape">✦</div>
+        <div class="star-shape">✦</div>
+        <div class="star-shape">✦</div>
+        <div class="star-shape">✦</div>
+        <div class="star-shape">✦</div>
+        <div class="star-shape">✦</div>
     </div>
 
 
+    <!-- =========================================
+         ส่วนที่ 1: หน้าแรกสไตล์บัตร ID CARD
+         ========================================= -->
     <section class="welcome-section">
         <div class="id-card">
             
+            <!-- ฝั่งรูปภาพซ้าย -->
             <div class="card-photo-side">
                 <div class="photo-box">
                     <img src="IMG_0545.jpeg" alt="zenithyshop Logo" onerror="this.style.display='none'; this.parentNode.innerHTML='<span style=\'color:var(--text-muted); font-size:14px; text-align:center;\'>[ รูปโลโก้ร้าน<br>IMG_0545.jpeg ]</span>'">
@@ -607,6 +643,7 @@
                 </div>
             </div>
 
+            <!-- ฝั่งข้อมูลขวา -->
             <div class="card-info-side">
                 <h1 class="card-title">
                     The Sweet Boy
@@ -640,107 +677,120 @@
 
         </div>
 
+        <!-- ปุ่มกดเปลี่ยนหน้าภาษาอังกฤษ -->
         <a href="#portfolio-page" class="scroll-btn">
             NEXT PAGE ➔
         </a>
     </section>
 
 
-    <section id="portfolio-page" class="main-portfolio">
-        
-        <div class="left-column">
-            <div class="brand-header">
-                <div class="brand-hello">hello!</div>
-                <div class="brand-name">zenithy</div>
-            </div>
-
-            <div>
-                <h3 class="section-title-left">CONTACT</h3>
-                <div class="contact-info">
-                    <strong>Facebook :</strong> <br>
-                    <a href="https://www.facebook.com/profile.php?id=61554192600355" target="_blank">https://www.facebook.com/profile.php?id=61554192600355</a>
-                    <br><br>
-                    <strong>Line :</strong> <br>
-                    <a href="https://line.me/ti/p/LfBtdhlrVa" target="_blank">https://line.me/ti/p/LfBtdhlrVa</a>
-                </div>
-            </div>
-
-            <div class="left-photo-space">
-                <div class="photo-holder">
-                    <img src="IMG_0545.jpeg" alt="zenithyshop Logo" onerror="this.style.display='none'; this.parentNode.innerHTML='<span style=\'color:var(--text-muted); font-size:12px; padding:20px; display:block;\'>[ รูปโลโก้ร้าน IMG_0545.jpeg ]</span>'">
-                </div>
-                <div class="left-photo-tag">GRAPHIC DESIGNER</div>
-            </div>
-        </div>
-
-        <div class="right-column">
+    <!-- =========================================
+         ส่วนที่ 2: หน้าข้อมูลร้านในกรอบข้อความน่ารักฟุ้งๆ (ตามที่ขอ)
+         ========================================= -->
+    <section id="portfolio-page" class="portfolio-container">
+        <div class="main-portfolio">
             
-            <div>
-                <h2 class="content-block-title">PERSONAL</h2>
-                <p class="personal-desc">
-                    zenithy รับทำเว็บไซต์ร้านค้าสำหรับร้านปล่อยเช่า/ร้านทำป้าย/ร้านเติมเกม identity v * รอบทดลอง *
-                </p>
-            </div>
+            <!-- คอลัมน์ซ้าย: ช่องทางติดต่อ -->
+            <div class="left-column">
+                <div class="brand-header">
+                    <div class="brand-hello">hello!</div>
+                    <div class="brand-name">zenithy</div>
+                </div>
 
-            <div>
-                <h2 class="content-block-title">PRICE RATE</h2>
-                <table class="price-table">
-                    <tr>
-                        <td class="price-name">เว็บไซต์บัญชี</td>
-                        <td class="price-value">99.-</td>
-                    </tr>
-                    <tr>
-                        <td class="price-name">เว็บไซต์รวมลิงก์ผลงาน</td>
-                        <td class="price-value">129.-</td>
-                    </tr>
-                    <tr>
-                        <td class="price-name">เว็บไซต์เรทราคา</td>
-                        <td class="price-value">129.-</td>
-                    </tr>
-                    <tr>
-                        <td class="price-name">เรทราคา+รวมลิงก์</td>
-                        <td class="price-value">149.-</td>
-                    </tr>
-                </table>
-            </div>
+                <div>
+                    <h3 class="section-title-left">CONTACT</h3>
+                    <div class="contact-info">
+                        <strong>Facebook :</strong> <br>
+                        <a href="https://www.facebook.com/profile.php?id=61554192600355" target="_blank">https://www.facebook.com/profile.php?id=61554192600355</a>
+                        <br><br>
+                        <strong>Line :</strong> <br>
+                        <a href="https://line.me/ti/p/LfBtdhlrVa" target="_blank">https://line.me/ti/p/LfBtdhlrVa</a>
+                    </div>
+                </div>
 
-            <div>
-                <h2 class="content-block-title">FEATURES ❔⬇️</h2>
-                <ul class="feature-list">
-                    <li>สามารถใส่รวมลิงก์ผลงานป้าย/ลิงก์โพสต์รวมไอดีปล่อยเช่า/ลิงก์เช็คคิวต่างๆ ไว้ในเว็บไซต์เดียว !</li>
-                    <li>ใส่เรทราคาทำป้าย/เรทดันไอดี/ อื่น ๆ</li>
-                    <li>ใส่ลิงก์ช่องทางการติดต่อ ได้ทั้ง Line / Facebook / Instagram / อื่นๆ</li>
-                    <li>เว็บบัญชี (สามารถคัดลอกเลขบัญชีได้) และใส่รูปสำหรับแสกนได้เช่นกัน</li>
-                </ul>
-                <div style="margin-top: 15px; font-weight: bold; color: var(--accent-brown); font-size: 15px;">
-                    *️⃣ มีเทมเพลตให้เลือกถึง 50+ แบบ 🔥
+                <div class="left-photo-space">
+                    <div class="photo-holder">
+                        <img src="IMG_0545.jpeg" alt="zenithyshop Logo" onerror="this.style.display='none'; this.parentNode.innerHTML='<span style=\'color:var(--text-muted); font-size:12px; padding:20px; display:block;\'>[ รูปโลโก้ร้าน IMG_0545.jpeg ]</span>'">
+                    </div>
+                    <div class="left-photo-tag">GRAPHIC DESIGNER</div>
                 </div>
             </div>
 
-            <div>
-                <h2 class="content-block-title">PORTFOLIO & TEMPLATE</h2>
-                <div class="drive-box">
-                    <div class="drive-item">
-                        <span class="drive-label">📁 ตัวอย่างเทมเพลตคลิกลิงก์:</span>
-                        <a class="drive-link" href="https://drive.google.com/drive/mobile/folders/1fj024BhkgC1ctJeiwyZUG3USteSdzWzr" target="_blank">
-                            https://drive.google.com/drive/mobile/folders/1fj024BhkgC1ctJeiwyZUG3USteSdzWzr
-                        </a>
-                    </div>
-                    <div class="drive-item">
-                        <span class="drive-label">🌐 ตัวอย่างงานwebsite:</span>
-                        <a class="drive-link" href="https://drive.google.com/drive/folders/16FFEJUwVLDIjmbSZEPM3x_SkLzVkl4CO" target="_blank">
-                            https://drive.google.com/drive/folders/16FFEJUwVLDIjmbSZEPM3x_SkLzVkl4CO
-                        </a>
+            <!-- คอลัมน์ขวา: ข้อมูลบริการและราคา -->
+            <div class="right-column">
+                
+                <!-- ข้อมูลร้าน -->
+                <div>
+                    <h2 class="content-block-title">PERSONAL</h2>
+                    <p class="personal-desc">
+                        zenithy รับทำเว็บไซต์ร้านค้าสำหรับร้านปล่อยเช่า/ร้านทำป้าย/ร้านเติมเกม identity v * รอบทดลอง *
+                    </p>
+                </div>
+
+                <!-- เรทราคา -->
+                <div>
+                    <h2 class="content-block-title">PRICE RATE</h2>
+                    <table class="price-table">
+                        <tr>
+                            <td class="price-name">เว็บไซต์บัญชี</td>
+                            <td class="price-value">99.-</td>
+                        </tr>
+                        <tr>
+                            <td class="price-name">เว็บไซต์รวมลิงก์ผลงาน</td>
+                            <td class="price-value">129.-</td>
+                        </tr>
+                        <tr>
+                            <td class="price-name">เว็บไซต์เรทราคา</td>
+                            <td class="price-value">129.-</td>
+                        </tr>
+                        <tr>
+                            <td class="price-name">เรทราคา+รวมลิงก์</td>
+                            <td class="price-value">149.-</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <!-- ฟีเจอร์เด่น -->
+                <div>
+                    <h2 class="content-block-title">FEATURES ❔⬇️</h2>
+                    <ul class="feature-list">
+                        <li>สามารถใส่รวมลิงก์ผลงานป้าย/ลิงก์โพสต์รวมไอดีปล่อยเช่า/ลิงก์เช็คคิวต่างๆ ไว้ในเว็บไซต์เดียว !</li>
+                        <li>ใส่เรทราคาทำป้าย/เรทดันไอดี/ อื่น ๆ</li>
+                        <li>ใส่ลิงก์ช่องทางการติดต่อ ได้ทั้ง Line / Facebook / Instagram / อื่นๆ</li>
+                        <li>เว็บบัญชี (สามารถคัดลอกเลขบัญชีได้) และใส่รูปสำหรับแสกนได้เช่นกัน</li>
+                    </ul>
+                    <div style="margin-top: 15px; font-weight: bold; color: var(--accent-brown); font-size: 15px;">
+                        *️⃣ มีเทมเพลตให้เลือกถึง 50+ แบบ 🔥
                     </div>
                 </div>
-            </div>
 
-            <div class="warranty-badge">
-                📍 มีรับประกันเว็บ 1 เดือน เว็บมีปัญหาแจ้งได้ตลอดค่ะ
+                <!-- คลังผลงาน Google Drive -->
+                <div>
+                    <h2 class="content-block-title">PORTFOLIO & TEMPLATE</h2>
+                    <div class="drive-box">
+                        <div class="drive-item">
+                            <span class="drive-label">📁 ตัวอย่างเทมเพลตคลิกลิงก์:</span>
+                            <a class="drive-link" href="https://drive.google.com/drive/mobile/folders/1fj024BhkgC1ctJeiwyZUG3USteSdzWzr" target="_blank">
+                                https://drive.google.com/drive/mobile/folders/1fj024BhkgC1ctJeiwyZUG3USteSdzWzr
+                            </a>
+                        </div>
+                        <div class="drive-item">
+                            <span class="drive-label">🌐 ตัวอย่างงานwebsite:</span>
+                            <a class="drive-link" href="https://drive.google.com/drive/folders/16FFEJUwVLDIjmbSZEPM3x_SkLzVkl4CO" target="_blank">
+                                https://drive.google.com/drive/folders/16FFEJUwVLDIjmbSZEPM3x_SkLzVkl4CO
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- การรับประกัน -->
+                <div class="warranty-badge">
+                    📍 มีรับประกันเว็บ 1 เดือน เว็บมีปัญหาแจ้งได้ตลอดค่ะ
+                </div>
+
             </div>
 
         </div>
-
     </section>
 
 </body>
