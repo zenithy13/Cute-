@@ -2,149 +2,79 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>zenithyshop - Official</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai+Looped:wght@400;500;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-blue: #e8f7fa;
-            --card-gray: #f2f4f7;
-            --accent-brown: #826659;
-            --text-dark: #3a3f44;
-            --text-muted: #7e868c;
-            --font-thai: 'Noto Sans Thai Looped', sans-serif;
-            --font-serif: 'Playfair Display', serif;
-            --font-sans: 'Montserrat', sans-serif;
-            --star-color: #8a99ad; 
-            --star-gray-feature: #8a99ad; 
-            --btn-blue: #dbeafe;       
-            --btn-blue-text: #1e40af;
-            --btn-line-bg: #e1fdf1;
-            --btn-line-text: #00b900;
-            --btn-brown: #f5ebe6;      
-            --btn-brown-text: #78350f;
-        }
-
+        :root { --accent: #826659; --star: #8a99ad; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        html, body { width: 100%; height: 100%; font-family: var(--font-thai); background-color: var(--card-gray); overflow: hidden; }
+        body { font-family: 'Kanit', sans-serif; background: #f2f4f7; overflow-x: hidden; }
 
-        .star-bg-layer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999; overflow: hidden; }
-        .star-falling { position: absolute; color: var(--star-color); font-size: 26px; user-select: none; animation: starRain linear infinite; opacity: 0.8; filter: drop-shadow(0 0 5px rgba(138, 153, 173, 0.4)); }
-        @keyframes starRain { 0% { transform: translateY(-10vh) rotate(0deg) scale(0.6); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateY(110vh) rotate(180deg) scale(0.6); opacity: 0; } }
+        /* ดาวโปรยแบบสมูท ไม่ทับปุ่ม */
+        .stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+        .star { position: absolute; color: var(--star); animation: fall linear infinite; opacity: 0.5; }
+        @keyframes fall { 0% { transform: translateY(-10vh); } 100% { transform: translateY(110vh); } }
 
-        .welcome-section { width: 100vw; height: 100vh; background: linear-gradient(135deg, #ffffff, var(--bg-blue), #ffffff); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; position: relative; z-index: 10; }
-        .id-card { background-color: rgba(255, 255, 255, 0.95); border: 1px solid rgba(130, 102, 89, 0.2); border-radius: 24px; width: 100%; max-width: 780px; padding: 35px; box-shadow: 0 25px 60px rgba(130, 102, 89, 0.08); display: grid; grid-template-columns: 1fr 1.5fr; gap: 35px; backdrop-filter: blur(10px); }
-        .card-title { font-family: var(--font-serif); font-size: 34px; font-weight: 700; color: var(--accent-brown); margin-bottom: 25px; }
-        .card-title span { display: block; font-family: var(--font-sans); font-size: 12px; font-weight: 600; color: var(--text-muted); margin-top: 6px; letter-spacing: 4px; text-transform: uppercase; }
-        .info-row { margin-bottom: 12px; display: flex; align-items: flex-end; font-size: 14px; }
-        .info-label { font-family: var(--font-serif); font-style: italic; color: var(--text-muted); white-space: nowrap; margin-right: 12px; min-width: 95px; }
-        .info-value { color: var(--accent-brown); font-weight: 700; border-bottom: 1px dashed rgba(130, 102, 89, 0.4); width: 100%; padding-bottom: 2px; }
-        .scroll-btn { margin-top: 30px; background: linear-gradient(135deg, var(--accent-brown), #9a7d70); color: #fff; border: none; padding: 14px 40px; font-family: var(--font-sans); font-size: 13px; letter-spacing: 2px; font-weight: bold; border-radius: 50px; cursor: pointer; box-shadow: 0 10px 25px rgba(130, 102, 89, 0.25); text-decoration: none; }
+        /* ID Card หรูหรา */
+        .section { position: relative; z-index: 2; width: 100%; height: 100vh; display: flex; align-items: center; justify-content: center; }
+        .id-card { background: white; width: 90%; max-width: 500px; padding: 40px; border-radius: 25px; box-shadow: 0 20px 40px rgba(0,0,0,0.15); text-align: center; border: 1px solid #eee; }
+        .id-card h1 { font-family: 'Playfair Display', serif; color: var(--accent); margin-bottom: 20px; }
+        .id-card p { margin: 10px 0; color: #555; }
+        .btn-next { margin-top: 30px; background: var(--accent); color: white; padding: 12px 30px; border-radius: 50px; cursor: pointer; border: none; font-weight: bold; }
 
-        #portfolio-page { width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; padding: 40px 20px; background-color: var(--card-gray); }
-        .main-portfolio { width: 100%; max-width: 1000px; background-color: #fff; border-radius: 32px; display: grid; grid-template-columns: 1fr 1.6fr; overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.05); }
-        .left-column { background-color: rgba(244, 251, 253, 0.8); padding: 40px; display: flex; flex-direction: column; gap: 30px; border-right: 1px solid #f0f0f0; }
-        .right-column { padding: 40px 50px; display: flex; flex-direction: column; gap: 30px; overflow-y: auto; }
-        .content-block-title { font-family: var(--font-sans); font-size: 16px; letter-spacing: 2px; color: var(--accent-brown); font-weight: bold; text-transform: uppercase; border-left: 4px solid var(--accent-brown); padding-left: 10px; margin-bottom: 15px; }
-        .price-table { width: 100%; border-collapse: collapse; }
-        .price-table td { padding: 12px 5px; font-size: 15px; border-bottom: 1px solid #f0f0f0; }
-        .price-value { text-align: right; color: var(--accent-brown); font-weight: 700; }
-        .feature-list { list-style: none; }
-        .feature-list li { position: relative; padding-left: 25px; margin-bottom: 10px; font-size: 14px; line-height: 1.6; }
-        .feature-list li::before { content: '★'; position: absolute; left: 0; color: var(--star-gray-feature); font-size: 16px; }
-        .btn-modern { display: flex; align-items: center; justify-content: center; padding: 14px 20px; border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 14px; transition: 0.3s; margin-top: 10px; width: 100%; }
-        .btn-fb { background: var(--btn-blue); color: var(--btn-blue-text); }
-        .btn-line { background: var(--btn-line-bg); color: var(--btn-line-text); }
-        .btn-drive-tpl { background: var(--btn-brown); color: var(--btn-brown-text); }
-        .btn-drive-web { background: var(--btn-blue); color: var(--btn-blue-text); }
-        .warranty-badge { background-color: #fffcf0; border-left: 4px solid var(--star-gray-feature); padding: 15px; font-size: 13px; font-weight: 700; border-radius: 8px; color: #4b5563; }
+        /* หน้าข้อมูล */
+        .content { padding: 40px 20px; max-width: 600px; margin: 0 auto; }
+        .card-box { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        h2 { color: var(--accent); border-bottom: 2px solid var(--accent); margin: 25px 0 15px; }
+        .btn-link { display: block; padding: 15px; margin: 10px 0; background: #f8f9fa; border: 1px solid #ddd; border-radius: 12px; text-decoration: none; color: #333; text-align: center; font-weight: 600; }
+        .btn-link:hover { background: var(--accent); color: white; }
     </style>
 </head>
 <body>
 
-    <div class="star-bg-layer" id="star-field"></div>
+    <div class="stars" id="stars"></div>
     <script>
-        const field = document.getElementById('star-field');
-        for (let i = 0; i < 20; i++) {
-            const star = document.createElement('div');
-            star.className = 'star-falling';
-            star.innerHTML = '★';
-            star.style.left = Math.random() * 100 + '%';
-            star.style.animationDuration = (Math.random() * 5 + 8) + 's';
-            star.style.animationDelay = Math.random() * 10 + 's';
-            field.appendChild(star);
+        for(let i=0; i<20; i++){
+            let s = document.createElement('div');
+            s.className = 'star'; s.innerHTML = '★';
+            s.style.left = Math.random()*100 + '%';
+            s.style.fontSize = (Math.random()*15 + 15) + 'px';
+            s.style.animationDuration = (Math.random()*8 + 10) + 's';
+            document.getElementById('stars').appendChild(s);
         }
     </script>
 
-    <section class="welcome-section" id="welcome-screen">
+    <div class="section">
         <div class="id-card">
-            <div class="card-photo-side">
-                <div class="photo-box"></div>
-                <div class="signature-area">SIGNATURE: <span class="signature-hand">zenithy</span></div>
-            </div>
-            <div class="card-info-side">
-                <h1 class="card-title">The Sweet Boy<span>ID CARD</span></h1>
-                <div class="info-row"><span class="info-label">Issued to</span><span class="info-value">zenithyshop</span></div>
-                <div class="info-row"><span class="info-label">Date of birth</span><span class="info-value">15 / 09 / 2003</span></div>
-                <p style="margin-top:20px; font-size: 11px; color: var(--text-muted);">"By registering to 'the Sweet Boy club' you agree to open up your heart, show us your soul &lt;3"</p>
-            </div>
+            <h1>The Sweet Boy</h1>
+            <p><strong>ID CARD:</strong> zenithyshop</p>
+            <p>Date of birth: 15 / 09 / 2003</p>
+            <p><em>"By registering to 'the Sweet Boy club' you agree to open up your heart, show us your soul &lt;3"</em></p>
+            <button class="btn-next" onclick="document.getElementById('main').scrollIntoView({behavior:'smooth'})">NEXT PAGE ➔</button>
         </div>
-        <button class="scroll-btn" onclick="unlockAndGo()">NEXT PAGE ➔</button>
-    </section>
+    </div>
 
-    <section id="portfolio-page">
-        <div class="main-portfolio">
-            <div class="left-column">
-                <div class="brand-header">
-                    <div class="brand-hello">hello! 👋🏻</div>
-                    <div class="brand-name">zenithy</div>
-                </div>
-                <div class="contact-buttons-container">
-                    <h3 style="font-size:14px; color:var(--accent-brown); margin-bottom:10px;">CONTACT 📥</h3>
-                    <a href="https://www.facebook.com/profile.php?id=61554192600355" target="_blank" class="btn-modern btn-fb">Facebook</a>
-                    <a href="https://lin.ee/qihwQGM" target="_blank" class="btn-modern btn-line">LINE Official</a>
-                </div>
-            </div>
+    <div id="main" class="content">
+        <div class="card-box">
+            <h2>PERSONAL 🏷️</h2>
+            <p>zenithy รับทำเว็บไซต์ร้านค้าสำหรับร้านปล่อยเช่า ร้านทำป้าย ร้านเติมเกม identity v รอบทดลอง 🫶🏻✨</p>
 
-            <div class="right-column">
-                <h2 class="content-block-title">PERSONAL 🏷️</h2>
-                <p>zenithy รับทำเว็บไซต์ร้านค้าสำหรับร้านปล่อยเช่า ร้านทำป้าย ร้านเติมเกม identity v รอบทดลอง 🫶🏻✨</p>
+            <h2>PRICE RATE</h2>
+            <ul>
+                <li>เว็บไซต์บัญชี: 99.-</li>
+                <li>เว็บไซต์รวมลิงก์ผลงาน: 129.-</li>
+                <li>เว็บไซต์เรทราคา: 129.-</li>
+                <li>เรทราคา และ รวมลิงก์: 149.-</li>
+            </ul>
 
-                <h2 class="content-block-title" style="margin-top:20px;">PRICE RATE</h2>
-                <table class="price-table">
-                    <tr><td>เว็บไซต์บัญชี</td><td class="price-value">99.-</td></tr>
-                    <tr><td>เว็บไซต์รวมลิงก์ผลงาน</td><td class="price-value">129.-</td></tr>
-                    <tr><td>เว็บไซต์เรทราคา</td><td class="price-value">129.-</td></tr>
-                    <tr><td>เรทราคา และ รวมลิงก์</td><td class="price-value">149.-</td></tr>
-                </table>
+            <h2>CONTACT 📥</h2>
+            <a href="fb://profile/61554192600355" class="btn-link">Facebook (เปิดในแอป)</a>
+            <a href="https://lin.ee/qihwQGM" class="btn-link">LINE Official</a>
 
-                <h2 class="content-block-title" style="margin-top:20px;">FEATURES 🌟</h2>
-                <ul class="feature-list">
-                    <li>สามารถใส่รวมลิงก์ผลงานป้าย ลิงก์โพสต์รวมไอดีปล่อยเช่า ลิงก์เช็คคิวต่างๆ ไว้ในเว็บไซต์เดียว</li>
-                    <li>ใส่เรทราคาทำป้าย เรทดันไอดี และอื่นๆ</li>
-                    <li>ใส่ลิงก์ช่องทางการติดต่อ ได้ทั้ง Line Facebook Instagram และอื่นๆ</li>
-                    <li>เว็บบัญชี สามารถคัดลอกเลขบัญชีได้ และใส่รูปสำหรับแสกนได้เช่นกัน</li>
-                    <li>คัดสรรมาให้แล้ว มีเทมเพลตให้เลือกถึง 50+ แบบ 💖</li>
-                </ul>
-
-                <h2 class="content-block-title" style="margin-top:20px;">PORTFOLIO & TEMPLATE 📂</h2>
-                <a href="https://drive.google.com/drive/mobile/folders/1fj024BhkgC1ctJeiwyZUG3USteSdzWzr" target="_blank" class="btn-modern btn-drive-tpl">ดูเทมเพลตทั้งหมด (50+ แบบ)</a>
-                <a href="https://drive.google.com/drive/folders/16FFEJUwVLDIjmbSZEPM3x_SkLzVkl4CO" target="_blank" class="btn-modern btn-drive-web">ดูตัวอย่างเว็บไซต์ที่ทำสำเร็จ</a>
-
-                <div class="warranty-badge" style="margin-top:20px;">🔒 มีรับประกันเว็บ 1 เดือน เว็บมีปัญหาแจ้งได้ตลอดค่ะ</div>
-            </div>
+            <h2>PORTFOLIO 📂</h2>
+            <a href="https://drive.google.com/drive/mobile/folders/1fj024BhkgC1ctJeiwyZUG3USteSdzWzr" class="btn-link">ดูเทมเพลตทั้งหมด (50+ แบบ)</a>
+            <a href="https://drive.google.com/drive/folders/16FFEJUwVLDIjmbSZEPM3x_SkLzVkl4CO" class="btn-link">ดูตัวอย่างเว็บไซต์สำเร็จ</a>
         </div>
-    </section>
-
-    <script>
-        function unlockAndGo() {
-            document.body.style.overflow = 'auto';
-            document.documentElement.style.overflow = 'auto';
-            document.getElementById('portfolio-page').scrollIntoView({ behavior: 'smooth' });
-        }
-    </script>
+    </div>
 </body>
 </html>
