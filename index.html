@@ -31,77 +31,120 @@
             background-color: var(--card-gray);
             color: var(--text-dark);
             scroll-behavior: smooth;
-            overflow-x: hidden;
+            position: relative;
         }
 
         /* -----------------------------------------
-           NEW EFFECT: ฟุ้งๆ ฝันดาวตกตลอดยอดนิยม (Shooting Stars)
+           GLOBAL BACKGROUND DECORATION (ใช้ร่วมกันทั้ง 2 หน้า)
         ----------------------------------------- */
-        .star-container {
-            position: absolute;
+        .background-overlay {
+            position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
             pointer-events: none;
-            z-index: 1;
+            z-index: 1; /* อยู่หลังเนื้อหา แต่อยู่หน้าพื้นหลังปกติ */
+            overflow: hidden;
         }
 
-        /* เมฆฟุ้งเรืองแสงด้านหลัง */
-        .glowing-cloud {
+        /* ก้อนเมฆฟุ้งสมจริง (Realistic Soft Clouds) */
+        .cloud {
             position: absolute;
-            background: rgba(255, 255, 255, 0.7);
-            filter: blur(40px);
+            background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.6) 40%, rgba(255,255,255,0) 70%);
+            filter: blur(25px);
             border-radius: 50%;
-            animation: float-cloud 8s ease-in-out infinite alternate;
+            pointer-events: none;
+            opacity: 0.75;
+            animation: cloudFloat 12s ease-in-out infinite alternate;
         }
-        .cloud-1 { width: 300px; height: 200px; top: 10%; left: -5%; background: rgba(255, 255, 255, 0.8); }
-        .cloud-2 { width: 350px; height: 250px; bottom: 15%; right: -5%; background: rgba(210, 240, 245, 0.8); }
-
-        @keyframes float-cloud {
-            0% { transform: translateY(0) scale(1); opacity: 0.5; }
-            100% { transform: translateY(-20px) scale(1.1); opacity: 0.8; }
-        }
-
-        /* ตัวเส้นฝนดาวตกที่วิ่งเฉียงลงมา */
-        .meteor {
+        
+        .cloud::before, .cloud::after {
+            content: '';
             position: absolute;
-            top: -50px;
-            width: 2px;
-            height: 80px;
-            /* ปรับไล่เฉดสีให้ปลายดาวเรียวกลืนหายไป และตัวดาวเรืองแสงสีทอง/ขาวนวล */
-            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,1) 80%, rgba(130, 102, 89, 0.8));
-            filter: drop-shadow(0 0 8px rgba(255,255,255,1)) drop-shadow(0 0 15px rgba(232, 247, 250, 1));
-            animation: meteor-fall linear infinite;
-            opacity: 0;
+            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+            filter: blur(20px);
+            border-radius: 50%;
         }
 
-        /* กำหนดตำแหน่ง ความเร็ว และขนาดให้ฝนดาวตกแต่ละดวงกระจายทั่วหน้าจอ */
-        .meteor:nth-child(1) { left: 20%; animation-duration: 3.5s; animation-delay: 0s; width: 2px; height: 70px; }
-        .meteor:nth-child(2) { left: 40%; animation-duration: 4.5s; animation-delay: 1.5s; width: 3px; height: 100px; }
-        .meteor:nth-child(3) { left: 65%; animation-duration: 3s; animation-delay: 0.8s; width: 2px; height: 60px; }
-        .meteor:nth-child(4) { left: 85%; animation-duration: 5s; animation-delay: 2.2s; width: 3px; height: 110px; }
-        .meteor:nth-child(5) { left: 10%; animation-duration: 4s; animation-delay: 3s; width: 2px; height: 80px; }
-        .meteor:nth-child(6) { left: 55%; animation-duration: 3.8s; animation-delay: 2.7s; width: 2.5px; height: 90px; }
-        .meteor:nth-child(7) { left: 75%; animation-duration: 4.8s; animation-delay: 0.3s; width: 2px; height: 75px; }
+        .cloud-top-left {
+            width: 500px;
+            height: 300px;
+            top: -50px;
+            left: -100px;
+            animation-duration: 14s;
+        }
 
-        @keyframes meteor-fall {
+        .cloud-mid-right {
+            width: 600px;
+            height: 400px;
+            top: 40%;
+            right: -150px;
+            background: radial-gradient(circle, rgba(240,251,253,0.9) 0%, rgba(220,245,248,0.5) 50%, rgba(255,255,255,0) 70%);
+            animation-duration: 18s;
+        }
+
+        .cloud-bottom-left {
+            width: 550px;
+            height: 350px;
+            bottom: -50px;
+            left: -100px;
+            animation-duration: 16s;
+        }
+
+        @keyframes cloudFloat {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(30px, -20px) scale(1.08); }
+        }
+
+        /* ฝนดาวระยิบระยับแบบโปรยปราย (Twinkling Star Rain - ไม่ใช่ดาวตกขีดๆ) */
+        .star-rain {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #fff, 0 0 18px rgba(255,255,255,0.8);
+            opacity: 0;
+            animation: starFall linear infinite;
+        }
+
+        /* กระจายฝนดาวให้ตกนุ่มๆ ทั่วหน้าจอ สลับความเร็วและความวิบวับ */
+        .star-rain:nth-child(1) { left: 10%; top: -10px; animation-duration: 6s; animation-delay: 0s; }
+        .star-rain:nth-child(2) { left: 25%; top: -10px; animation-duration: 8s; animation-delay: 2s; width: 5px; height: 5px; }
+        .star-rain:nth-child(3) { left: 38%; top: -10px; animation-duration: 7s; animation-delay: 4s; }
+        .star-rain:nth-child(4) { left: 52%; top: -10px; animation-duration: 9s; animation-delay: 1s; width: 3px; height: 3px; }
+        .star-rain:nth-child(5) { left: 67%; top: -10px; animation-duration: 6.5s; animation-delay: 3s; }
+        .star-rain:nth-child(6) { left: 80%; top: -10px; animation-duration: 8.5s; animation-delay: 5s; width: 5px; height: 5px; }
+        .star-rain:nth-child(7) { left: 93%; top: -10px; animation-duration: 7.5s; animation-delay: 1.5s; }
+        .star-rain:nth-child(8) { left: 18%; top: -10px; animation-duration: 9.5s; animation-delay: 3.5s; }
+        .star-rain:nth-child(9) { left: 45%; top: -10px; animation-duration: 6.8s; animation-delay: 5.5s; }
+        .star-rain:nth-child(10) { left: 73%; top: -10px; animation-duration: 8.2s; animation-delay: 2.5s; }
+
+        @keyframes starFall {
             0% {
-                transform: translateY(0) translateX(0) rotate(-35deg);
+                transform: translateY(0) scale(0.5);
                 opacity: 0;
             }
-            10% {
-                opacity: 1;
+            15% {
+                opacity: 0.9;
+                transform: translateY(15vh) scale(1) rotate(0deg);
             }
-            60% {
-                opacity: 1;
+            45% {
+                opacity: 0.4; /* สลับความวิบวับระยิบระยับตอนกำลังไอลงมา */
+            }
+            55% {
+                opacity: 0.9;
+            }
+            85% {
+                opacity: 0.8;
             }
             100% {
-                transform: translateY(110vh) translateX(-300px) rotate(-35deg);
+                transform: translateY(105vh) scale(0.4);
                 opacity: 0;
             }
         }
+
 
         /* -----------------------------------------
            SECTION 1: ID CARD STYLE (รูปที่ 1)
@@ -118,19 +161,19 @@
         }
 
         .id-card {
-            background-color: rgba(255, 255, 255, 0.85);
+            background-color: rgba(255, 255, 255, 0.82);
             border: 1px solid rgba(130, 102, 89, 0.25);
             border-radius: 28px;
             width: 100%;
             max-width: 800px;
             padding: 45px;
-            box-shadow: 0 20px 50px rgba(130, 102, 89, 0.08), inset 0 0 20px rgba(255, 255, 255, 0.6);
+            box-shadow: 0 20px 50px rgba(130, 102, 89, 0.06), inset 0 0 20px rgba(255, 255, 255, 0.5);
             display: grid;
             grid-template-columns: 1fr 1.4fr;
             gap: 40px;
             position: relative;
             z-index: 2;
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(10px);
         }
 
         .photo-box {
@@ -276,7 +319,7 @@
             min-height: 100vh;
             max-width: 950px;
             margin: 60px auto;
-            background-color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.9);
             box-shadow: 0 20px 60px rgba(0,0,0,0.04);
             display: grid;
             grid-template-columns: 1fr 1.6fr;
@@ -284,11 +327,13 @@
             border-radius: 0 20px 20px 0;
             overflow: hidden;
             position: relative;
+            z-index: 2;
+            backdrop-filter: blur(10px);
         }
 
         /* คอลัมน์ซ้าย (Contact & Profile) */
         .left-column {
-            background-color: #f8fafc;
+            background-color: rgba(248, 250, 252, 0.85);
             padding: 50px 35px;
             display: flex;
             flex-direction: column;
@@ -529,20 +574,25 @@
 </head>
 <body>
 
-    <section class="welcome-section">
-        
-        <div class="star-container">
-            <div class="glowing-cloud cloud-1"></div>
-            <div class="glowing-cloud cloud-2"></div>
-            <div class="meteor"></div>
-            <div class="meteor"></div>
-            <div class="meteor"></div>
-            <div class="meteor"></div>
-            <div class="meteor"></div>
-            <div class="meteor"></div>
-            <div class="meteor"></div>
-        </div>
+    <div class="background-overlay">
+        <div class="cloud cloud-top-left"></div>
+        <div class="cloud cloud-mid-right"></div>
+        <div class="cloud cloud-bottom-left"></div>
 
+        <div class="star-rain"></div>
+        <div class="star-rain"></div>
+        <div class="star-rain"></div>
+        <div class="star-rain"></div>
+        <div class="star-rain"></div>
+        <div class="star-rain"></div>
+        <div class="star-rain"></div>
+        <div class="star-rain"></div>
+        <div class="star-rain"></div>
+        <div class="star-rain"></div>
+    </div>
+
+
+    <section class="welcome-section">
         <div class="id-card">
             
             <div class="card-photo-side">
