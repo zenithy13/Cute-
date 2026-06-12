@@ -6,17 +6,18 @@
     <title>zenithyshop</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;700&family=Mali:wght@400;700&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mali:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --bg-blue: #e3fafc;
-            --card-gray: #f1f3f5;
-            --accent-brown: #8b6e60;
-            --text-dark: #495057;
-            --text-muted: #868e96;
-            --font-main: 'Mali', cursive;
-            --font-heading: 'Chakra Petch', sans-serif;
+            --bg-blue: #e8f7fa;
+            --card-gray: #f2f4f7;
+            --accent-brown: #826659;
+            --text-dark: #3a3f44;
+            --text-muted: #7e868c;
+            --font-thai: 'Mali', cursive;
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Montserrat', sans-serif;
         }
 
         * {
@@ -26,10 +27,94 @@
         }
 
         body {
-            font-family: var(--font-main);
+            font-family: var(--font-thai);
             background-color: var(--card-gray);
             color: var(--text-dark);
             scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        /* -----------------------------------------
+           STAR EFFECT & BACKGROUND DECORATION
+        ----------------------------------------- */
+        .star-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ฝนดาวตก (Shooting Stars) */
+        .shooting-star {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            height: 2px;
+            background: linear-gradient(-45deg, #fff, rgba(255, 255, 255, 0));
+            border-radius: 999px;
+            filter: drop-shadow(0 0 6px #fff) drop-shadow(0 0 12px rgba(130, 102, 89, 0.4));
+            animation: tail 3s ease-in-out infinite, shooting 3s ease-in-out infinite;
+        }
+
+        .shooting-star::before, .shooting-star::after {
+            content: '';
+            position: absolute;
+            top: calc(50% - 1px);
+            right: 0;
+            height: 2px;
+            background: linear-gradient(-45deg, rgba(0,0,0,0), #fff, rgba(0,0,0,0));
+            transform: translateX(50%) rotate(45deg);
+            border-radius: 999px;
+            animation: shining 3s ease-in-out infinite;
+        }
+
+        .shooting-star::after {
+            transform: translateX(50%) rotate(-45deg);
+        }
+
+        .shooting-star:nth-child(1) { top: 10%; left: 30%; animation-delay: 0s; animation-duration: 3.5s; }
+        .shooting-star:nth-child(2) { top: 25%; left: 60%; animation-delay: 1.2s; animation-duration: 4s; }
+        .shooting-star:nth-child(3) { top: 5%; left: 80%; animation-delay: 0.5s; animation-duration: 3s; }
+        .shooting-star:nth-child(4) { top: 40%; left: 15%; animation-delay: 2.2s; animation-duration: 4.5s; }
+        .shooting-star:nth-child(5) { top: 60%; left: 75%; animation-delay: 1.8s; animation-duration: 3.8s; }
+
+        @keyframes tail {
+            0% { width: 0; }
+            30% { width: 100px; }
+            100% { width: 0; }
+        }
+
+        @keyframes shining {
+            0% { width: 0; }
+            50% { width: 3px; }
+            100% { width: 0; }
+        }
+
+        @keyframes shooting {
+            0% { transform: translateX(0) translateY(0) rotate(-45deg); }
+            100% { transform: translateX(-400px) translateY(400px) rotate(-45deg); }
+        }
+
+        /* เมฆฟุ้งๆ (Fluffy Glowing Clouds) */
+        .glowing-cloud {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.6);
+            filter: blur(30px);
+            border-radius: 50%;
+            animation: float-cloud 6s ease-in-out infinite alternate;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .cloud-1 { width: 200px; height: 150px; top: 15%; left: 5%; background: rgba(255, 255, 255, 0.7); }
+        .cloud-2 { width: 250px; height: 180px; bottom: 10%; right: 5%; background: rgba(232, 247, 250, 0.8); }
+
+        @keyframes float-cloud {
+            0% { transform: translateY(0) scale(1); opacity: 0.6; }
+            100% { transform: translateY(-15px) scale(1.05); opacity: 0.9; }
         }
 
         /* -----------------------------------------
@@ -37,58 +122,47 @@
         ----------------------------------------- */
         .welcome-section {
             min-height: 100vh;
-            background-color: var(--bg-blue);
+            background: radial-gradient(circle at top, #ffffff, var(--bg-blue));
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 30px 20px;
             position: relative;
         }
 
         .id-card {
-            background-color: #ffffff;
-            border: 3px solid var(--accent-brown);
-            border-radius: 24px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(130, 102, 89, 0.3);
+            border-radius: 28px;
             width: 100%;
-            max-width: 750px;
-            padding: 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            max-width: 800px;
+            padding: 45px;
+            box-shadow: 0 20px 50px rgba(130, 102, 89, 0.1), inset 0 0 20px rgba(255, 255, 255, 0.6);
             display: grid;
-            grid-template-columns: 1fr 1.3fr;
-            gap: 30px;
+            grid-template-columns: 1fr 1.4fr;
+            gap: 40px;
             position: relative;
-            background-image: radial-gradient(var(--card-gray) 1px, transparent 0);
-            background-size: 20px 20px;
-        }
-
-        /* ตกแต่งรูปหัวใจและดาวโปรยรอบการ์ด */
-        .id-card::before {
-            content: '☁️ ✨ 🩵 ⚙️';
-            position: absolute;
-            top: -25px;
-            left: 20px;
-            font-size: 24px;
-        }
-
-        .card-photo-side {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            z-index: 2;
+            backdrop-filter: blur(10px);
         }
 
         .photo-box {
             width: 100%;
             aspect-ratio: 3/4;
-            background-color: #dee2e6;
-            border-radius: 12px;
-            border: 2px dashed var(--accent-brown);
+            background-color: #eef2f5;
+            border-radius: 16px;
+            border: 2px solid rgba(130, 102, 89, 0.2);
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            position: relative;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.03);
+            transition: transform 0.3s ease;
+        }
+
+        .photo-box:hover {
+            transform: scale(1.02);
         }
 
         .photo-box img {
@@ -98,21 +172,26 @@
         }
 
         .signature-area {
-            margin-top: 15px;
-            font-size: 14px;
-            font-weight: bold;
-            color: var(--accent-brown);
+            margin-top: 20px;
+            font-family: var(--font-sans);
+            font-size: 11px;
+            letter-spacing: 2px;
+            font-weight: 600;
+            color: var(--text-muted);
             text-align: center;
             width: 100%;
-            border-top: 1px solid #ced4da;
-            padding-top: 5px;
+            border-top: 1px solid rgba(0,0,0,0.06);
+            padding-top: 10px;
         }
 
         .signature-hand {
-            font-family: 'Playfair Display', serif;
+            font-family: var(--font-serif);
             font-style: italic;
-            font-size: 22px;
+            font-size: 26px;
             color: var(--accent-brown);
+            display: block;
+            margin-top: 4px;
+            font-weight: bold;
         }
 
         .card-info-side {
@@ -122,68 +201,77 @@
         }
 
         .card-title {
-            font-family: var(--font-heading);
-            font-size: 36px;
+            font-family: var(--font-serif);
+            font-size: 44px;
             font-weight: 700;
             color: var(--accent-brown);
             text-align: center;
-            line-height: 1.1;
-            margin-bottom: 25px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            line-height: 1;
+            margin-bottom: 30px;
+            letter-spacing: -0.5px;
+            text-shadow: 0 2px 4px rgba(130, 102, 89, 0.1);
         }
 
         .card-title span {
             display: block;
-            font-size: 18px;
+            font-family: var(--font-sans);
+            font-size: 14px;
+            font-weight: 600;
             color: var(--text-muted);
-            margin-top: 5px;
+            margin-top: 8px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
         }
 
         .info-row {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             display: flex;
             align-items: flex-end;
             font-size: 16px;
         }
 
         .info-label {
+            font-family: var(--font-serif);
+            font-style: italic;
             color: var(--text-muted);
             white-space: nowrap;
-            margin-right: 10px;
+            margin-right: 15px;
+            font-size: 17px;
         }
 
         .info-value {
             color: var(--accent-brown);
-            font-weight: bold;
-            border-bottom: 2px dotted var(--accent-brown);
+            font-weight: 700;
+            border-bottom: 1px dashed rgba(130, 102, 89, 0.4);
             width: 100%;
-            padding-bottom: 2px;
+            padding-bottom: 4px;
         }
 
         .card-footer-text {
-            margin-top: 20px;
+            margin-top: 25px;
             font-size: 11px;
             color: var(--text-muted);
-            line-height: 1.4;
+            line-height: 1.5;
             text-align: justify;
+            font-family: var(--font-sans);
         }
 
-        /* ปุ่มกดไปหน้าถัดไป */
+        /* ปุ่มกดเลื่อนหน้าสไตล์น่ารักฟุ้งๆ */
         .scroll-btn {
-            margin-top: 30px;
-            background-color: var(--accent-brown);
+            margin-top: 40px;
+            background: linear-gradient(135deg, var(--accent-brown), #9a7d70);
             color: #fff;
             border: none;
-            padding: 12px 35px;
-            font-family: var(--font-heading);
-            font-size: 18px;
+            padding: 14px 40px;
+            font-family: var(--font-thai);
+            font-size: 16px;
             font-weight: bold;
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(139, 110, 96, 0.3);
+            box-shadow: 0 10px 25px rgba(130, 102, 89, 0.25);
             text-decoration: none;
+            z-index: 2;
             display: inline-flex;
             align-items: center;
             gap: 10px;
@@ -191,31 +279,35 @@
 
         .scroll-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(139, 110, 96, 0.5);
-            background-color: #745b4f;
+            box-shadow: 0 15px 30px rgba(130, 102, 89, 0.4);
+            filter: brightness(1.1);
         }
 
         /* -----------------------------------------
-           SECTION 2: PORTFOLIO STYLE (รูปที่ 2)
+           SECTION 2: RESUME/PORTFOLIO STYLE (รูปที่ 2)
         ----------------------------------------- */
         .main-portfolio {
             min-height: 100vh;
-            max-width: 900px;
-            margin: 0 auto;
+            max-width: 950px;
+            margin: 60px auto;
             background-color: #ffffff;
-            box-shadow: 0 0 40px rgba(0,0,0,0.05);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.04);
             display: grid;
-            grid-template-columns: 1fr 1.5fr;
-            border-left: 15px solid var(--accent-brown);
+            grid-template-columns: 1fr 1.6fr;
+            border-left: 12px solid var(--accent-brown);
+            border-radius: 0 20px 20px 0;
+            overflow: hidden;
+            position: relative;
         }
 
         /* คอลัมน์ซ้าย (Contact & Profile) */
         .left-column {
-            background-color: var(--card-gray);
-            padding: 40px 30px;
+            background-color: #f8fafc;
+            padding: 50px 35px;
             display: flex;
             flex-direction: column;
-            gap: 40px;
+            gap: 45px;
+            border-right: 1px solid rgba(0,0,0,0.03);
         }
 
         .brand-header {
@@ -223,29 +315,31 @@
         }
 
         .brand-hello {
-            font-family: 'Playfair Display', serif;
-            font-size: 55px;
+            font-family: var(--font-serif);
+            font-style: italic;
+            font-size: 60px;
             color: var(--accent-brown);
-            line-height: 0.8;
-            margin-bottom: 5px;
+            line-height: 0.9;
+            margin-bottom: 10px;
         }
 
         .brand-name {
-            font-family: var(--font-heading);
-            font-size: 32px;
+            font-family: var(--font-sans);
+            font-size: 26px;
             font-weight: bold;
-            letter-spacing: 2px;
+            letter-spacing: 4px;
             color: var(--text-dark);
             text-transform: uppercase;
         }
 
         .section-title-left {
-            font-family: var(--font-heading);
-            font-size: 22px;
+            font-family: var(--font-sans);
+            font-size: 16px;
+            letter-spacing: 2px;
             color: var(--accent-brown);
             border-bottom: 2px solid var(--accent-brown);
-            padding-bottom: 5px;
-            margin-bottom: 15px;
+            padding-bottom: 6px;
+            margin-bottom: 20px;
             text-transform: uppercase;
             font-weight: bold;
         }
@@ -260,6 +354,7 @@
             color: var(--text-dark);
             text-decoration: none;
             border-bottom: 1px dashed var(--accent-brown);
+            transition: color 0.2s;
         }
         
         .contact-info a:hover {
@@ -274,10 +369,11 @@
         .left-photo-space .photo-holder {
             width: 100%;
             aspect-ratio: 1/1;
-            background-color: #dee2e6;
-            border-radius: 8px;
+            background-color: #eef2f5;
+            border-radius: 16px;
             overflow: hidden;
-            border: 1px solid #ced4da;
+            border: 1px solid rgba(130, 102, 89, 0.1);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.02);
         }
 
         .left-photo-space .photo-holder img {
@@ -287,38 +383,38 @@
         }
 
         .left-photo-tag {
-            font-family: var(--font-heading);
-            font-size: 14px;
+            font-family: var(--font-sans);
+            font-size: 12px;
+            font-weight: 600;
             color: var(--text-muted);
-            margin-top: 8px;
-            letter-spacing: 1px;
+            margin-top: 12px;
+            letter-spacing: 2px;
         }
-
 
         /* คอลัมน์ขวา (Content หลัก) */
         .right-column {
-            padding: 40px;
+            padding: 50px;
             display: flex;
             flex-direction: column;
-            gap: 35px;
+            gap: 40px;
         }
 
         .content-block-title {
-            font-family: var(--font-heading);
-            font-size: 24px;
+            font-family: var(--font-sans);
+            font-size: 18px;
+            letter-spacing: 2px;
             color: var(--accent-brown);
-            letter-spacing: 1px;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             font-weight: bold;
             text-transform: uppercase;
-            border-bottom: 2px solid var(--bg-blue);
-            padding-bottom: 5px;
+            border-bottom: 3px solid var(--bg-blue);
+            padding-bottom: 6px;
+            width: fit-content;
         }
 
         .personal-desc {
             font-size: 15px;
-            line-height: 1.7;
-            text-align: justify;
+            line-height: 1.8;
             color: var(--text-dark);
         }
 
@@ -326,68 +422,75 @@
         .price-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
-        }
-
-        .price-table tr {
-            border-bottom: 1px solid #e9ecef;
         }
 
         .price-table td {
-            padding: 12px 8px;
+            padding: 14px 10px;
             font-size: 15px;
         }
 
+        .price-table tr {
+            border-bottom: 1px solid #f1f3f5;
+            transition: background-color 0.2s;
+        }
+
+        .price-table tr:hover {
+            background-color: var(--bg-blue);
+        }
+
         .price-name {
-            font-weight: bold;
+            font-weight: 500;
         }
 
         .price-value {
             text-align: right;
             color: var(--accent-brown);
-            font-weight: bold;
+            font-weight: 700;
             font-size: 16px;
         }
 
-        /* ฟีเจอร์ลิสต์ */
+        /* รายการฟีเจอร์ */
         .feature-list {
             list-style: none;
         }
 
         .feature-list li {
             position: relative;
-            padding-left: 25px;
-            margin-bottom: 12px;
-            font-size: 14.5px;
-            line-height: 1.6;
+            padding-left: 28px;
+            margin-bottom: 14px;
+            font-size: 15px;
+            line-height: 1.7;
         }
 
         .feature-list li::before {
-            content: '🔹';
+            content: '✦';
             position: absolute;
-            left: 0;
-            top: 2px;
+            left: 4px;
+            top: 1px;
+            color: var(--accent-brown);
+            font-size: 14px;
         }
 
-        /* ลิงก์ไดรฟ์ตัวอย่าง */
+        /* กล่องลิงก์คลังตัวอย่าง */
         .drive-box {
             background-color: var(--bg-blue);
-            border-radius: 12px;
-            padding: 20px;
+            border-radius: 16px;
+            padding: 24px;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 18px;
         }
 
         .drive-item {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 6px;
         }
 
         .drive-label {
             font-size: 14px;
-            font-weight: bold;
+            font-weight: 700;
+            color: var(--text-dark);
         }
 
         .drive-link {
@@ -395,8 +498,9 @@
             color: var(--accent-brown);
             word-break: break-all;
             text-decoration: none;
-            border-bottom: 1px solid var(--accent-brown);
+            border-bottom: 1px solid rgba(130, 102, 89, 0.3);
             width: fit-content;
+            transition: all 0.2s;
         }
 
         .drive-link:hover {
@@ -405,28 +509,34 @@
         }
 
         .warranty-badge {
-            background-color: #f8f9fa;
-            border-left: 4px solid #fab005;
-            padding: 15px;
-            font-size: 14px;
-            font-weight: bold;
-            border-radius: 0 8px 8px 0;
+            background-color: #fff9db;
+            border-left: 4px solid #fcc419;
+            padding: 16px;
+            font-size: 14.5px;
+            font-weight: 700;
+            border-radius: 0 12px 12px 0;
+            color: #664d03;
         }
 
-        /* Responsive สำหรับมือถือ */
+        /* Responsive */
         @media (max-width: 768px) {
             .id-card {
                 grid-template-columns: 1fr;
-                gap: 20px;
-                padding: 20px;
+                gap: 30px;
+                padding: 25px;
+            }
+            .card-title {
+                font-size: 34px;
             }
             .main-portfolio {
                 grid-template-columns: 1fr;
                 border-left: none;
-                border-top: 15px solid var(--accent-brown);
+                border-top: 12px solid var(--accent-brown);
+                border-radius: 0 0 20px 20px;
+                margin: 20px 10px;
             }
-            .left-photo-space {
-                margin-top: 20px;
+            .left-column, .right-column {
+                padding: 35px 20px;
             }
         }
     </style>
@@ -434,21 +544,33 @@
 <body>
 
     <section class="welcome-section">
+        
+        <div class="star-container">
+            <div class="shooting-star"></div>
+            <div class="shooting-star"></div>
+            <div class="shooting-star"></div>
+            <div class="shooting-star"></div>
+            <div class="shooting-star"></div>
+            <div class="glowing-cloud cloud-1"></div>
+            <div class="glowing-cloud cloud-2"></div>
+        </div>
+
         <div class="id-card">
             
             <div class="card-photo-side">
                 <div class="photo-box">
-                    <img src="IMG_0545.jpeg" alt="zenithyshop Logo" onerror="this.style.display='none'; this.parentNode.innerHTML='<span style=\'color:var(--text-muted); font-size:14px;\'>[ รูปโลโก้ IMG_0545.jpeg ]</span>'">
+                    <img src="IMG_0545.jpeg" alt="zenithyshop Logo" onerror="this.style.display='none'; this.parentNode.innerHTML='<span style=\'color:var(--text-muted); font-size:14px; text-align:center;\'>[ รูปโลโก้ร้าน<br>IMG_0545.jpeg ]</span>'">
                 </div>
                 <div class="signature-area">
-                    SIGNATURE HERE: <span class="signature-hand">Zenithy</span>
+                    SIGNATURE HERE: 
+                    <span class="signature-hand">Malcolm Todd</span>
                 </div>
             </div>
 
             <div class="card-info-side">
                 <h1 class="card-title">
-                    The Zenithy
-                    <span>SHOP ID CARD</span>
+                    The Sweet Boy
+                    <span>ID CARD</span>
                 </h1>
 
                 <div class="info-row">
@@ -457,18 +579,18 @@
                 </div>
 
                 <div class="info-row">
-                    <span class="info-label">Status</span>
-                    <span class="info-value">รอบทดลอง</span>
+                    <span class="info-label">Date of birth</span>
+                    <span class="info-value">15 / 09 / 2003</span>
                 </div>
 
                 <div class="info-row">
                     <span class="info-label">Place of issue</span>
-                    <span class="info-value">Website Store</span>
+                    <span class="info-value">Los Angeles, CA</span>
                 </div>
 
                 <div class="info-row">
                     <span class="info-label">Date of issue</span>
-                    <span class="info-value">12 / 06 / 2026</span>
+                    <span class="info-value">05 / 01 / 2024</span>
                 </div>
 
                 <p class="card-footer-text">
@@ -479,7 +601,7 @@
         </div>
 
         <a href="#portfolio-page" class="scroll-btn">
-            ดูรายละเอียดร้านค้า ⬇️
+            กดเพื่อไปหน้าถัดไป ➔
         </a>
     </section>
 
@@ -505,7 +627,7 @@
 
             <div class="left-photo-space">
                 <div class="photo-holder">
-                    <img src="IMG_0545.jpeg" alt="zenithyshop Logo" onerror="this.style.display='none'; this.parentNode.innerHTML='<span style=\'color:var(--text-muted); font-size:12px; padding:20px; display:block;\'>[ รูปโลโก้ IMG_0545.jpeg ]</span>'">
+                    <img src="IMG_0545.jpeg" alt="zenithyshop Logo" onerror="this.style.display='none'; this.parentNode.innerHTML='<span style=\'color:var(--text-muted); font-size:12px; padding:20px; display:block;\'>[ รูปโลโก้ร้าน IMG_0545.jpeg ]</span>'">
                 </div>
                 <div class="left-photo-tag">GRAPHIC DESIGNER</div>
             </div>
@@ -550,7 +672,7 @@
                     <li>ใส่ลิงก์ช่องทางการติดต่อ ได้ทั้ง Line / Facebook / Instagram / อื่นๆ</li>
                     <li>เว็บบัญชี (สามารถคัดลอกเลขบัญชีได้) และใส่รูปสำหรับแสกนได้เช่นกัน</li>
                 </ul>
-                <div style="margin-top: 15px; font-weight: bold; color: var(--accent-brown);">
+                <div style="margin-top: 15px; font-weight: bold; color: var(--accent-brown); font-size: 15px;">
                     *️⃣ มีเทมเพลตให้เลือกถึง 50+ แบบ 🔥
                 </div>
             </div>
