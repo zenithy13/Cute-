@@ -2,7 +2,7 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>zenithyshop</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -50,27 +50,28 @@
         }
 
         /* -----------------------------------------
-           BACKGROUND LAYER (ฝนดาวโปรยปรายยาวครอบคลุมทุกหน้า)
+           BACKGROUND LAYER (กู้คืนฝนดาวโปรยปราย - อยู่ตำแหน่งถูกต้องไม่หายแน่นอน)
         ----------------------------------------- */
         .background-overlay {
-            position: absolute; /* เปลี่ยนเป็น absolute เพื่อให้ขยายยาวตามความสูงเว็บทั้งหมด */
+            position: absolute;
             top: 0;
             left: 0;
             width: 100vw;
-            height: 100%; /* ครอบคลุมทั้งหน้า 1 และ หน้า 2 */
+            height: 100%; /* ครอบคลุมความสูงทั้งหมดของเว็บ */
             pointer-events: none;
-            z-index: 1;
+            z-index: 2; /* ดันให้อยู่เหนือพื้นหลังเพื่อไม่ให้โดนทับ */
             overflow: hidden;
         }
 
         .cloud {
-            position: fixed; /* เมฆลอยนิ่งๆ สวยๆ ไว้ด้านหลัง */
+            position: fixed;
             background: radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.8) 30%, rgba(240, 252, 255, 0.5) 60%, rgba(255,255,255,0) 80%);
             filter: blur(40px);
             border-radius: 50%;
             pointer-events: none;
             opacity: 0.85;
             animation: cloudFloat 20s ease-in-out infinite alternate;
+            z-index: 1;
         }
 
         .cloud-top-left { width: 650px; height: 350px; top: -5%; left: -100px; animation-duration: 16s; }
@@ -92,7 +93,7 @@
             filter: drop-shadow(0 0 6px rgba(138, 153, 173, 0.5));
         }
 
-        /* ปรับให้ดาวโปรยวิ่งยาวลงไปจนสุดขอบล่างของหน้าเว็บทั้งหมด */
+        /* ให้ดาวตกวิ่งผ่านหน้า 1 ลงไป หน้า 2 อย่างต่อเนื่อง */
         @keyframes starRainFall {
             0% { transform: translateY(-50px) rotate(0deg) scale(0.6); opacity: 0; }
             5% { opacity: 0.85; }
@@ -100,11 +101,11 @@
             50% { opacity: 0.9; }
             75% { opacity: 0.4; }
             95% { opacity: 0.85; }
-            100% { transform: translateY(210vh) rotate(120deg) scale(0.6); opacity: 0; }
+            100% { transform: translateY(220vh) rotate(120deg) scale(0.6); opacity: 0; }
         }
 
         /* -----------------------------------------
-           SECTION 1: ID CARD แนวนอน (ล็อกความสูงหน้าจอ)
+           SECTION 1: ID CARD แนวนอน (ล็อกหน้าจอจนกว่าจะกดปุ่ม)
         ----------------------------------------- */
         .welcome-section {
             width: 100vw;
@@ -132,7 +133,7 @@
             grid-template-columns: 1fr 1.5fr; 
             gap: 35px;
             position: relative;
-            z-index: 2;
+            z-index: 5;
             backdrop-filter: blur(12px);
         }
 
@@ -250,7 +251,7 @@
             transition: all 0.3s ease;
             box-shadow: 0 10px 25px rgba(130, 102, 89, 0.25);
             text-decoration: none;
-            z-index: 12;
+            z-index: 15;
             display: inline-flex;
             align-items: center;
             gap: 10px;
@@ -262,30 +263,30 @@
         }
 
         /* -----------------------------------------
-           SECTION 2: PORTFOLIO MAIN PAGE (แสดงผลซ้ายขวาเสมอเหมือนบนคอม)
+           SECTION 2: PORTFOLIO MAIN PAGE (PC MODE - ขยายกว้างขอบชนขอบขึ้น)
         ----------------------------------------- */
         .portfolio-container {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 50px 16px;
+            padding: 40px 16px;
             position: relative;
             z-index: 10;
         }
 
         .main-portfolio {
             width: 100%;
-            max-width: 950px;
+            max-width: 1050px; /* เพิ่มความกว้างให้ดูโปร่งสบายตาขึ้น */
             background-color: rgba(255, 255, 255, 0.94);
             border: 2px dashed rgba(130, 102, 89, 0.25); 
             border-radius: 40px; 
             box-shadow: 0 30px 70px rgba(140, 180, 190, 0.25), 0 10px 40px rgba(130, 102, 89, 0.05); 
             display: grid;
-            grid-template-columns: 1fr 1.6fr; /* ล็อกแบบ 2 คอลัมน์ซ้ายขวาในทุกอุปกรณ์ */
+            grid-template-columns: 1fr 1.6fr; /* ยึดโมเดล 2 คอลัมน์ PC */
             overflow: hidden;
             position: relative;
-            z-index: 2;
+            z-index: 5;
             backdrop-filter: blur(15px);
         }
 
@@ -448,56 +449,66 @@
         }
 
         /* -----------------------------------------
-           📱 RESPONSIVE (รักษาโครงสร้างซ้ายขวาแบบคอมในหน้าสอง)
+           📱 RESPONSIVE - (ขยายเต็มหน้าจอมือถือ + จัดรูปแบบซ้ายขวาอย่างสมดุล)
         ----------------------------------------- */
         @media (max-width: 768px) {
-            /* หน้า 1: จัดสัดส่วนของบัตร ID แนวนอนบนมือถือ */
+            /* หน้าแรก: ปรับบัตร ID แนวนอนบนมือถือให้ขยายพื้นที่เพิ่มขึ้น */
             .id-card { 
                 gap: 15px; 
-                padding: 20px 15px; 
-                border-radius: 18px;
+                padding: 18px 12px; 
+                border-radius: 16px;
             }
-            .photo-box { max-width: 100px; }
-            .signature-area { font-size: 8px; margin-top: 10px; }
-            .signature-hand { font-size: 16px; }
+            .photo-box { max-width: 95px; }
+            .signature-area { font-size: 8px; margin-top: 8px; }
+            .signature-hand { font-size: 14px; }
             
-            .card-title { font-size: 20px; margin-bottom: 15px; }
-            .card-title span { font-size: 9px; letter-spacing: 2px; }
-            .info-row { font-size: 11px; margin-bottom: 8px; }
-            .info-label { font-size: 11px; min-width: 65px; margin-right: 5px; }
+            .card-title { font-size: 18px; margin-bottom: 12px; }
+            .card-title span { font-size: 8px; letter-spacing: 1.5px; }
+            .info-row { font-size: 11px; margin-bottom: 6px; }
+            .info-label { font-size: 11px; min-width: 65px; margin-right: 4px; }
             .card-footer-text { display: none; } 
-            .scroll-btn { padding: 12px 30px; font-size: 12px; margin-top: 15px; }
+            .scroll-btn { padding: 11px 26px; font-size: 12px; margin-top: 15px; }
 
-            /* หน้า 2: บังคับให้รักษา Layout แบบ 2 คอลัมน์ซ้ายขวาตามแบบฉบับ Desktop Mode */
+            /* หน้าสอง: ปรับให้เต็มจอมือถือ (ขอบชนขอบ) ลบความอึดอัด + ล็อกรูปแบบซ้ายขวาแบบ PC */
+            .portfolio-container {
+                padding: 0px; /* เคลียร์ช่องไฟรอบนอกออกให้งานเต็มจอ */
+            }
+
             .main-portfolio { 
-                grid-template-columns: 1fr 1.5fr; /* ห้ามเปลี่ยนเป็นแนวดิ่ง */
-                border-radius: 20px; 
+                grid-template-columns: 1fr 1.4fr; /* แสดงผลแบบแบ่งซ้ายขวาสวยๆ แม้จอมือถือแคบ */
+                border-radius: 0px; /* ปรับเป็นเหลี่ยมเพื่อให้ชิดขอบจอพอดีเป๊ะ */
+                border: none; /* เอาเส้นปรู่ออกเพื่อเพิ่มพื้นที่ดูข้อมูล */
+                width: 100vw;
+                min-height: 100vh;
             }
-            .left-column { 
-                padding: 20px 15px; 
-                gap: 25px; 
-            }
-            .brand-hello { font-size: 28px; }
-            .brand-name { font-size: 14px; letter-spacing: 2px; }
-            .section-title-left { font-size: 11px; margin-bottom: 12px; }
-            .fluffy-btn { padding: 10px 8px; font-size: 11px; }
-            .left-photo-space .photo-holder { max-width: 90px; border-radius: 10px; }
-            .left-photo-tag { font-size: 9px; letter-spacing: 1px; }
 
-            .right-column { 
-                padding: 25px 15px; 
-                gap: 25px; 
+            /* คอลัมน์ซ้ายบนมือถือ */
+            .left-column { 
+                padding: 25px 12px; 
+                gap: 20px; 
             }
-            .content-block-title { font-size: 13px; margin-bottom: 10px; }
-            .personal-desc { font-size: 12px; line-height: 1.6; }
-            .price-table td { font-size: 12px; padding: 10px 4px; }
-            .price-value { font-size: 13px; }
-            .feature-list li { font-size: 12px; padding-left: 18px; margin-bottom: 10px; }
-            .feature-list li::before { font-size: 10px; }
+            .brand-hello { font-size: 26px; }
+            .brand-name { font-size: 13px; letter-spacing: 1px; }
+            .section-title-left { font-size: 10px; margin-bottom: 10px; }
+            .fluffy-btn { padding: 10px 6px; font-size: 10.5px; border-radius: 12px; }
+            .left-photo-space .photo-holder { max-width: 80px; border-radius: 10px; }
+            .left-photo-tag { font-size: 8.5px; letter-spacing: 0.5px; }
+
+            /* คอลัมน์ขวาบนมือถือ */
+            .right-column { 
+                padding: 25px 12px; 
+                gap: 22px; 
+            }
+            .content-block-title { font-size: 12px; margin-bottom: 8px; }
+            .personal-desc { font-size: 11.5px; line-height: 1.5; }
+            .price-table td { font-size: 11.5px; padding: 8px 2px; }
+            .price-value { font-size: 12px; }
+            .feature-list li { font-size: 11.5px; padding-left: 14px; margin-bottom: 8px; }
+            .feature-list li::before { font-size: 9px; left: 0px; }
             
-            .drive-box { padding: 15px 10px; gap: 15px; border-radius: 16px; }
-            .drive-label { font-size: 12px; }
-            .warranty-badge { font-size: 11.5px; padding: 10px; }
+            .drive-box { padding: 12px 8px; gap: 12px; border-radius: 12px; }
+            .drive-label { font-size: 11px; }
+            .warranty-badge { font-size: 11px; padding: 8px; border-radius: 8px; }
         }
     </style>
 </head>
@@ -668,19 +679,20 @@
     </section>
 
     <script>
-        // ฟังก์ชันเริ่มโหลดเว็บ: ล็อกหน้าแรกไว้ไม่ให้ผู้ใช้เลื่อนลงไปเองได้
+        // ฟังก์ชันล็อกหน้าแรก: ป้องกันการสกรอลล์เองแบบปกติ
         function lockScroll() {
             document.body.style.overflow = 'hidden';
             document.documentElement.style.overflow = 'hidden';
         }
         
-        // รันล็อกหน้าจอทันทีเมื่อเปิดเว็บขึ้นมา
+        // รันคำสั่งล็อกหน้าจอทันทีเมื่อเปิดเว็บขึ้นมา
         lockScroll();
 
-        // ปลดล็อกหน้าจอเมื่อมีการกดปุ่มและสไลด์ลงอย่างนุ่มนวล
+        // ฟังก์ชันปลดล็อกระบบเลื่อนหน้าจอเมื่อกดปุ่มถัดไป
         function unlockAndScroll(event) {
             event.preventDefault(); 
             
+            // ปลดล็อกระบบเพื่อเอื้ออำนวยให้สไลด์ไปหน้าสองได้อย่างเป็นธรรมชาติ
             document.body.style.overflow = 'auto';
             document.documentElement.style.overflow = 'auto';
             document.getElementById('welcome-screen').style.overflow = 'visible';
