@@ -2,75 +2,71 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>zenithyshop | iOS Aesthetic</title>
+    <title>zenithyshop | Glass Dashboard</title>
     <style>
-        :root { --glass: rgba(255, 255, 255, 0.15); --text: #ffffff; }
-        body { margin: 0; background: #000; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; display: flex; justify-content: center; min-height: 100vh; overflow: auto; }
-        
-        /* พื้นหลังฟุ้งๆ ใส่รูป IMG_2086 ที่นี่ */
-        .iphone-screen { width: 100%; max-width: 390px; min-height: 844px; padding: 20px; background: url('IMG_2086.jpg') center/cover; backdrop-filter: blur(20px); border-radius: 40px; position: relative; }
-        
-        /* Glassmorphism Widget */
-        .widget { background: var(--glass); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 30px; padding: 20px; color: var(--text); margin-bottom: 15px; }
-        
-        /* App Icons Style */
-        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 20px; }
-        .icon { text-align: center; font-size: 10px; color: white; }
-        .icon-img { width: 60px; height: 60px; border-radius: 18px; background: rgba(255,255,255,0.2); margin-bottom: 5px; object-fit: cover; }
+        body {
+            margin: 0; min-height: 100vh;
+            background: linear-gradient(135deg, #a8c1d5, #e0e4e8); /* โทนฟ้าเทา */
+            display: flex; justify-content: center; align-items: center;
+            font-family: 'Segoe UI', sans-serif; color: #fff;
+        }
 
-        h2 { font-size: 18px; margin: 0 0 10px; }
-        ul { padding-left: 20px; font-size: 13px; line-height: 1.6; }
-        .price-tag { font-weight: bold; color: #ffeb3b; }
-        .btn-modern { display: block; background: rgba(255,255,255,0.2); text-align: center; padding: 12px; border-radius: 15px; color: white; text-decoration: none; font-weight: bold; margin-top: 10px; }
+        /* กล่องหลักขนาดใหญ่ตามรูป */
+        .main-glass {
+            width: 800px; height: 500px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 30px; border: 1px solid rgba(255,255,255,0.3);
+            padding: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 30px;
+        }
+
+        /* ฝั่งซ้าย */
+        .left-side { display: flex; flex-direction: column; }
+        
+        /* การ์ด 4 ใบฝั่งขวา */
+        .right-side { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .card {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px; padding: 20px;
+            cursor: pointer; transition: 0.3s; height: 180px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .card:hover { background: rgba(255, 255, 255, 0.35); }
+        
+        .content-text { font-size: 13px; line-height: 1.5; margin-top: 10px; }
+        a { color: #fff; text-decoration: underline; }
     </style>
 </head>
 <body>
 
-<div class="iphone-screen">
-    <div class="widget">
-        <img src="IMG_0545.jpeg" style="width:50px; border-radius:50%; float:right;">
-        <h2 style="font-size:24px;">zenithyshop</h2>
-        <p style="font-size:12px; opacity:0.8;">zenithy รับทำเว็บไซต์ร้านค้าสำหรับร้านปล่อยเช่า/ร้านทำป้าย/ร้านเติมเกม identity v * รอบทดลอง *</p>
+<div class="main-glass">
+    <div class="left-side">
+        <h1><img src="IMG_0545.jpeg" width="50" style="border-radius:50%; vertical-align:middle"> zenithyshop</h1>
+        <p style="font-size: 14px; opacity: 0.8;">zenithy รับทำเว็บไซต์ร้านค้าสำหรับร้านปล่อยเช่า/ร้านทำป้าย/ร้านเติมเกม identity v * รอบทดลอง *</p>
+        <div style="margin-top:auto">
+            <h3>📱 ช่องทางติดต่อ</h3>
+            <p>Facebook: <a href="https://www.facebook.com/profile.php?id=61554192600355">Visit Page</a></p>
+            <p>Line: <a href="https://lin.ee/qihwQGM">เพิ่มเพื่อน</a></p>
+        </div>
     </div>
 
-    <div class="widget">
-        <h2>PRICE RATE</h2>
-        <ul>
-            <li>บัญชี: <span class="price-tag">99.-</span> | ลิงก์งาน: <span class="price-tag">129.-</span></li>
-            <li>เรทราคา: <span class="price-tag">129.-</span> | เรท+ลิงก์: <span class="price-tag">149.-</span></li>
-            <li>ออกแบบใหม่: <span class="price-tag">189.-</span></li>
-        </ul>
-    </div>
-
-    <div class="widget">
-        <h2>FEATURES ❔</h2>
-        <ul style="font-size:12px;">
-            <li>รวมลิงก์ผลงานป้าย/ไอดี/คิว ไว้ในเว็บเดียว</li>
-            <li>ใส่เรทราคา/เรทดันไอดี ได้ครบ</li>
-            <li>ใส่ลิงก์ Line/FB/IG ได้ทุกช่องทาง</li>
-            <li>เว็บบัญชีคัดลอกเลขง่าย/แสกนรูปได้</li>
-        </ul>
-        <p style="font-size:11px; margin-top:10px; color:#ffccbc;">*️⃣ มีเทมเพลตให้เลือก 50+ แบบ 🔥</p>
-    </div>
-
-    <div class="grid">
-        <a href="https://drive.google.com/drive/mobile/folders/1fj024BhkgC1ctJeiwyZUG3USteSdzWzr" class="icon">
-            <div class="icon-img"><img src="IMG_2088" style="width:100%; border-radius:18px;"></div>เทมเพลต
-        </a>
-        <a href="https://drive.google.com/drive/folders/16FFEJUwVLDIjmbSZEPM3x_SkLzVkl4CO" class="icon">
-            <div class="icon-img"><img src="IMG_2089" style="width:100%; border-radius:18px;"></div>งานจริง
-        </a>
-        <a href="https://www.facebook.com/profile.php?id=61554192600355" class="icon">
-            <div class="icon-img" style="background:#1877f2;">FB</div>Facebook
-        </a>
-        <a href="https://lin.ee/qihwQGM" class="icon">
-            <div class="icon-img" style="background:#00b900;">LINE</div>Line
-        </a>
-    </div>
-
-    <div class="widget" style="margin-top:20px; font-size:12px; text-align:center;">
-        📍 มีรับประกันเว็บ 1 เดือน เว็บมีปัญหาแจ้งได้ตลอดค่ะ
+    <div class="right-side">
+        <div class="card">
+            <h3>Price Rate</h3>
+            <div class="content-text">บัญชี 99.- / ลิงก์งาน 129.- / เรทราคา 129.- / เรท+ลิงก์ 149.- / ออกแบบใหม่ 189.-</div>
+        </div>
+        <div class="card">
+            <h3>Features ❔</h3>
+            <div class="content-text">รวมลิงก์, ใส่เรทราคา, ติดต่อได้ทุกทาง, เว็บบัญชีคัดลอกเลขได้</div>
+        </div>
+        <div class="card">
+            <h3>Portfolio 📂</h3>
+            <div class="content-text"><a href="https://drive.google.com/drive/mobile/folders/1fj024BhkgC1ctJeiwyZUG3USteSdzWzr">ดูเทมเพลต</a> | <a href="https://drive.google.com/drive/folders/16FFEJUwVLDIjmbSZEPM3x_SkLzVkl4CO">ดูงานจริง</a></div>
+        </div>
+        <div class="card">
+            <h3>Warranty 📍</h3>
+            <div class="content-text">มีรับประกันเว็บ 1 เดือน มีปัญหาแจ้งได้ตลอดค่ะ</div>
+        </div>
     </div>
 </div>
 
