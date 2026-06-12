@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>zenithyshop</title>
-    <!-- Google Fonts: Mali, Playfair Display, Montserrat -->
+    <!-- Google Fonts: Noto Sans Thai Looped (โมเดิร์น อ่านง่าย น่ารัก), Playfair Display, Montserrat -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Mali:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai+Looped:wght@400;500;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -16,12 +16,20 @@
             --accent-brown: #826659;
             --text-dark: #3a3f44;
             --text-muted: #7e868c;
-            --font-thai: 'Mali', cursive;
+            --font-thai: 'Noto Sans Thai Looped', sans-serif;
             --font-serif: 'Playfair Display', serif;
             --font-sans: 'Montserrat', sans-serif;
             
             /* สีดาว 5 แฉกเทาละมุน */
             --star-color: #8a99ad; 
+
+            /* พาเลทสีปุ่มกดฟุ้งตามบรีฟ */
+            --btn-blue: #dbeafe;       /* ฟ้าอ่อน */
+            --btn-blue-text: #1e40af;
+            --btn-gray: #e5e7eb;       /* เทาอ่อน */
+            --btn-gray-text: #4b5563;
+            --btn-brown: #f5ebe6;      /* น้ำตาลอ่อน */
+            --btn-brown-text: #78350f;
         }
 
         * {
@@ -52,7 +60,6 @@
             overflow: hidden;
         }
 
-        /* ปุยเมฆยักษ์ละมุน */
         .cloud {
             position: absolute;
             background: radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.8) 30%, rgba(240, 252, 255, 0.5) 60%, rgba(255,255,255,0) 80%);
@@ -72,7 +79,6 @@
             100% { transform: translate(50px, -30px) scale(1.05); opacity: 0.9; }
         }
 
-        /* ปรับสไตล์ดาว 5 แฉก (★) ให้ใหญ่ขึ้น เด่นชัด และโปรยลงมาเยอะสะใจ */
         .star-shape {
             position: absolute;
             color: var(--star-color);
@@ -83,7 +89,6 @@
             filter: drop-shadow(0 0 4px rgba(138, 153, 173, 0.4));
         }
 
-        /* เพิ่มขนาด (20px - 32px) และกระจายตำแหน่งทั่วหน้าจอให้หนาตา */
         .star-shape:nth-child(1) { left: 3%; top: -35px; animation-duration: 6s; animation-delay: 0s; font-size: 26px; }
         .star-shape:nth-child(2) { left: 10%; top: -35px; animation-duration: 8.5s; animation-delay: 2.5s; font-size: 20px; }
         .star-shape:nth-child(3) { left: 18%; top: -35px; animation-duration: 5.5s; animation-delay: 1s; font-size: 28px; }
@@ -108,14 +113,14 @@
         @keyframes starRainFall {
             0% { transform: translateY(0) rotate(0deg) scale(0.6); opacity: 0; }
             10% { opacity: 0.85; }
-            40% { opacity: 0.3; } /* เอฟเฟกต์กะพริบระยิบระยับ */
+            40% { opacity: 0.3; }
             65% { opacity: 0.9; }
             85% { opacity: 0.4; }
             100% { transform: translateY(105vh) rotate(50deg) scale(0.6); opacity: 0; }
         }
 
         /* -----------------------------------------
-           SECTION 1: ID CARD STYLE (รูปที่ 1)
+           SECTION 1: ID CARD STYLE
         ----------------------------------------- */
         .welcome-section {
             min-height: 100vh;
@@ -209,7 +214,7 @@
             text-transform: uppercase;
         }
 
-        .info-row { margin-bottom: 20px; display: flex; align-items: flex-end; font-size: 16px; }
+        .info-row { margin-bottom: 20px; display: flex; align-items: flex-end; font-size: 15px; }
 
         .info-label {
             font-family: var(--font-serif);
@@ -232,7 +237,7 @@
             margin-top: 25px;
             font-size: 11px;
             color: var(--text-muted);
-            line-height: 1.5;
+            line-height: 1.6;
             text-align: justify;
             font-family: var(--font-sans);
         }
@@ -265,7 +270,7 @@
         }
 
         /* -----------------------------------------
-           SECTION 2: หน้าสองกรอบข้อความน่ารักฟุ้งๆ + ปุ่มกดฟุ้งเรืองแสง
+           SECTION 2: กรอบข้อความน่ารักฟุ้งๆ + ปุ่มสลับสีไร้อิโมจิ
         ----------------------------------------- */
         .portfolio-container {
             min-height: 100vh;
@@ -279,7 +284,6 @@
         .main-portfolio {
             width: 100%;
             max-width: 950px;
-            /* กรอบข้อความก้อนเมฆฟุ้งๆ ชวนฝัน */
             background-color: rgba(255, 255, 255, 0.94);
             border: 2px dashed rgba(130, 102, 89, 0.25); 
             border-radius: 40px; 
@@ -292,7 +296,6 @@
             backdrop-filter: blur(15px);
         }
 
-        /* คอลัมน์ซ้าย */
         .left-column {
             background-color: rgba(244, 251, 253, 0.8); 
             padding: 50px 35px;
@@ -318,53 +321,66 @@
             font-weight: bold;
         }
 
-        /* ออกแบบปุ่มกดช่องทางติดต่อให้น่ารัก นุ่มฟุ้ง */
         .contact-buttons-container {
             display: flex;
             flex-direction: column;
             gap: 12px;
         }
 
+        /* ปุ่มกดดีไซน์นุ่มฟุ้ง สไตล์โมเดิร์นคลีน (ไม่มีอิโมจิ) */
         .fluffy-btn {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            padding: 12px 20px;
+            padding: 13px 20px;
             border-radius: 50px;
             font-size: 14px;
-            font-weight: bold;
+            font-weight: 500;
             text-decoration: none;
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
             border: 1px solid transparent;
+            text-align: center;
         }
 
-        .btn-facebook {
-            background-color: #eef5ff;
-            color: #2b6cb0;
-            border-color: rgba(43, 108, 176, 0.15);
-            box-shadow: 0 8px 25px rgba(43, 108, 176, 0.12);
+        /* ปุ่มสีฟ้าอ่อน (ปุ่ม 1) */
+        .btn-blue-tone {
+            background-color: var(--btn-blue);
+            color: var(--btn-blue-text);
+            border-color: rgba(30, 64, 175, 0.1);
+            box-shadow: 0 8px 25px rgba(30, 64, 175, 0.08);
         }
-
-        .btn-facebook:hover {
-            transform: translateY(-3px) scale(1.03);
-            box-shadow: 0 12px 30px rgba(43, 108, 176, 0.25);
-            background-color: #2b6cb0;
+        .btn-blue-tone:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 28px rgba(30, 64, 175, 0.2);
+            background-color: var(--btn-blue-text);
             color: #fff;
         }
 
-        .btn-line {
-            background-color: #f0fdf4;
-            color: #22c55e;
-            border-color: rgba(34, 197, 94, 0.15);
-            box-shadow: 0 8px 25px rgba(34, 197, 94, 0.12);
+        /* ปุ่มสีเทาอ่อน (ปุ่ม 2) */
+        .btn-gray-tone {
+            background-color: var(--btn-gray);
+            color: var(--btn-gray-text);
+            border-color: rgba(75, 85, 99, 0.1);
+            box-shadow: 0 8px 25px rgba(75, 85, 99, 0.06);
+        }
+        .btn-gray-tone:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 28px rgba(75, 85, 99, 0.18);
+            background-color: var(--btn-gray-text);
+            color: #fff;
         }
 
-        .btn-line:hover {
-            transform: translateY(-3px) scale(1.03);
-            box-shadow: 0 12px 30px rgba(34, 197, 94, 0.25);
-            background-color: #22c55e;
+        /* ปุ่มสีน้ำตาลอ่อน (ปุ่ม 3) */
+        .btn-brown-tone {
+            background-color: var(--btn-brown);
+            color: var(--btn-brown-text);
+            border-color: rgba(120, 53, 15, 0.1);
+            box-shadow: 0 8px 25px rgba(120, 53, 15, 0.06);
+        }
+        .btn-brown-tone:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 28px rgba(120, 53, 15, 0.18);
+            background-color: var(--btn-brown-text);
             color: #fff;
         }
 
@@ -407,19 +423,18 @@
         .price-name { font-weight: 500; }
         .price-value { text-align: right; color: var(--accent-brown); font-weight: 700; font-size: 16px; }
 
-        /* รายการฟีเจอร์เพิ่มลูกเล่นดาว 5 แฉก ★ */
+        /* รายการฟีเจอร์เด่น */
         .feature-list { list-style: none; }
         .feature-list li { position: relative; padding-left: 28px; margin-bottom: 14px; font-size: 15px; line-height: 1.7; }
         .feature-list li::before {
-            content: '★';
+            content: '📌';
             position: absolute;
-            left: 4px;
-            top: 1px;
-            color: var(--accent-brown);
+            left: 2px;
+            top: 2px;
             font-size: 14px;
         }
 
-        /* กล่องคลังผลงาน ปรับลิงก์เป็นปุ่มกดทรงก้อนเมฆฟุ้งใหญ่แบบพิเศษ */
+        /* คลังผลงานแบบกล่องฟุ้งพิเศษ */
         .drive-box {
             background-color: #ffffff;
             border-radius: 24px;
@@ -439,41 +454,15 @@
 
         .drive-label { font-size: 14.5px; font-weight: 700; color: var(--text-dark); }
 
-        .btn-drive-portfolio {
-            background: linear-gradient(135deg, #e0f2fe, #bae6fd);
-            color: #0369a1;
-            box-shadow: 0 10px 25px rgba(3, 105, 161, 0.15);
-        }
-
-        .btn-drive-portfolio:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 32px rgba(3, 105, 161, 0.3);
-            background: linear-gradient(135deg, #0369a1, #0284c7);
-            color: #fff;
-        }
-
-        .btn-drive-template {
-            background: linear-gradient(135deg, #fae8ff, #f5d0fe);
-            color: #a21caf;
-            box-shadow: 0 10px 25px rgba(162, 28, 175, 0.15);
-        }
-
-        .btn-drive-template:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 32px rgba(162, 28, 175, 0.3);
-            background: linear-gradient(135deg, #a21caf, #c026d3);
-            color: #fff;
-        }
-
         .warranty-badge {
-            background-color: #fff9db;
+            background-color: #fffcf0;
             border-left: 4px solid #fcc419;
             padding: 16px;
             font-size: 14.5px;
             font-weight: 700;
             border-radius: 12px;
             color: #664d03;
-            box-shadow: 0 5px 15px rgba(252, 196, 25, 0.1);
+            box-shadow: 0 5px 15px rgba(252, 196, 25, 0.05);
         }
 
         @media (max-width: 768px) {
@@ -488,7 +477,7 @@
 <body>
 
     <!-- =========================================
-         BACKGROUND LAYER (ปุยเมฆยักษ์ & ฝนดาว 5 แฉกขนาดใหญ่สะใจ)
+         BACKGROUND LAYER (ปุยเมฆยักษ์ & ฝนดาว 5 แฉก)
          ========================================= -->
     <div class="background-overlay">
         <div class="cloud cloud-top-left"></div>
@@ -543,28 +532,28 @@
 
 
     <!-- =========================================
-         ส่วนที่ 2: หน้าข้อมูลในกรอบข้อความน่ารักฟุ้งๆ + เปลี่ยนลิงก์เป็นปุ่มกด
+         ส่วนที่ 2: หน้าข้อมูลในกรอบข้อความน่ารักฟุ้งๆ
          ========================================= -->
     <section id="portfolio-page" class="portfolio-container">
         <div class="main-portfolio">
             
-            <!-- คอลัมน์ซ้าย: ช่องทางติดต่อแบบปุ่มกดฟุ้งๆ -->
+            <!-- คอลัมน์ซ้าย: ช่องทางติดต่อ (ปุ่มกดสีสลับ ฟ้าอ่อน / เทา *ไม่มีอิโมจิในปุ่ม) -->
             <div class="left-column">
                 <div class="brand-header">
-                    <div class="brand-hello">hello!</div>
+                    <div class="brand-hello">hello! 👋🏻</div>
                     <div class="brand-name">zenithy</div>
                 </div>
 
                 <div>
-                    <h3 class="section-title-left">CONTACT</h3>
+                    <h3 class="section-title-left">CONTACT 📥</h3>
                     <div class="contact-buttons-container">
-                        <!-- เปลี่ยนลิงก์ Facebook เป็นปุ่มกดนุ่มฟุ้ง -->
-                        <a href="https://www.facebook.com/profile.php?id=61554192600355" target="_blank" class="fluffy-btn btn-facebook">
-                            🔷 ติดต่อทาง Facebook
+                        <!-- ปุ่ม 1: สีฟ้าอ่อน (ถอดอิโมจิแล้ว) -->
+                        <a href="https://www.facebook.com/profile.php?id=61554192600355" target="_blank" class="fluffy-btn btn-blue-tone">
+                            ติดต่อทาง Facebook
                         </a>
-                        <!-- เปลี่ยนลิงก์ Line เป็นปุ่มกดนุ่มฟุ้ง -->
-                        <a href="https://line.me/ti/p/LfBtdhlrVa" target="_blank" class="fluffy-btn btn-line">
-                            💚 ติดต่อทาง Line ไอดี
+                        <!-- ปุ่ม 2: สีเทาอ่อน (ถอดอิโมจิแล้ว) -->
+                        <a href="https://line.me/ti/p/LfBtdhlrVa" target="_blank" class="fluffy-btn btn-gray-tone">
+                            ติดต่อทาง Line ไอดี
                         </a>
                     </div>
                 </div>
@@ -573,63 +562,65 @@
                     <div class="photo-holder">
                         <img src="IMG_0545.jpeg" alt="zenithyshop Logo" onerror="this.style.display='none'; this.parentNode.innerHTML='<span style=\'color:var(--text-muted); font-size:12px; padding:20px; display:block;\'>[ รูปโลโก้ร้าน IMG_0545.jpeg ]</span>'">
                     </div>
-                    <div class="left-photo-tag">GRAPHIC DESIGNER</div>
+                    <div class="left-photo-tag">GRAPHIC DESIGNER 🎨</div>
                 </div>
             </div>
 
-            <!-- คอลัมน์ขวา: เนื้อหาและคลังไดรฟ์แบบปุ่มกดพิเศษ -->
+            <!-- คอลัมน์ขวา: เนื้อหาและคลังไดรฟ์ -->
             <div class="right-column">
                 <div>
-                    <h2 class="content-block-title">PERSONAL</h2>
+                    <h2 class="content-block-title">PERSONAL 🏷️</h2>
                     <p class="personal-desc">
-                        zenithy รับทำเว็บไซต์ร้านค้าสำหรับร้านปล่อยเช่า/ร้านทำป้าย/ร้านเติมเกม identity v * รอบทดลอง *
+                        zenithy รับทำเว็บไซต์ร้านค้าสำหรับร้านปล่อยเช่า ร้านทำป้าย ร้านเติมเกม identity v รอบทดลอง 🫶🏻✨
                     </p>
                 </div>
 
                 <div>
-                    <h2 class="content-block-title">PRICE RATE</h2>
+                    <h2 class="content-block-title">PRICE RATE 💵</h2>
                     <table class="price-table">
                         <tr><td class="price-name">เว็บไซต์บัญชี</td><td class="price-value">99.-</td></tr>
                         <tr><td class="price-name">เว็บไซต์รวมลิงก์ผลงาน</td><td class="price-value">129.-</td></tr>
                         <tr><td class="price-name">เว็บไซต์เรทราคา</td><td class="price-value">129.-</td></tr>
-                        <tr><td class="price-name">เรทราคา+รวมลิงก์</td><td class="price-value">149.-</td></tr>
+                        <tr><td class="price-name">เรทราคา และ รวมลิงก์</td><td class="price-value">149.-</td></tr>
                     </table>
                 </div>
 
                 <div>
-                    <h2 class="content-block-title">FEATURES ❔⬇️</h2>
+                    <h2 class="content-block-title">FEATURES 🌟</h2>
                     <ul class="feature-list">
-                        <li>สามารถใส่รวมลิงก์ผลงานป้าย/ลิงก์โพสต์รวมไอดีปล่อยเช่า/ลิงก์เช็คคิวต่างๆ ไว้ในเว็บไซต์เดียว !</li>
-                        <li>ใส่เรทราคาทำป้าย/เรทดันไอดี/ อื่น ๆ</li>
-                        <li>ใส่ลิงก์ช่องทางการติดต่อ ได้ทั้ง Line / Facebook / Instagram / อื่นๆ</li>
-                        <li>เว็บบัญชี (สามารถคัดลอกเลขบัญชีได้) และใส่รูปสำหรับแสกนได้เช่นกัน</li>
+                        <li>สามารถใส่รวมลิงก์ผลงานป้าย ลิงก์โพสต์รวมไอดีปล่อยเช่า ลิงก์เช็คคิวต่างๆ ไว้ในเว็บไซต์เดียว</li>
+                        <li>ใส่เรทราคาทำป้าย เรทดันไอดี และอื่นๆ</li>
+                        <li>ใส่ลิงก์ช่องทางการติดต่อ ได้ทั้ง Line Facebook Instagram และอื่นๆ</li>
+                        <li>เว็บบัญชี สามารถคัดลอกเลขบัญชีได้ และใส่รูปสำหรับแสกนได้เช่นกัน</li>
                     </ul>
-                    <div style="margin-top: 15px; font-weight: bold; color: var(--accent-brown); font-size: 15px;">
-                        *️⃣ มีเทมเพลตให้เลือกถึง 50+ แบบ 🔥
+                    <div style="margin-top: 15px; font-weight: 700; color: var(--accent-brown); font-size: 15px;">
+                        คัดสรรมาให้แล้ว มีเทมเพลตให้เลือกถึง 50+ แบบ 💖
                     </div>
                 </div>
 
-                <!-- คลังผลงาน Google Drive ปรับจากลิงก์ข้อความเป็นปุ่มกดฟุ้งใหญ่ -->
+                <!-- คลังผลงาน Google Drive (ปุ่ม 3 และ ปุ่ม 1 *ไม่มีอิโมจิในปุ่ม) -->
                 <div>
-                    <h2 class="content-block-title">PORTFOLIO & TEMPLATE</h2>
+                    <h2 class="content-block-title">PORTFOLIO & TEMPLATE 📂</h2>
                     <div class="drive-box">
                         <div class="drive-item">
-                            <span class="drive-label">📁 ดูตัวอย่างเทมเพลตทั้งหมด:</span>
-                            <a class="fluffy-btn btn-drive-template" href="https://drive.google.com/drive/mobile/folders/1fj024BhkgC1ctJeiwyZUG3USteSdzWzr" target="_blank">
-                                ✨ คลิกเปิดคลังโฟลเดอร์เทมเพลต
+                            <span class="drive-label">ดูตัวอย่างเทมเพลตทั้งหมด:</span>
+                            <!-- ปุ่ม 3: สีน้ำตาลอ่อน (ถอดอิโมจิแล้ว) -->
+                            <a class="fluffy-btn btn-brown-tone" href="https://drive.google.com/drive/mobile/folders/1fj024BhkgC1ctJeiwyZUG3USteSdzWzr" target="_blank">
+                                คลิกเปิดคลังโฟลเดอร์เทมเพลต
                             </a>
                         </div>
                         <div class="drive-item">
-                            <span class="drive-label">🌐 ดูตัวอย่างเว็บไซต์ที่ทำสำเร็จแล้ว:</span>
-                            <a class="fluffy-btn btn-drive-portfolio" href="https://drive.google.com/drive/folders/16FFEJUwVLDIjmbSZEPM3x_SkLzVkl4CO" target="_blank">
-                                🚀 คลิกเปิดดูตัวอย่างงาน Website
+                            <span class="drive-label">ดูตัวอย่างเว็บไซต์ที่ทำสำเร็จแล้ว:</span>
+                            <!-- ปุ่ม 1: สีฟ้าอ่อน (ถอดอิโมจิแล้ว) -->
+                            <a class="fluffy-btn btn-blue-tone" href="https://drive.google.com/drive/folders/16FFEJUwVLDIjmbSZEPM3x_SkLzVkl4CO" target="_blank">
+                                คลิกเปิดดูตัวอย่างงาน Website
                             </a>
                         </div>
                     </div>
                 </div>
 
                 <div class="warranty-badge">
-                    📍 มีรับประกันเว็บ 1 เดือน เว็บมีปัญหาแจ้งได้ตลอดค่ะ
+                    🔒 มีรับประกันเว็บ 1 เดือน เว็บมีปัญหาแจ้งได้ตลอดค่ะ
                 </div>
             </div>
 
