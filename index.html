@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>zenithyshop</title>
-    <!-- Google Fonts: Mali (Thai), Playfair Display (Serif Title), Montserrat (Clean sans-serif) -->
+    <!-- Google Fonts: Mali, Playfair Display, Montserrat -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Mali:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
@@ -20,8 +20,8 @@
             --font-serif: 'Playfair Display', serif;
             --font-sans: 'Montserrat', sans-serif;
             
-            /* สีดาวเทาเข้มสวยละมุน เห็นชัดเจนบนพื้นหลังขาว/ฟ้า */
-            --star-color: #718096; 
+            /* สีดาว 5 แฉกเทาละมุน */
+            --star-color: #8a99ad; 
         }
 
         * {
@@ -39,7 +39,7 @@
         }
 
         /* -----------------------------------------
-           BACKGROUND LAYER (ก้อนเมฆฟุ้งยักษ์ & ฝันรูปดาวโปรยปรายจำนวนมาก)
+           BACKGROUND LAYER (ก้อนเมฆ & ดาว 5 แฉกขนาดใหญ่โปรยลงมาจำนวนมาก)
         ----------------------------------------- */
         .background-overlay {
             position: fixed;
@@ -48,109 +48,71 @@
             width: 100vw;
             height: 100vh;
             pointer-events: none;
-            z-index: 1; /* อยู่ด้านหลังเนื้อหาหลัก แต่อยู่บนพื้นหลัง */
+            z-index: 1;
             overflow: hidden;
         }
 
-        /* ก้อนเมฆสมจริง ปรับให้ฟุ้งยักษ์ นุ่มละมุนสุดๆ */
+        /* ปุยเมฆยักษ์ละมุน */
         .cloud {
             position: absolute;
             background: radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.8) 30%, rgba(240, 252, 255, 0.5) 60%, rgba(255,255,255,0) 80%);
-            filter: blur(40px); /* เพิ่มความเบลอให้ฟุ้งนุ่มนวลสมจริง */
+            filter: blur(40px);
             border-radius: 50%;
             pointer-events: none;
             opacity: 0.85;
             animation: cloudFloat 20s ease-in-out infinite alternate;
         }
 
-        .cloud-top-left {
-            width: 650px;
-            height: 350px;
-            top: -5%;
-            left: -100px;
-            animation-duration: 16s;
-        }
-
-        .cloud-mid-right {
-            width: 700px;
-            height: 400px;
-            top: 40%;
-            right: -150px;
-            animation-duration: 22s;
-        }
-
-        .cloud-bottom-left {
-            width: 650px;
-            height: 380px;
-            bottom: -5%;
-            left: -120px;
-            animation-duration: 18s;
-        }
+        .cloud-top-left { width: 650px; height: 350px; top: -5%; left: -100px; animation-duration: 16s; }
+        .cloud-mid-right { width: 700px; height: 400px; top: 40%; right: -150px; animation-duration: 22s; }
+        .cloud-bottom-left { width: 650px; height: 380px; bottom: -5%; left: -120px; animation-duration: 18s; }
 
         @keyframes cloudFloat {
             0% { transform: translate(0, 0) scale(0.95); opacity: 0.75; }
             100% { transform: translate(50px, -30px) scale(1.05); opacity: 0.9; }
         }
 
-        /* เอฟเฟกต์รูปดาวสี่แฉกโปรยปราย (Star Rain Element) */
+        /* ปรับสไตล์ดาว 5 แฉก (★) ให้ใหญ่ขึ้น เด่นชัด และโปรยลงมาเยอะสะใจ */
         .star-shape {
             position: absolute;
             color: var(--star-color);
-            font-size: 14px;
-            line-height: 1;
             user-select: none;
             pointer-events: none;
             opacity: 0;
             animation: starRainFall linear infinite;
-            text-shadow: 0 0 5px rgba(113, 128, 150, 0.3);
+            filter: drop-shadow(0 0 4px rgba(138, 153, 173, 0.4));
         }
 
-        /* เพิ่มจำนวนดวงดาวให้เยอะและหนาตาขึ้น กระจายทั่วทั้งหน้าจอ */
-        .star-shape:nth-child(1) { left: 5%; top: -20px; animation-duration: 7s; animation-delay: 0s; font-size: 16px; }
-        .star-shape:nth-child(2) { left: 13%; top: -20px; animation-duration: 9.5s; animation-delay: 3s; font-size: 11px; }
-        .star-shape:nth-child(3) { left: 22%; top: -20px; animation-duration: 6.5s; animation-delay: 1.5s; font-size: 14px; }
-        .star-shape:nth-child(4) { left: 30%; top: -20px; animation-duration: 8s; animation-delay: 4.5s; font-size: 18px; }
-        .star-shape:nth-child(5) { left: 38%; top: -20px; animation-duration: 11s; animation-delay: 0.5s; font-size: 12px; }
-        .star-shape:nth-child(6) { left: 45%; top: -20px; animation-duration: 7.5s; animation-delay: 2.5s; font-size: 15px; }
-        .star-shape:nth-child(7) { left: 53%; top: -20px; animation-duration: 10s; animation-delay: 5s; font-size: 13px; }
-        .star-shape:nth-child(8) { left: 62%; top: -20px; animation-duration: 6s; animation-delay: 1.2s; font-size: 17px; }
-        .star-shape:nth-child(9) { left: 70%; top: -20px; animation-duration: 8.5s; animation-delay: 3.7s; font-size: 10px; }
-        .star-shape:nth-child(10) { left: 78%; top: -20px; animation-duration: 11.5s; animation-delay: 2s; font-size: 15px; }
-        .star-shape:nth-child(11) { left: 86%; top: -20px; animation-duration: 7.2s; animation-delay: 5.5s; font-size: 13px; }
-        .star-shape:nth-child(12) { left: 94%; top: -20px; animation-duration: 9s; animation-delay: 0.8s; font-size: 16px; }
-        .star-shape:nth-child(13) { left: 9%; top: -20px; animation-duration: 8.2s; animation-delay: 4s; font-size: 14px; }
-        .star-shape:nth-child(14) { left: 27%; top: -20px; animation-duration: 7s; animation-delay: 2.8s; font-size: 11px; }
-        .star-shape:nth-child(15) { left: 58%; top: -20px; animation-duration: 10.5s; animation-delay: 1.7s; font-size: 17px; }
-        .star-shape:nth-child(16) { left: 66%; top: -20px; animation-duration: 6.8s; animation-delay: 4.8s; font-size: 12px; }
-        .star-shape:nth-child(17) { left: 82%; top: -20px; animation-duration: 9.2s; animation-delay: 0.3s; font-size: 15px; }
-        .star-shape:nth-child(18) { left: 91%; top: -20px; animation-duration: 7.8s; animation-delay: 3.2s; font-size: 14px; }
+        /* เพิ่มขนาด (20px - 32px) และกระจายตำแหน่งทั่วหน้าจอให้หนาตา */
+        .star-shape:nth-child(1) { left: 3%; top: -35px; animation-duration: 6s; animation-delay: 0s; font-size: 26px; }
+        .star-shape:nth-child(2) { left: 10%; top: -35px; animation-duration: 8.5s; animation-delay: 2.5s; font-size: 20px; }
+        .star-shape:nth-child(3) { left: 18%; top: -35px; animation-duration: 5.5s; animation-delay: 1s; font-size: 28px; }
+        .star-shape:nth-child(4) { left: 25%; top: -35px; animation-duration: 7s; animation-delay: 4s; font-size: 32px; }
+        .star-shape:nth-child(5) { left: 33%; top: -35px; animation-duration: 9.5s; animation-delay: 0.5s; font-size: 22px; }
+        .star-shape:nth-child(6) { left: 40%; top: -35px; animation-duration: 6.5s; animation-delay: 2s; font-size: 25px; }
+        .star-shape:nth-child(7) { left: 48%; top: -35px; animation-duration: 8s; animation-delay: 4.5s; font-size: 24px; }
+        .star-shape:nth-child(8) { left: 55%; top: -35px; animation-duration: 5s; animation-delay: 1.2s; font-size: 30px; }
+        .star-shape:nth-child(9) { left: 63%; top: -35px; animation-duration: 7.5s; animation-delay: 3.2s; font-size: 20px; }
+        .star-shape:nth-child(10) { left: 70%; top: -35px; animation-duration: 10s; animation-delay: 1.8s; font-size: 27px; }
+        .star-shape:nth-child(11) { left: 78%; top: -35px; animation-duration: 6.2s; animation-delay: 5s; font-size: 23px; }
+        .star-shape:nth-child(12) { left: 85%; top: -35px; animation-duration: 8s; animation-delay: 0.8s; font-size: 31px; }
+        .star-shape:nth-child(13) { left: 93%; top: -35px; animation-duration: 7.2s; animation-delay: 3.5s; font-size: 25px; }
+        .star-shape:nth-child(14) { left: 6%; top: -35px; animation-duration: 7.8s; animation-delay: 4.2s; font-size: 22px; }
+        .star-shape:nth-child(15) { left: 14%; top: -35px; animation-duration: 6.4s; animation-delay: 1.7s; font-size: 29px; }
+        .star-shape:nth-child(16) { left: 29%; top: -35px; animation-duration: 8.2s; animation-delay: 3s; font-size: 21px; }
+        .star-shape:nth-child(17) { left: 51%; top: -35px; animation-duration: 9s; animation-delay: 5.2s; font-size: 26px; }
+        .star-shape:nth-child(18) { left: 67%; top: -35px; animation-duration: 5.8s; animation-delay: 2.3s; font-size: 24px; }
+        .star-shape:nth-child(19) { left: 74%; top: -35px; animation-duration: 7.4s; animation-delay: 0.2s; font-size: 30px; }
+        .star-shape:nth-child(20) { left: 89%; top: -35px; animation-duration: 6.9s; animation-delay: 4.7s; font-size: 23px; }
 
         @keyframes starRainFall {
-            0% {
-                transform: translateY(0) rotate(0deg) scale(0.6);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.8;
-            }
-            35% {
-                opacity: 0.3; /* เอฟเฟกต์กะพริบระยิบระยับตอนกำลังโปรยลงมา */
-            }
-            55% {
-                opacity: 0.85;
-            }
-            75% {
-                opacity: 0.4;
-            }
-            90% {
-                opacity: 0.75;
-            }
-            100% {
-                transform: translateY(105vh) rotate(35deg) scale(0.6);
-                opacity: 0;
-            }
+            0% { transform: translateY(0) rotate(0deg) scale(0.6); opacity: 0; }
+            10% { opacity: 0.85; }
+            40% { opacity: 0.3; } /* เอฟเฟกต์กะพริบระยิบระยับ */
+            65% { opacity: 0.9; }
+            85% { opacity: 0.4; }
+            100% { transform: translateY(105vh) rotate(50deg) scale(0.6); opacity: 0; }
         }
-
 
         /* -----------------------------------------
            SECTION 1: ID CARD STYLE (รูปที่ 1)
@@ -196,15 +158,8 @@
             transition: transform 0.3s ease;
         }
 
-        .photo-box:hover {
-            transform: scale(1.02);
-        }
-
-        .photo-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        .photo-box:hover { transform: scale(1.02); }
+        .photo-box img { width: 100%; height: 100%; object-fit: cover; }
 
         .signature-area {
             margin-top: 20px;
@@ -229,11 +184,7 @@
             font-weight: bold;
         }
 
-        .card-info-side {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
+        .card-info-side { display: flex; flex-direction: column; justify-content: center; }
 
         .card-title {
             font-family: var(--font-serif);
@@ -258,12 +209,7 @@
             text-transform: uppercase;
         }
 
-        .info-row {
-            margin-bottom: 20px;
-            display: flex;
-            align-items: flex-end;
-            font-size: 16px;
-        }
+        .info-row { margin-bottom: 20px; display: flex; align-items: flex-end; font-size: 16px; }
 
         .info-label {
             font-family: var(--font-serif);
@@ -291,7 +237,6 @@
             font-family: var(--font-sans);
         }
 
-        /* ปุ่มกดเปลี่ยนหน้าภาษาอังกฤษตามที่ขอ */
         .scroll-btn {
             margin-top: 40px;
             background: linear-gradient(135deg, var(--accent-brown), #9a7d70);
@@ -320,7 +265,7 @@
         }
 
         /* -----------------------------------------
-           SECTION 2: RESUME/PORTFOLIO NEW CLOUD STYLE (หน้าที่สองกรอบข้อความน่ารักฟุ้งๆ)
+           SECTION 2: หน้าสองกรอบข้อความน่ารักฟุ้งๆ + ปุ่มกดฟุ้งเรืองแสง
         ----------------------------------------- */
         .portfolio-container {
             min-height: 100vh;
@@ -334,11 +279,11 @@
         .main-portfolio {
             width: 100%;
             max-width: 950px;
-            /* ปรับกรอบเนื้อหาให้เป็นสีขาวนวลแบบก้อนเมฆฟุ้งๆ พร้อมเงาฟูละมุน */
-            background-color: rgba(255, 255, 255, 0.92);
-            border: 2px dashed rgba(130, 102, 89, 0.25); /* เพิ่มเส้นขอบประน่ารักๆ */
-            border-radius: 40px; /* ปรับขอบให้มนโค้งนุ่มนวลฟุ้งๆ */
-            box-shadow: 0 30px 70px rgba(140, 180, 190, 0.15), 0 10px 30px rgba(0, 0, 0, 0.02); 
+            /* กรอบข้อความก้อนเมฆฟุ้งๆ ชวนฝัน */
+            background-color: rgba(255, 255, 255, 0.94);
+            border: 2px dashed rgba(130, 102, 89, 0.25); 
+            border-radius: 40px; 
+            box-shadow: 0 30px 70px rgba(140, 180, 190, 0.25), 0 10px 40px rgba(130, 102, 89, 0.05); 
             display: grid;
             grid-template-columns: 1fr 1.6fr;
             overflow: hidden;
@@ -347,9 +292,9 @@
             backdrop-filter: blur(15px);
         }
 
-        /* คอลัมน์ซ้าย (Contact & Profile) */
+        /* คอลัมน์ซ้าย */
         .left-column {
-            background-color: rgba(244, 251, 253, 0.75); /* ปรับสีหลังคาฝั่งซ้ายให้ฟุ้งเข้ากับเมฆ */
+            background-color: rgba(244, 251, 253, 0.8); 
             padding: 50px 35px;
             display: flex;
             flex-direction: column;
@@ -357,27 +302,9 @@
             border-right: 2px dashed rgba(130, 102, 89, 0.15);
         }
 
-        .brand-header {
-            text-align: center;
-        }
-
-        .brand-hello {
-            font-family: var(--font-serif);
-            font-style: italic;
-            font-size: 60px;
-            color: var(--accent-brown);
-            line-height: 0.9;
-            margin-bottom: 10px;
-        }
-
-        .brand-name {
-            font-family: var(--font-sans);
-            font-size: 26px;
-            font-weight: bold;
-            letter-spacing: 4px;
-            color: var(--text-dark);
-            text-transform: uppercase;
-        }
+        .brand-header { text-align: center; }
+        .brand-hello { font-family: var(--font-serif); font-style: italic; font-size: 60px; color: var(--accent-brown); line-height: 0.9; margin-bottom: 10px; }
+        .brand-name { font-family: var(--font-sans); font-size: 26px; font-weight: bold; letter-spacing: 4px; color: var(--text-dark); text-transform: uppercase; }
 
         .section-title-left {
             font-family: var(--font-sans);
@@ -391,28 +318,57 @@
             font-weight: bold;
         }
 
-        .contact-info {
+        /* ออกแบบปุ่มกดช่องทางติดต่อให้น่ารัก นุ่มฟุ้ง */
+        .contact-buttons-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .fluffy-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px 20px;
+            border-radius: 50px;
             font-size: 14px;
-            line-height: 1.8;
-            word-break: break-all;
-        }
-
-        .contact-info a {
-            color: var(--text-dark);
+            font-weight: bold;
             text-decoration: none;
-            border-bottom: 1px dashed var(--accent-brown);
-            transition: color 0.2s;
-        }
-        
-        .contact-info a:hover {
-            color: var(--accent-brown);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+            border: 1px solid transparent;
         }
 
-        .left-photo-space {
-            margin-top: auto;
-            text-align: center;
+        .btn-facebook {
+            background-color: #eef5ff;
+            color: #2b6cb0;
+            border-color: rgba(43, 108, 176, 0.15);
+            box-shadow: 0 8px 25px rgba(43, 108, 176, 0.12);
         }
 
+        .btn-facebook:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 12px 30px rgba(43, 108, 176, 0.25);
+            background-color: #2b6cb0;
+            color: #fff;
+        }
+
+        .btn-line {
+            background-color: #f0fdf4;
+            color: #22c55e;
+            border-color: rgba(34, 197, 94, 0.15);
+            box-shadow: 0 8px 25px rgba(34, 197, 94, 0.12);
+        }
+
+        .btn-line:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 12px 30px rgba(34, 197, 94, 0.25);
+            background-color: #22c55e;
+            color: #fff;
+        }
+
+        .left-photo-space { margin-top: auto; text-align: center; }
         .left-photo-space .photo-holder {
             width: 100%;
             aspect-ratio: 1/1;
@@ -422,29 +378,11 @@
             border: 1px solid rgba(130, 102, 89, 0.12);
             box-shadow: 0 8px 20px rgba(0,0,0,0.02);
         }
+        .left-photo-space .photo-holder img { width: 100%; height: 100%; object-fit: cover; }
+        .left-photo-tag { font-family: var(--font-sans); font-size: 12px; font-weight: 600; color: var(--text-muted); margin-top: 12px; letter-spacing: 2px; }
 
-        .left-photo-space .photo-holder img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .left-photo-tag {
-            font-family: var(--font-sans);
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--text-muted);
-            margin-top: 12px;
-            letter-spacing: 2px;
-        }
-
-        /* คอลัมน์ขวา (Content หลักในกรอบฟุ้งๆ) */
-        .right-column {
-            padding: 50px;
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-        }
+        /* คอลัมน์ขวา */
+        .right-column { padding: 50px; display: flex; flex-direction: column; gap: 40px; }
 
         .content-block-title {
             font-family: var(--font-sans);
@@ -459,59 +397,21 @@
             width: fit-content;
         }
 
-        .personal-desc {
-            font-size: 15px;
-            line-height: 1.8;
-            color: var(--text-dark);
-        }
+        .personal-desc { font-size: 15px; line-height: 1.8; color: var(--text-dark); }
 
-        /* ตารางเรทราคาในกล่องแบบน่ารัก */
-        .price-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
+        /* ตารางเรทราคา */
+        .price-table { width: 100%; border-collapse: collapse; }
+        .price-table td { padding: 14px 10px; font-size: 15px; }
+        .price-table tr { border-bottom: 1px solid #f1f3f5; transition: background-color 0.2s; }
+        .price-table tr:hover { background-color: var(--bg-blue); }
+        .price-name { font-weight: 500; }
+        .price-value { text-align: right; color: var(--accent-brown); font-weight: 700; font-size: 16px; }
 
-        .price-table td {
-            padding: 14px 10px;
-            font-size: 15px;
-        }
-
-        .price-table tr {
-            border-bottom: 1px solid #f1f3f5;
-            transition: background-color 0.2s;
-        }
-
-        .price-table tr:hover {
-            background-color: var(--bg-blue);
-            border-radius: 8px;
-        }
-
-        .price-name {
-            font-weight: 500;
-        }
-
-        .price-value {
-            text-align: right;
-            color: var(--accent-brown);
-            font-weight: 700;
-            font-size: 16px;
-        }
-
-        /* รายการฟีเจอร์เพิ่มลูกเล่นดาว ✦ */
-        .feature-list {
-            list-style: none;
-        }
-
-        .feature-list li {
-            position: relative;
-            padding-left: 28px;
-            margin-bottom: 14px;
-            font-size: 15px;
-            line-height: 1.7;
-        }
-
+        /* รายการฟีเจอร์เพิ่มลูกเล่นดาว 5 แฉก ★ */
+        .feature-list { list-style: none; }
+        .feature-list li { position: relative; padding-left: 28px; margin-bottom: 14px; font-size: 15px; line-height: 1.7; }
         .feature-list li::before {
-            content: '✦';
+            content: '★';
             position: absolute;
             left: 4px;
             top: 1px;
@@ -519,42 +419,50 @@
             font-size: 14px;
         }
 
-        /* กล่องลิงก์ไดรฟ์ทรงก้อนเมฆมนๆ */
+        /* กล่องคลังผลงาน ปรับลิงก์เป็นปุ่มกดทรงก้อนเมฆฟุ้งใหญ่แบบพิเศษ */
         .drive-box {
-            background-color: var(--bg-blue);
-            border-radius: 20px;
+            background-color: #ffffff;
+            border-radius: 24px;
             padding: 24px;
             display: flex;
             flex-direction: column;
-            gap: 18px;
-            border: 1px solid rgba(130, 102, 89, 0.08);
+            gap: 20px;
+            border: 2px dashed rgba(140, 180, 190, 0.3);
+            box-shadow: inset 0 0 15px rgba(232, 247, 250, 0.5);
         }
 
         .drive-item {
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 10px;
         }
 
-        .drive-label {
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--text-dark);
+        .drive-label { font-size: 14.5px; font-weight: 700; color: var(--text-dark); }
+
+        .btn-drive-portfolio {
+            background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+            color: #0369a1;
+            box-shadow: 0 10px 25px rgba(3, 105, 161, 0.15);
         }
 
-        .drive-link {
-            font-size: 13px;
-            color: var(--accent-brown);
-            word-break: break-all;
-            text-decoration: none;
-            border-bottom: 1px solid rgba(130, 102, 89, 0.3);
-            width: fit-content;
-            transition: all 0.2s;
+        .btn-drive-portfolio:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 32px rgba(3, 105, 161, 0.3);
+            background: linear-gradient(135deg, #0369a1, #0284c7);
+            color: #fff;
         }
 
-        .drive-link:hover {
-            color: #000;
-            border-color: #000;
+        .btn-drive-template {
+            background: linear-gradient(135deg, #fae8ff, #f5d0fe);
+            color: #a21caf;
+            box-shadow: 0 10px 25px rgba(162, 28, 175, 0.15);
+        }
+
+        .btn-drive-template:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 32px rgba(162, 28, 175, 0.3);
+            background: linear-gradient(135deg, #a21caf, #c026d3);
+            color: #fff;
         }
 
         .warranty-badge {
@@ -568,61 +476,36 @@
             box-shadow: 0 5px 15px rgba(252, 196, 25, 0.1);
         }
 
-        /* Responsive สำหรับมือถือ */
         @media (max-width: 768px) {
-            .id-card {
-                grid-template-columns: 1fr;
-                gap: 30px;
-                padding: 25px;
-            }
-            .card-title {
-                font-size: 34px;
-            }
-            .main-portfolio {
-                grid-template-columns: 1fr;
-                border-radius: 30px;
-                margin: 10px;
-            }
-            .left-column {
-                border-right: none;
-                border-bottom: 2px dashed rgba(130, 102, 89, 0.15);
-            }
-            .left-column, .right-column {
-                padding: 35px 20px;
-            }
+            .id-card { grid-template-columns: 1fr; gap: 30px; padding: 25px; }
+            .card-title { font-size: 34px; }
+            .main-portfolio { grid-template-columns: 1fr; border-radius: 30px; margin: 10px; }
+            .left-column { border-right: none; border-bottom: 2px dashed rgba(130, 102, 89, 0.15); }
+            .left-column, .right-column { padding: 35px 20px; }
         }
     </style>
 </head>
 <body>
 
     <!-- =========================================
-         BACKGROUND LAYER (ก้อนเมฆสมจริงยักษ์ & ฝนรูปดาวโปรยปรายหนาตา)
+         BACKGROUND LAYER (ปุยเมฆยักษ์ & ฝนดาว 5 แฉกขนาดใหญ่สะใจ)
          ========================================= -->
     <div class="background-overlay">
-        <!-- กลุ่มปุยเมฆยักษ์แบบสมจริง ขยับได้รอบหน้าเว็บ -->
         <div class="cloud cloud-top-left"></div>
         <div class="cloud cloud-mid-right"></div>
         <div class="cloud cloud-bottom-left"></div>
 
-        <!-- ฝันดาวตกแต่งรูปดาว (✦) สีเทาเข้มขยับได้เยอะจุใจตลอดยอดหน้าจอ -->
-        <div class="star-shape">✦</div>
-        <div class="star-shape">✦</div>
-        <div class="star-shape">✦</div>
-        <div class="star-shape">✦</div>
-        <div class="star-shape">✦</div>
-        <div class="star-shape">✦</div>
-        <div class="star-shape">✦</div>
-        <div class="star-shape">✦</div>
-        <div class="star-shape">✦</div>
-        <div class="star-shape">✦</div>
-        <div class="star-shape">✦</div>
-        <div class="star-shape">✦</div>
-        <div class="star-shape">✦</div>
-        <div class="star-shape">✦</div>
-        <div class="star-shape">✦</div>
-        <div class="star-shape">✦</div>
-        <div class="star-shape">✦</div>
-        <div class="star-shape">✦</div>
+        <!-- ดวงดาว 5 แฉกกระจายเต็มพิกัด -->
+        <div class="star-shape">★</div><div class="star-shape">★</div>
+        <div class="star-shape">★</div><div class="star-shape">★</div>
+        <div class="star-shape">★</div><div class="star-shape">★</div>
+        <div class="star-shape">★</div><div class="star-shape">★</div>
+        <div class="star-shape">★</div><div class="star-shape">★</div>
+        <div class="star-shape">★</div><div class="star-shape">★</div>
+        <div class="star-shape">★</div><div class="star-shape">★</div>
+        <div class="star-shape">★</div><div class="star-shape">★</div>
+        <div class="star-shape">★</div><div class="star-shape">★</div>
+        <div class="star-shape">★</div><div class="star-shape">★</div>
     </div>
 
 
@@ -631,8 +514,6 @@
          ========================================= -->
     <section class="welcome-section">
         <div class="id-card">
-            
-            <!-- ฝั่งรูปภาพซ้าย -->
             <div class="card-photo-side">
                 <div class="photo-box">
                     <img src="IMG_0545.jpeg" alt="zenithyshop Logo" onerror="this.style.display='none'; this.parentNode.innerHTML='<span style=\'color:var(--text-muted); font-size:14px; text-align:center;\'>[ รูปโลโก้ร้าน<br>IMG_0545.jpeg ]</span>'">
@@ -643,54 +524,31 @@
                 </div>
             </div>
 
-            <!-- ฝั่งข้อมูลขวา -->
             <div class="card-info-side">
                 <h1 class="card-title">
                     The Sweet Boy
                     <span>ID CARD</span>
                 </h1>
-
-                <div class="info-row">
-                    <span class="info-label">Issued to</span>
-                    <span class="info-value">zenithyshop</span>
-                </div>
-
-                <div class="info-row">
-                    <span class="info-label">Date of birth</span>
-                    <span class="info-value">15 / 09 / 2003</span>
-                </div>
-
-                <div class="info-row">
-                    <span class="info-label">Place of issue</span>
-                    <span class="info-value">Los Angeles, CA</span>
-                </div>
-
-                <div class="info-row">
-                    <span class="info-label">Date of issue</span>
-                    <span class="info-value">05 / 01 / 2024</span>
-                </div>
-
+                <div class="info-row"><span class="info-label">Issued to</span><span class="info-value">zenithyshop</span></div>
+                <div class="info-row"><span class="info-label">Date of birth</span><span class="info-value">15 / 09 / 2003</span></div>
+                <div class="info-row"><span class="info-label">Place of issue</span><span class="info-value">Los Angeles, CA</span></div>
+                <div class="info-row"><span class="info-label">Date of issue</span><span class="info-value">05 / 01 / 2024</span></div>
                 <p class="card-footer-text">
                     By registering to 'the Sweet Boy club' you agree to: be totally honest about the feelings and inspirations you experienced in the last year of being a teenager. Open up your heart, show us your soul &lt;3
                 </p>
             </div>
-
         </div>
-
-        <!-- ปุ่มกดเปลี่ยนหน้าภาษาอังกฤษ -->
-        <a href="#portfolio-page" class="scroll-btn">
-            NEXT PAGE ➔
-        </a>
+        <a href="#portfolio-page" class="scroll-btn">NEXT PAGE ➔</a>
     </section>
 
 
     <!-- =========================================
-         ส่วนที่ 2: หน้าข้อมูลร้านในกรอบข้อความน่ารักฟุ้งๆ (ตามที่ขอ)
+         ส่วนที่ 2: หน้าข้อมูลในกรอบข้อความน่ารักฟุ้งๆ + เปลี่ยนลิงก์เป็นปุ่มกด
          ========================================= -->
     <section id="portfolio-page" class="portfolio-container">
         <div class="main-portfolio">
             
-            <!-- คอลัมน์ซ้าย: ช่องทางติดต่อ -->
+            <!-- คอลัมน์ซ้าย: ช่องทางติดต่อแบบปุ่มกดฟุ้งๆ -->
             <div class="left-column">
                 <div class="brand-header">
                     <div class="brand-hello">hello!</div>
@@ -699,12 +557,15 @@
 
                 <div>
                     <h3 class="section-title-left">CONTACT</h3>
-                    <div class="contact-info">
-                        <strong>Facebook :</strong> <br>
-                        <a href="https://www.facebook.com/profile.php?id=61554192600355" target="_blank">https://www.facebook.com/profile.php?id=61554192600355</a>
-                        <br><br>
-                        <strong>Line :</strong> <br>
-                        <a href="https://line.me/ti/p/LfBtdhlrVa" target="_blank">https://line.me/ti/p/LfBtdhlrVa</a>
+                    <div class="contact-buttons-container">
+                        <!-- เปลี่ยนลิงก์ Facebook เป็นปุ่มกดนุ่มฟุ้ง -->
+                        <a href="https://www.facebook.com/profile.php?id=61554192600355" target="_blank" class="fluffy-btn btn-facebook">
+                            🔷 ติดต่อทาง Facebook
+                        </a>
+                        <!-- เปลี่ยนลิงก์ Line เป็นปุ่มกดนุ่มฟุ้ง -->
+                        <a href="https://line.me/ti/p/LfBtdhlrVa" target="_blank" class="fluffy-btn btn-line">
+                            💚 ติดต่อทาง Line ไอดี
+                        </a>
                     </div>
                 </div>
 
@@ -716,10 +577,8 @@
                 </div>
             </div>
 
-            <!-- คอลัมน์ขวา: ข้อมูลบริการและราคา -->
+            <!-- คอลัมน์ขวา: เนื้อหาและคลังไดรฟ์แบบปุ่มกดพิเศษ -->
             <div class="right-column">
-                
-                <!-- ข้อมูลร้าน -->
                 <div>
                     <h2 class="content-block-title">PERSONAL</h2>
                     <p class="personal-desc">
@@ -727,30 +586,16 @@
                     </p>
                 </div>
 
-                <!-- เรทราคา -->
                 <div>
                     <h2 class="content-block-title">PRICE RATE</h2>
                     <table class="price-table">
-                        <tr>
-                            <td class="price-name">เว็บไซต์บัญชี</td>
-                            <td class="price-value">99.-</td>
-                        </tr>
-                        <tr>
-                            <td class="price-name">เว็บไซต์รวมลิงก์ผลงาน</td>
-                            <td class="price-value">129.-</td>
-                        </tr>
-                        <tr>
-                            <td class="price-name">เว็บไซต์เรทราคา</td>
-                            <td class="price-value">129.-</td>
-                        </tr>
-                        <tr>
-                            <td class="price-name">เรทราคา+รวมลิงก์</td>
-                            <td class="price-value">149.-</td>
-                        </tr>
+                        <tr><td class="price-name">เว็บไซต์บัญชี</td><td class="price-value">99.-</td></tr>
+                        <tr><td class="price-name">เว็บไซต์รวมลิงก์ผลงาน</td><td class="price-value">129.-</td></tr>
+                        <tr><td class="price-name">เว็บไซต์เรทราคา</td><td class="price-value">129.-</td></tr>
+                        <tr><td class="price-name">เรทราคา+รวมลิงก์</td><td class="price-value">149.-</td></tr>
                     </table>
                 </div>
 
-                <!-- ฟีเจอร์เด่น -->
                 <div>
                     <h2 class="content-block-title">FEATURES ❔⬇️</h2>
                     <ul class="feature-list">
@@ -764,30 +609,28 @@
                     </div>
                 </div>
 
-                <!-- คลังผลงาน Google Drive -->
+                <!-- คลังผลงาน Google Drive ปรับจากลิงก์ข้อความเป็นปุ่มกดฟุ้งใหญ่ -->
                 <div>
                     <h2 class="content-block-title">PORTFOLIO & TEMPLATE</h2>
                     <div class="drive-box">
                         <div class="drive-item">
-                            <span class="drive-label">📁 ตัวอย่างเทมเพลตคลิกลิงก์:</span>
-                            <a class="drive-link" href="https://drive.google.com/drive/mobile/folders/1fj024BhkgC1ctJeiwyZUG3USteSdzWzr" target="_blank">
-                                https://drive.google.com/drive/mobile/folders/1fj024BhkgC1ctJeiwyZUG3USteSdzWzr
+                            <span class="drive-label">📁 ดูตัวอย่างเทมเพลตทั้งหมด:</span>
+                            <a class="fluffy-btn btn-drive-template" href="https://drive.google.com/drive/mobile/folders/1fj024BhkgC1ctJeiwyZUG3USteSdzWzr" target="_blank">
+                                ✨ คลิกเปิดคลังโฟลเดอร์เทมเพลต
                             </a>
                         </div>
                         <div class="drive-item">
-                            <span class="drive-label">🌐 ตัวอย่างงานwebsite:</span>
-                            <a class="drive-link" href="https://drive.google.com/drive/folders/16FFEJUwVLDIjmbSZEPM3x_SkLzVkl4CO" target="_blank">
-                                https://drive.google.com/drive/folders/16FFEJUwVLDIjmbSZEPM3x_SkLzVkl4CO
+                            <span class="drive-label">🌐 ดูตัวอย่างเว็บไซต์ที่ทำสำเร็จแล้ว:</span>
+                            <a class="fluffy-btn btn-drive-portfolio" href="https://drive.google.com/drive/folders/16FFEJUwVLDIjmbSZEPM3x_SkLzVkl4CO" target="_blank">
+                                🚀 คลิกเปิดดูตัวอย่างงาน Website
                             </a>
                         </div>
                     </div>
                 </div>
 
-                <!-- การรับประกัน -->
                 <div class="warranty-badge">
                     📍 มีรับประกันเว็บ 1 เดือน เว็บมีปัญหาแจ้งได้ตลอดค่ะ
                 </div>
-
             </div>
 
         </div>
