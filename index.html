@@ -3,49 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>zenithyshop | iOS Style</title>
+    <title>zenithyshop | iOS Aesthetic</title>
     <style>
-        body { margin: 0; background: #000; font-family: sans-serif; color: white; display: flex; justify-content: center; min-height: 100vh; }
-        .ios-screen { width: 100%; max-width: 400px; padding: 20px; background: linear-gradient(to bottom, #333, #000); border-radius: 40px; }
-
-        /* Widget สไตล์ iOS */
-        .widget { background: rgba(255,255,255,0.1); backdrop-filter: blur(20px); border-radius: 25px; padding: 20px; margin-bottom: 20px; }
+        :root { --glass: rgba(255, 255, 255, 0.15); --text: #ffffff; }
+        body { margin: 0; background: #000; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; display: flex; justify-content: center; min-height: 100vh; overflow: auto; }
         
-        /* App Icon Style */
-        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
-        .icon { text-align: center; font-size: 12px; }
-        .icon-box { width: 60px; height: 60px; background: #444; border-radius: 15px; margin: 0 auto 5px; display: flex; align-items: center; justify-content: center; }
+        /* พื้นหลังฟุ้งๆ ใส่รูป IMG_2086 ที่นี่ */
+        .iphone-screen { width: 100%; max-width: 390px; min-height: 844px; padding: 20px; background: url('IMG_2086.jpg') center/cover; backdrop-filter: blur(20px); border-radius: 40px; position: relative; }
+        
+        /* Glassmorphism Widget */
+        .widget { background: var(--glass); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 30px; padding: 20px; color: var(--text); margin-bottom: 15px; }
+        
+        /* App Icons Style */
+        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 20px; }
+        .icon { text-align: center; font-size: 10px; color: white; }
+        .icon-img { width: 60px; height: 60px; border-radius: 18px; background: rgba(255,255,255,0.2); margin-bottom: 5px; object-fit: cover; }
 
-        .btn-link { display: block; background: #222; color: #fff; padding: 10px; border-radius: 10px; text-decoration: none; margin-top: 10px; font-size: 14px; text-align: center; border: 1px solid #444; }
+        h2 { font-size: 18px; margin: 0 0 10px; }
+        ul { padding-left: 20px; font-size: 13px; line-height: 1.6; }
+        .price-tag { font-weight: bold; color: #ffeb3b; }
+        .btn-modern { display: block; background: rgba(255,255,255,0.2); text-align: center; padding: 12px; border-radius: 15px; color: white; text-decoration: none; font-weight: bold; margin-top: 10px; }
     </style>
 </head>
 <body>
 
-<div class="ios-screen">
+<div class="iphone-screen">
     <div class="widget">
-        <h2 style="margin-top:0">zenithyshop</h2>
-        <p style="font-size: 14px;">zenithy รับทำเว็บไซต์ร้านค้าสำหรับร้านปล่อยเช่า/ร้านทำป้าย/ร้านเติมเกม identity v * รอบทดลอง *</p>
+        <img src="IMG_0545.jpeg" style="width:50px; border-radius:50%; float:right;">
+        <h2 style="font-size:24px;">zenithyshop</h2>
+        <p style="font-size:12px; opacity:0.8;">zenithy รับทำเว็บไซต์ร้านค้าสำหรับร้านปล่อยเช่า/ร้านทำป้าย/ร้านเติมเกม identity v * รอบทดลอง *</p>
     </div>
 
     <div class="widget">
-        <h3 style="margin-top:0">Price Rate</h3>
-        <ul style="font-size: 13px;">
-            <li>บัญชี: 99.- | ลิงก์งาน: 129.-</li>
-            <li>เรทราคา: 129.- | เรท+ลิงก์: 149.-</li>
-            <li>ออกแบบใหม่: 189.-</li>
+        <h2>PRICE RATE</h2>
+        <ul>
+            <li>บัญชี: <span class="price-tag">99.-</span> | ลิงก์งาน: <span class="price-tag">129.-</span></li>
+            <li>เรทราคา: <span class="price-tag">129.-</span> | เรท+ลิงก์: <span class="price-tag">149.-</span></li>
+            <li>ออกแบบใหม่: <span class="price-tag">189.-</span></li>
         </ul>
     </div>
 
-    <div class="grid">
-        <div class="icon"><div class="icon-box">📂</div>เทมเพลต</div>
-        <div class="icon"><div class="icon-box">🌐</div>ตัวอย่างงาน</div>
-        <div class="icon"><div class="icon-box">💬</div>Line</div>
-        <div class="icon"><div class="icon-box">👥</div>FB</div>
+    <div class="widget">
+        <h2>FEATURES ❔</h2>
+        <ul style="font-size:12px;">
+            <li>รวมลิงก์ผลงานป้าย/ไอดี/คิว ไว้ในเว็บเดียว</li>
+            <li>ใส่เรทราคา/เรทดันไอดี ได้ครบ</li>
+            <li>ใส่ลิงก์ Line/FB/IG ได้ทุกช่องทาง</li>
+            <li>เว็บบัญชีคัดลอกเลขง่าย/แสกนรูปได้</li>
+        </ul>
+        <p style="font-size:11px; margin-top:10px; color:#ffccbc;">*️⃣ มีเทมเพลตให้เลือก 50+ แบบ 🔥</p>
     </div>
 
-    <div style="margin-top:20px; text-align:center;">
-        <p style="font-size: 12px;">🔒 มีรับประกันเว็บ 1 เดือน แจ้งได้ตลอดค่ะ</p>
-        <a href="https://lin.ee/qihwQGM" class="btn-link">เพิ่มเพื่อนทาง Line</a>
+    <div class="grid">
+        <a href="https://drive.google.com/drive/mobile/folders/1fj024BhkgC1ctJeiwyZUG3USteSdzWzr" class="icon">
+            <div class="icon-img"><img src="IMG_2088" style="width:100%; border-radius:18px;"></div>เทมเพลต
+        </a>
+        <a href="https://drive.google.com/drive/folders/16FFEJUwVLDIjmbSZEPM3x_SkLzVkl4CO" class="icon">
+            <div class="icon-img"><img src="IMG_2089" style="width:100%; border-radius:18px;"></div>งานจริง
+        </a>
+        <a href="https://www.facebook.com/profile.php?id=61554192600355" class="icon">
+            <div class="icon-img" style="background:#1877f2;">FB</div>Facebook
+        </a>
+        <a href="https://lin.ee/qihwQGM" class="icon">
+            <div class="icon-img" style="background:#00b900;">LINE</div>Line
+        </a>
+    </div>
+
+    <div class="widget" style="margin-top:20px; font-size:12px; text-align:center;">
+        📍 มีรับประกันเว็บ 1 เดือน เว็บมีปัญหาแจ้งได้ตลอดค่ะ
     </div>
 </div>
 
