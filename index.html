@@ -36,7 +36,6 @@
             padding: 0;
         }
 
-        /* ล็อกไม่ให้เลื่อนในตอนแรก (จะเปิดล็อกเมื่อเปิดผ่านปุ่ม) */
         html {
             scroll-behavior: smooth;
             overflow-x: hidden;
@@ -51,21 +50,21 @@
         }
 
         /* -----------------------------------------
-           BACKGROUND LAYER (ฝนดาวโปรยปรายขนาดใหญ่ 40 ดวง)
+           BACKGROUND LAYER (ฝนดาวโปรยปรายยาวครอบคลุมทุกหน้า)
         ----------------------------------------- */
         .background-overlay {
-            position: fixed;
+            position: absolute; /* เปลี่ยนเป็น absolute เพื่อให้ขยายยาวตามความสูงเว็บทั้งหมด */
             top: 0;
             left: 0;
             width: 100vw;
-            height: 100vh;
+            height: 100%; /* ครอบคลุมทั้งหน้า 1 และ หน้า 2 */
             pointer-events: none;
             z-index: 1;
             overflow: hidden;
         }
 
         .cloud {
-            position: absolute;
+            position: fixed; /* เมฆลอยนิ่งๆ สวยๆ ไว้ด้านหลัง */
             background: radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.8) 30%, rgba(240, 252, 255, 0.5) 60%, rgba(255,255,255,0) 80%);
             filter: blur(40px);
             border-radius: 50%;
@@ -93,17 +92,19 @@
             filter: drop-shadow(0 0 6px rgba(138, 153, 173, 0.5));
         }
 
+        /* ปรับให้ดาวโปรยวิ่งยาวลงไปจนสุดขอบล่างของหน้าเว็บทั้งหมด */
         @keyframes starRainFall {
             0% { transform: translateY(-50px) rotate(0deg) scale(0.6); opacity: 0; }
-            10% { opacity: 0.85; }
-            40% { opacity: 0.4; }
-            65% { opacity: 0.9; }
-            85% { opacity: 0.5; }
-            100% { transform: translateY(105vh) rotate(70deg) scale(0.6); opacity: 0; }
+            5% { opacity: 0.85; }
+            30% { opacity: 0.5; }
+            50% { opacity: 0.9; }
+            75% { opacity: 0.4; }
+            95% { opacity: 0.85; }
+            100% { transform: translateY(210vh) rotate(120deg) scale(0.6); opacity: 0; }
         }
 
         /* -----------------------------------------
-           SECTION 1: ID CARD (ล็อกเป็นแนวนอนเต็มจอ + ห้ามเลื่อน)
+           SECTION 1: ID CARD แนวนอน (ล็อกความสูงหน้าจอ)
         ----------------------------------------- */
         .welcome-section {
             width: 100vw;
@@ -116,10 +117,9 @@
             padding: 20px;
             position: relative;
             z-index: 10;
-            overflow: hidden; /* บังคับไม่ให้ขึ้นหน้าที่สองจนกว่าจะกดปุ่ม */
+            overflow: hidden; 
         }
 
-        /* ดีไซน์โครงสร้างแบบแนวนอน (Horizontal Card) */
         .id-card {
             background-color: rgba(255, 255, 255, 0.9);
             border: 1px solid rgba(130, 102, 89, 0.25);
@@ -129,7 +129,7 @@
             padding: 35px;
             box-shadow: 0 25px 60px rgba(130, 102, 89, 0.08), inset 0 0 20px rgba(255, 255, 255, 0.6);
             display: grid;
-            grid-template-columns: 1fr 1.5fr; /* บังคับแบ่งซ้ายขวาเสมอไม่ว่าบนจออะไร */
+            grid-template-columns: 1fr 1.5fr; 
             gap: 35px;
             position: relative;
             z-index: 2;
@@ -262,7 +262,7 @@
         }
 
         /* -----------------------------------------
-           SECTION 2: PORTFOLIO MAIN PAGE (ซ่อนไว้ก่อนเริ่มเลื่อน)
+           SECTION 2: PORTFOLIO MAIN PAGE (แสดงผลซ้ายขวาเสมอเหมือนบนคอม)
         ----------------------------------------- */
         .portfolio-container {
             min-height: 100vh;
@@ -282,7 +282,7 @@
             border-radius: 40px; 
             box-shadow: 0 30px 70px rgba(140, 180, 190, 0.25), 0 10px 40px rgba(130, 102, 89, 0.05); 
             display: grid;
-            grid-template-columns: 1fr 1.6fr;
+            grid-template-columns: 1fr 1.6fr; /* ล็อกแบบ 2 คอลัมน์ซ้ายขวาในทุกอุปกรณ์ */
             overflow: hidden;
             position: relative;
             z-index: 2;
@@ -320,7 +320,6 @@
             gap: 14px;
         }
 
-        /* ปุ่มลิงก์สไตล์ปุยฟุ้งกระจาย */
         .fluffy-btn {
             display: flex;
             align-items: center;
@@ -449,36 +448,56 @@
         }
 
         /* -----------------------------------------
-           📱 RESPONSIVE (รักษาดีไซน์ ID Card ให้แนวนอนเสมอ)
+           📱 RESPONSIVE (รักษาโครงสร้างซ้ายขวาแบบคอมในหน้าสอง)
         ----------------------------------------- */
         @media (max-width: 768px) {
-            /* ป้องกันการเบียดและจัดช่องไฟบัตรแนวนอนบนมือถือ */
+            /* หน้า 1: จัดสัดส่วนของบัตร ID แนวนอนบนมือถือ */
             .id-card { 
                 gap: 15px; 
                 padding: 20px 15px; 
                 border-radius: 18px;
-                max-width: 100%;
             }
-            .photo-box { max-width: 110px; }
+            .photo-box { max-width: 100px; }
             .signature-area { font-size: 8px; margin-top: 10px; }
             .signature-hand { font-size: 16px; }
             
-            .card-title { font-size: 20px; margin-bottom: 15px; text-align: left; }
+            .card-title { font-size: 20px; margin-bottom: 15px; }
             .card-title span { font-size: 9px; letter-spacing: 2px; }
             .info-row { font-size: 11px; margin-bottom: 8px; }
-            .info-label { font-size: 12px; min-width: 70px; margin-right: 5px; }
-            .card-footer-text { display: none; } /* ซ่อนข้อความจำลองเล็กๆ เพื่อไม่ให้ล้นหน้าจอมือถือ */
+            .info-label { font-size: 11px; min-width: 65px; margin-right: 5px; }
+            .card-footer-text { display: none; } 
             .scroll-btn { padding: 12px 30px; font-size: 12px; margin-top: 15px; }
 
-            /* หน้าเนื้อหาหลัก Portfolio หมุนกลับมาเป็นแนวตั้งเพื่อความสวยงามตามสัดส่วนมือถือ */
-            .main-portfolio { grid-template-columns: 1fr; border-radius: 32px; }
-            .left-column { border-right: none; border-bottom: 2px dashed rgba(130, 102, 89, 0.15); padding: 35px 20px; gap: 30px; }
-            .brand-hello { font-size: 48px; }
-            .brand-name { font-size: 20px; }
-            .right-column { padding: 35px 20px; gap: 35px; }
-            .price-table td { font-size: 14px; padding: 12px 6px; }
-            .feature-list li { font-size: 14px; padding-left: 24px; }
-            .drive-box { padding: 20px 16px; gap: 18px; }
+            /* หน้า 2: บังคับให้รักษา Layout แบบ 2 คอลัมน์ซ้ายขวาตามแบบฉบับ Desktop Mode */
+            .main-portfolio { 
+                grid-template-columns: 1fr 1.5fr; /* ห้ามเปลี่ยนเป็นแนวดิ่ง */
+                border-radius: 20px; 
+            }
+            .left-column { 
+                padding: 20px 15px; 
+                gap: 25px; 
+            }
+            .brand-hello { font-size: 28px; }
+            .brand-name { font-size: 14px; letter-spacing: 2px; }
+            .section-title-left { font-size: 11px; margin-bottom: 12px; }
+            .fluffy-btn { padding: 10px 8px; font-size: 11px; }
+            .left-photo-space .photo-holder { max-width: 90px; border-radius: 10px; }
+            .left-photo-tag { font-size: 9px; letter-spacing: 1px; }
+
+            .right-column { 
+                padding: 25px 15px; 
+                gap: 25px; 
+            }
+            .content-block-title { font-size: 13px; margin-bottom: 10px; }
+            .personal-desc { font-size: 12px; line-height: 1.6; }
+            .price-table td { font-size: 12px; padding: 10px 4px; }
+            .price-value { font-size: 13px; }
+            .feature-list li { font-size: 12px; padding-left: 18px; margin-bottom: 10px; }
+            .feature-list li::before { font-size: 10px; }
+            
+            .drive-box { padding: 15px 10px; gap: 15px; border-radius: 16px; }
+            .drive-label { font-size: 12px; }
+            .warranty-badge { font-size: 11.5px; padding: 10px; }
         }
     </style>
 </head>
@@ -585,7 +604,7 @@
 
                 <div class="left-photo-space">
                     <div class="photo-holder">
-                        <img src="IMG_0545.jpeg" alt="zenithyshop Logo" onerror="this.style.display='none'; this.parentNode.innerHTML='<span style=\'color:var(--text-muted); font-size:12px; padding:20px; display:block;\'>[ รูปโลโก้ร้าน IMG_0545.jpeg ]</span>'">
+                        <img src="IMG_0545.jpeg" alt="zenithyshop Logo" onerror="this.style.display='none'; this.parentNode.innerHTML='<span style=\'color:var(--text-muted); font-size:10px; padding:5px; display:block;\'>[ รูปโลโก้ร้าน ]</span>'">
                     </div>
                     <div class="left-photo-tag">GRAPHIC DESIGNER 🎨</div>
                 </div>
@@ -617,7 +636,7 @@
                         <li>ใส่ลิงก์ช่องทางการติดต่อ ได้ทั้ง Line Facebook Instagram และอื่นๆ</li>
                         <li>เว็บบัญชี สามารถคัดลอกเลขบัญชีได้ และใส่รูปสำหรับแสกนได้เช่นกัน</li>
                     </ul>
-                    <div style="margin-top: 15px; font-weight: 700; color: var(--accent-brown); font-size: 14.5px;">
+                    <div style="margin-top: 10px; font-weight: 700; color: var(--accent-brown); font-size: 13px;">
                         คัดสรรมาให้แล้ว มีเทมเพลตให้เลือกถึง 50+ แบบ 💖
                     </div>
                 </div>
@@ -649,25 +668,23 @@
     </section>
 
     <script>
-        // ฟังก์ชันเมื่อเริ่มโหลดเว็บ: บังคับล็อกหน้าจอห้ามเลื่อนลงเด็ดขาด
+        // ฟังก์ชันเริ่มโหลดเว็บ: ล็อกหน้าแรกไว้ไม่ให้ผู้ใช้เลื่อนลงไปเองได้
         function lockScroll() {
             document.body.style.overflow = 'hidden';
             document.documentElement.style.overflow = 'hidden';
         }
         
-        // รันคำสั่งล็อกทันทีเมื่อเปิดหน้าเว็บ
+        // รันล็อกหน้าจอทันทีเมื่อเปิดเว็บขึ้นมา
         lockScroll();
 
-        // ฟังก์ชันปลดล็อกหน้าจอและเลื่อนสไลด์เมื่อกดปุ่มหน้าถัดไป
+        // ปลดล็อกหน้าจอเมื่อมีการกดปุ่มและสไลด์ลงอย่างนุ่มนวล
         function unlockAndScroll(event) {
-            event.preventDefault(); // ป้องกันการกระโดดข้ามหน้าแบบกระทันหัน
+            event.preventDefault(); 
             
-            // ปลดล็อกเพื่อให้เว็บบนคอมพิวเตอร์และมือถือเลื่อนได้ตามปกติ
             document.body.style.overflow = 'auto';
             document.documentElement.style.overflow = 'auto';
             document.getElementById('welcome-screen').style.overflow = 'visible';
 
-            // เลื่อนลงไปยังส่วนที่สองแบบสมูทลื่นไหล
             const target = document.getElementById('portfolio-page');
             target.scrollIntoView({ behavior: 'smooth' });
         }
