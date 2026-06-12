@@ -18,6 +18,9 @@
             --font-thai: 'Mali', cursive;
             --font-serif: 'Playfair Display', serif;
             --font-sans: 'Montserrat', sans-serif;
+            
+            /* สีดาวสีเทาเข้มเพื่อให้เห็นชัดเจนบนพื้นหลังขาว/ฟ้า */
+            --star-grey: #6b7280; 
         }
 
         * {
@@ -35,7 +38,7 @@
         }
 
         /* -----------------------------------------
-           GLOBAL BACKGROUND DECORATION (ใช้ร่วมกันทั้ง 2 หน้า)
+           NEW FIXED BACKGROUND EFFECT (ก้อนเมฆสมจริง & ดาวโปรยสีเทาเห็นชัด)
         ----------------------------------------- */
         .background-overlay {
             position: fixed;
@@ -44,103 +47,99 @@
             width: 100vw;
             height: 100vh;
             pointer-events: none;
-            z-index: 1; /* อยู่หลังเนื้อหา แต่อยู่หน้าพื้นหลังปกติ */
+            z-index: 1; /* อยู่หลังเนื้อหาการ์ด แต่อยู่บนพื้นหลัง */
             overflow: hidden;
         }
 
-        /* ก้อนเมฆฟุ้งสมจริง (Realistic Soft Clouds) */
+        /* ก้อนเมฆแบบสมจริง ปรับให้เห็นชัดขึ้นด้วยขอบฟุ้งสีขาวนวลตัดกับเลเยอร์หลัง */
         .cloud {
             position: absolute;
-            background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.6) 40%, rgba(255,255,255,0) 70%);
-            filter: blur(25px);
+            background: radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.7) 40%, rgba(232, 247, 250, 0.4) 60%, rgba(255,255,255,0) 80%);
+            filter: blur(15px);
             border-radius: 50%;
             pointer-events: none;
-            opacity: 0.75;
-            animation: cloudFloat 12s ease-in-out infinite alternate;
-        }
-        
-        .cloud::before, .cloud::after {
-            content: '';
-            position: absolute;
-            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
-            filter: blur(20px);
-            border-radius: 50%;
+            opacity: 0.85;
+            animation: cloudFloat 15s ease-in-out infinite alternate;
         }
 
         .cloud-top-left {
-            width: 500px;
-            height: 300px;
-            top: -50px;
-            left: -100px;
-            animation-duration: 14s;
+            width: 450px;
+            height: 250px;
+            top: 5%;
+            left: -50px;
+            animation-duration: 12s;
         }
 
         .cloud-mid-right {
-            width: 600px;
-            height: 400px;
-            top: 40%;
-            right: -150px;
-            background: radial-gradient(circle, rgba(240,251,253,0.9) 0%, rgba(220,245,248,0.5) 50%, rgba(255,255,255,0) 70%);
+            width: 500px;
+            height: 300px;
+            top: 45%;
+            right: -80px;
             animation-duration: 18s;
         }
 
         .cloud-bottom-left {
-            width: 550px;
-            height: 350px;
-            bottom: -50px;
-            left: -100px;
-            animation-duration: 16s;
+            width: 480px;
+            height: 280px;
+            bottom: 5%;
+            left: -60px;
+            animation-duration: 15s;
         }
 
         @keyframes cloudFloat {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(30px, -20px) scale(1.08); }
+            0% { transform: translate(0, 0) scale(1); opacity: 0.7; }
+            100% { transform: translate(40px, -20px) scale(1.1); opacity: 0.9; }
         }
 
-        /* ฝนดาวระยิบระยับแบบโปรยปราย (Twinkling Star Rain - ไม่ใช่ดาวตกขีดๆ) */
+        /* ฝนดาวโปรยปรายสีเทาเห็นชัด (Twinkling Star Rain) */
         .star-rain {
             position: absolute;
-            width: 4px;
-            height: 4px;
-            background: #ffffff;
+            width: 5px;
+            height: 5px;
+            background: var(--star-grey);
             border-radius: 50%;
-            box-shadow: 0 0 10px #fff, 0 0 18px rgba(255,255,255,0.8);
+            /* เพิ่ม Shadow สีเทาอมฟ้าบางๆ ให้ดูละมุนวิบวับ */
+            box-shadow: 0 0 6px var(--star-grey), 0 0 12px rgba(107, 114, 128, 0.4);
             opacity: 0;
             animation: starFall linear infinite;
         }
 
-        /* กระจายฝนดาวให้ตกนุ่มๆ ทั่วหน้าจอ สลับความเร็วและความวิบวับ */
-        .star-rain:nth-child(1) { left: 10%; top: -10px; animation-duration: 6s; animation-delay: 0s; }
-        .star-rain:nth-child(2) { left: 25%; top: -10px; animation-duration: 8s; animation-delay: 2s; width: 5px; height: 5px; }
-        .star-rain:nth-child(3) { left: 38%; top: -10px; animation-duration: 7s; animation-delay: 4s; }
-        .star-rain:nth-child(4) { left: 52%; top: -10px; animation-duration: 9s; animation-delay: 1s; width: 3px; height: 3px; }
-        .star-rain:nth-child(5) { left: 67%; top: -10px; animation-duration: 6.5s; animation-delay: 3s; }
-        .star-rain:nth-child(6) { left: 80%; top: -10px; animation-duration: 8.5s; animation-delay: 5s; width: 5px; height: 5px; }
-        .star-rain:nth-child(7) { left: 93%; top: -10px; animation-duration: 7.5s; animation-delay: 1.5s; }
-        .star-rain:nth-child(8) { left: 18%; top: -10px; animation-duration: 9.5s; animation-delay: 3.5s; }
-        .star-rain:nth-child(9) { left: 45%; top: -10px; animation-duration: 6.8s; animation-delay: 5.5s; }
-        .star-rain:nth-child(10) { left: 73%; top: -10px; animation-duration: 8.2s; animation-delay: 2.5s; }
+        /* กระจายฝนดาวตกนุ่มๆ ทั่วหน้าจอ สลับตำแหน่งและความเร็ว */
+        .star-rain:nth-child(1) { left: 8%; top: -20px; animation-duration: 7s; animation-delay: 0s; }
+        .star-rain:nth-child(2) { left: 22%; top: -20px; animation-duration: 9s; animation-delay: 2s; width: 6px; height: 6px; }
+        .star-rain:nth-child(3) { left: 35%; top: -20px; animation-duration: 6.5s; animation-delay: 4.5s; width: 4px; height: 4px; }
+        .star-rain:nth-child(4) { left: 48%; top: -20px; animation-duration: 11s; animation-delay: 1s; width: 5px; height: 5px; }
+        .star-rain:nth-child(5) { left: 62%; top: -20px; animation-duration: 8s; animation-delay: 3.5s; width: 6px; height: 6px; }
+        .star-rain:nth-child(6) { left: 78%; top: -20px; animation-duration: 10s; animation-delay: 5s; width: 4px; height: 4px; }
+        .star-rain:nth-child(7) { left: 90%; top: -20px; animation-duration: 7.5s; animation-delay: 1.5s; width: 5px; height: 5px; }
+        .star-rain:nth-child(8) { left: 15%; top: -20px; animation-duration: 8.5s; animation-delay: 3s; width: 5px; height: 5px; }
+        .star-rain:nth-child(9) { left: 42%; top: -20px; animation-duration: 7s; animation-delay: 5.5s; width: 6px; height: 6px; }
+        .star-rain:nth-child(10) { left: 55%; top: -20px; animation-duration: 9.5s; animation-delay: 2.5s; width: 4px; height: 4px; }
+        .star-rain:nth-child(11) { left: 70%; top: -20px; animation-duration: 8.2s; animation-delay: 0.8s; width: 5px; height: 5px; }
+        .star-rain:nth-child(12) { left: 85%; top: -20px; animation-duration: 10.5s; animation-delay: 4s; width: 6px; height: 6px; }
 
         @keyframes starFall {
             0% {
-                transform: translateY(0) scale(0.5);
+                transform: translateY(0) scale(0.6);
                 opacity: 0;
             }
-            15% {
-                opacity: 0.9;
-                transform: translateY(15vh) scale(1) rotate(0deg);
-            }
-            45% {
-                opacity: 0.4; /* สลับความวิบวับระยิบระยับตอนกำลังไอลงมา */
-            }
-            55% {
-                opacity: 0.9;
-            }
-            85% {
+            10% {
                 opacity: 0.8;
             }
+            30% {
+                opacity: 0.4; /* จำลองการระยิบระยับกะพริบระหว่างโปรยลงมา */
+            }
+            50% {
+                opacity: 0.8;
+            }
+            70% {
+                opacity: 0.4;
+            }
+            90% {
+                opacity: 0.7;
+            }
             100% {
-                transform: translateY(105vh) scale(0.4);
+                transform: translateY(105vh) scale(0.5);
                 opacity: 0;
             }
         }
@@ -161,7 +160,7 @@
         }
 
         .id-card {
-            background-color: rgba(255, 255, 255, 0.82);
+            background-color: rgba(255, 255, 255, 0.85);
             border: 1px solid rgba(130, 102, 89, 0.25);
             border-radius: 28px;
             width: 100%;
@@ -285,15 +284,16 @@
             font-family: var(--font-sans);
         }
 
-        /* ปุ่มกดเลื่อนหน้าสไตล์น่ารักฟุ้งๆ */
+        /* ปุ่มกดเปลี่ยนหน้าภาษาอังกฤษ */
         .scroll-btn {
             margin-top: 40px;
             background: linear-gradient(135deg, var(--accent-brown), #9a7d70);
             color: #fff;
             border: none;
-            padding: 14px 40px;
-            font-family: var(--font-thai);
-            font-size: 16px;
+            padding: 14px 45px;
+            font-family: var(--font-sans);
+            font-size: 14px;
+            letter-spacing: 2px;
             font-weight: bold;
             border-radius: 50px;
             cursor: pointer;
@@ -589,6 +589,8 @@
         <div class="star-rain"></div>
         <div class="star-rain"></div>
         <div class="star-rain"></div>
+        <div class="star-rain"></div>
+        <div class="star-rain"></div>
     </div>
 
 
@@ -639,7 +641,7 @@
         </div>
 
         <a href="#portfolio-page" class="scroll-btn">
-            กดเพื่อไปหน้าถัดไป ➔
+            NEXT PAGE ➔
         </a>
     </section>
 
