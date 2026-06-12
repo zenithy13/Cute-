@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>zenithyshop</title>
+    <!-- Google Fonts: Noto Sans Thai Looped, Playfair Display, Montserrat -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai+Looped:wght@400;500;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
@@ -18,16 +19,14 @@
             --font-thai: 'Noto Sans Thai Looped', sans-serif;
             --font-serif: 'Playfair Display', serif;
             --font-sans: 'Montserrat', sans-serif;
-            --star-color: rgba(138, 153, 173, 0.6); 
-            --star-gold: #fcc419;
+            
+            /* ปรับสีดาวห้าแฉกให้กลับมาเป็นสีเทาตามเดิม และปรับดาวตกให้เข้มขึ้นเพื่อให้มองเห็นชัดเจน */
+            --star-color: rgba(110, 125, 145, 0.85); 
+            --star-gray-feature: #8a99ad; 
 
             /* สีปุ่มกด */
             --btn-blue: #dbeafe;       
             --btn-blue-text: #1e40af;
-            --btn-gray: #e5e7eb;       
-            --btn-gray-text: #4b5563;
-            --btn-brown: #f5ebe6;      
-            --btn-brown-text: #78350f;
         }
 
         * {
@@ -42,12 +41,11 @@
             font-family: var(--font-thai);
             background-color: var(--card-gray);
             color: var(--text-dark);
-            /* ล็อกการสกรอลล์เริ่มต้นเพื่อบังคับให้อยู่หน้าแรกและต้องกดปุ่มเท่านั้น */
-            overflow: hidden; 
+            overflow: hidden; /* ล็อกการสกรอลล์เริ่มต้น บังคับให้กดปุ่มเท่านั้น */
         }
 
         /* -----------------------------------------
-           BACKGROUND LAYER (กู้คืนระบบดาวตก มั่นใจได้ว่าแสดงผลทันทีทั้งหน้า 1 และ 2)
+           BACKGROUND LAYER (ปรับให้ดาวตกเด่นขึ้นมาให้เห็นชัดเจน)
         ----------------------------------------- */
         .star-bg-layer {
             position: absolute;
@@ -67,13 +65,13 @@
             user-select: none;
             animation: starRain 6s linear infinite;
             opacity: 0;
-            filter: drop-shadow(0 0 5px rgba(138, 153, 173, 0.5));
+            filter: drop-shadow(0 0 6px rgba(110, 125, 145, 0.4));
         }
 
         @keyframes starRain {
             0% { transform: translateY(-5vh) rotate(0deg) scale(0.6); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
+            12% { opacity: 1; }
+            88% { opacity: 1; }
             100% { transform: translateY(105vh) rotate(120deg) scale(0.6); opacity: 0; }
         }
 
@@ -224,7 +222,7 @@
         .scroll-btn:hover { transform: translateY(-3px); }
 
         /* -----------------------------------------
-           SECTION 2: PORTFOLIO MAIN PAGE (หน้า 2 คงรูปแบบเดิมสำหรับคอม)
+           SECTION 2: PORTFOLIO MAIN PAGE (หน้า 2 คอมพิวเตอร์)
         ----------------------------------------- */
         .portfolio-container {
             width: 100vw;
@@ -241,18 +239,17 @@
         .main-portfolio {
             width: 100%;
             max-width: 1000px;
-            height: 90vh; /* ล็อกความสูงให้พอดีหน้าจอคอม */
+            height: 90vh; 
             background-color: rgba(255, 255, 255, 0.95);
             border: 1px solid rgba(130, 102, 89, 0.15);
             border-radius: 32px; 
             box-shadow: 0 30px 60px rgba(130, 102, 89, 0.05);
             display: grid;
-            grid-template-columns: 1fr 1.6fr; /* รูปแบบเดิมสำหรับคอมพิวเตอร์แยกซ้ายขวา */
+            grid-template-columns: 1fr 1.6fr; 
             overflow: hidden;
             backdrop-filter: blur(15px);
         }
 
-        /* คอมพิวเตอร์: คอลัมน์ซ้าย (ข้อมูลผู้สร้างและช่องทางติดต่ออยู่ฝั่งนี้) */
         .left-column {
             background-color: rgba(244, 251, 253, 0.7); 
             padding: 45px 35px;
@@ -277,10 +274,12 @@
             font-weight: bold;
         }
 
+        /* ปรับแต่งส่วนจัดการปุ่ม Contact ให้รองรับปุ่มรูปแบบใหม่ */
         .contact-buttons-container {
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            align-items: center;
+            gap: 16px;
         }
 
         .fluffy-btn {
@@ -294,16 +293,28 @@
             text-decoration: none;
             transition: all 0.3s ease;
             text-align: center;
+            width: 100%;
         }
 
         .btn-blue-tone { background-color: var(--btn-blue); color: var(--btn-blue-text); box-shadow: 0 6px 15px rgba(30, 64, 175, 0.1); }
         .btn-blue-tone:hover { transform: translateY(-2px); background-color: var(--btn-blue-text); color: #fff; }
 
-        .btn-gray-tone { background-color: var(--btn-gray); color: var(--btn-gray-text); box-shadow: 0 6px 15px rgba(75, 85, 99, 0.1); }
-        .btn-gray-tone:hover { transform: translateY(-2px); background-color: var(--btn-gray-text); color: #fff; }
+        /* จัดระเบียบปุ่ม Line รูปภาพ */
+        .line-add-wrapper {
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+        .line-add-wrapper:hover {
+            transform: scale(1.05);
+        }
+        .line-add-wrapper img {
+            display: block;
+            height: 38px;
+            width: auto;
+        }
 
-        .btn-brown-tone { background-color: var(--btn-brown); color: var(--btn-brown-text); box-shadow: 0 6px 15px rgba(120, 53, 15, 0.1); }
-        .btn-brown-tone:hover { transform: translateY(-2px); background-color: var(--btn-brown-text); color: #fff; }
+        .btn-brown-tone { background-color: #f5ebe6; color: #78350f; box-shadow: 0 6px 15px rgba(120, 53, 15, 0.1); }
+        .btn-brown-tone:hover { transform: translateY(-2px); background-color: #78350f; color: #fff; }
 
         .left-photo-space { margin-top: auto; text-align: center; }
         .left-photo-space .photo-holder {
@@ -318,7 +329,6 @@
         .left-photo-space .photo-holder img { width: 100%; height: 100%; object-fit: cover; }
         .left-photo-tag { font-family: var(--font-sans); font-size: 11px; font-weight: 600; color: var(--text-muted); margin-top: 10px; letter-spacing: 2px; }
 
-        /* คอมพิวเตอร์: คอลัมน์ขวา (รายละเอียดเนื้อหาเรทราคา) */
         .right-column { padding: 45px 50px; display: flex; flex-direction: column; gap: 30px; overflow-y: auto; }
 
         .content-block-title {
@@ -341,14 +351,14 @@
         .price-name { font-weight: 500; }
         .price-value { text-align: right; color: var(--accent-brown); font-weight: 700; font-size: 16px; }
 
-        /* เปลี่ยนข้อความย่อยเป็นดาวห้าแฉกสีทองระยับ (★) */
+        /* ดาวห้าแฉกสีเทาตรง Features */
         .feature-list { list-style: none; }
         .feature-list li { position: relative; padding-left: 24px; margin-bottom: 12px; font-size: 14.5px; line-height: 1.6; }
         .feature-list li::before {
             content: '★';
             position: absolute;
             left: 2px;
-            color: var(--star-gold);
+            color: var(--star-gray-feature); 
             font-size: 14px;
         }
 
@@ -366,23 +376,22 @@
 
         .warranty-badge {
             background-color: #fffcf0;
-            border-left: 4px solid #fcc419;
+            border-left: 4px solid var(--star-gray-feature);
             padding: 14px;
             font-size: 14px;
             font-weight: 700;
             border-radius: 8px;
-            color: #664d03;
+            color: #4b5563;
         }
 
-        /* โซนคอนแทคมือถือเริ่มต้นจะถูกซ่อนไว้บน PC */
+        /* ซ่อนส่วนคอนแทคท้ายหน้าจอบนคอมพิวเตอร์ */
         .mobile-contact-footer { display: none; }
 
 
         /* -----------------------------------------
-           📱 RESPONSIVE: แยกระบบล็อกรูปแบบและย้าย Contact เฉพาะบนมือถือ
+           📱 RESPONSIVE: รูปแบบมือถือ
         ----------------------------------------- */
         @media (max-width: 768px) {
-            /* หน้าแรก: บัตร ID CARD คงรูปแบบแนวนอนเป๊ะๆ ไม่เปลี่ยนโครงสร้าง */
             .id-card { 
                 grid-template-columns: 1fr 1.5fr !important; 
                 gap: 15px; 
@@ -400,19 +409,17 @@
             .card-footer-text { display: none; } 
             .scroll-btn { padding: 11px 26px; font-size: 12px; margin-top: 15px; }
 
-            /* หน้าสองบนมือถือ: จัดเรียงใหม่อ่านง่ายแบบแนวตั้งเดี่ยว (Single Column) และดึงพื้นที่เต็มความกว้าง */
             .portfolio-container { 
                 padding: 12px 10px; 
-                height: auto; /* ปล่อยอิสระให้สกรอลล์อ่านง่ายบนสมาร์ตโฟน */
+                height: auto; 
             }
 
             .main-portfolio { 
-                grid-template-columns: 1fr; /* ยุบรวมเป็น 1 คอลัมน์แนวตั้งอ่านง่ายบนมือถือ */
+                grid-template-columns: 1fr; 
                 height: auto;
                 border-radius: 20px;
             }
 
-            /* ซ่อนคอลัมน์ซ้ายเดิม (เพราะปุ่มคอนแทคจะย้ายไปล่างสุด และรูปโปรไฟล์จะดึงไปจัดตำแหน่งใหม่ด้านบน) */
             .left-column { 
                 padding: 30px 16px 10px 16px;
                 border-right: none;
@@ -421,12 +428,11 @@
             }
             .left-column .contact-buttons-container, 
             .left-column .section-title-left { 
-                display: none; /* ซ่อนคอนแทคในตำแหน่งคอมพิวเตอร์ */
+                display: none; 
             }
             .left-photo-space { order: -1; margin-bottom: 0; }
             .left-photo-space .photo-holder { width: 90px; height: 90px; }
 
-            /* คอลัมน์ขวา (โซนเนื้อหาบนมือถือ) */
             .right-column { 
                 padding: 25px 16px; 
                 gap: 25px; 
@@ -438,12 +444,11 @@
             .price-table td { font-size: 13.5px; padding: 10px 4px; }
             .price-value { font-size: 14.5px; }
             .feature-list li { font-size: 13.5px; padding-left: 20px; }
-            .feature-list li::before { font-size: 12px; }
             .drive-box { padding: 16px 12px; }
             .fluffy-btn { padding: 12px 16px; font-size: 13px; }
             .warranty-badge { font-size: 13px; }
 
-            /* เปิดใช้งานโซน CONTACT ใหม่ ด้านล่างสุดของหน้า 2 บนมือถือตามคำสั่งบอกเป๊ะๆ */
+            /* ส่วนติดต่อด้านล่างสุดของ Mobile */
             .mobile-contact-footer { 
                 display: block; 
                 background-color: rgba(244, 251, 253, 0.8);
@@ -455,8 +460,9 @@
             .mobile-contact-footer .contact-buttons-container { 
                 display: flex; 
                 flex-direction: column; 
-                gap: 12px; 
+                gap: 14px; 
                 margin-top: 15px;
+                align-items: center;
             }
             .mobile-contact-footer .fluffy-btn { 
                 width: 100%; 
@@ -469,6 +475,9 @@
 </head>
 <body>
 
+    <!-- =========================================
+         BACKGROUND LAYER (ระบบดาวตกสีเทาที่ปรับให้เห็นชัดเจนขึ้น)
+         ========================================= -->
     <div class="star-bg-layer" id="stars-container">
         <div class="star-falling" style="left: 6%; animation-duration: 4.8s; animation-delay: 0s;">★</div>
         <div class="star-falling" style="left: 18%; animation-duration: 6.2s; animation-delay: 1.5s;">★</div>
@@ -487,6 +496,9 @@
     </div>
 
 
+    <!-- =========================================
+         ส่วนที่ 1: บัตร ID CARD แนวนอน (ล็อกหน้าแรก)
+         ========================================= -->
     <section class="welcome-section" id="welcome-screen">
         <div class="id-card">
             <div class="card-photo-side">
@@ -517,9 +529,13 @@
     </section>
 
 
+    <!-- =========================================
+         ส่วนที่ 2: หน้าข้อมูลหลักผลงาน
+         ========================================= -->
     <section id="portfolio-page" class="portfolio-container">
         <div class="main-portfolio">
             
+            <!-- [คอมพิวเตอร์] คอลัมน์ซ้ายข้อมูลแบรนด์ และ ติดต่อด้านซ้าย -->
             <div class="left-column">
                 <div class="left-photo-space">
                     <div class="photo-holder">
@@ -537,15 +553,16 @@
                     <h3 class="section-title-left">CONTACT 📥</h3>
                     <div class="contact-buttons-container">
                         <a href="https://www.facebook.com/profile.php?id=61554192600355" target="_blank" class="fluffy-btn btn-blue-tone">
-                            ติดต่อทาง Facebook
+                            Facebook
                         </a>
-                        <a href="https://line.me/ti/p/LfBtdhlrVa" target="_blank" class="fluffy-btn btn-gray-tone">
-                            ติดต่อทาง Line ไอดี
+                        <a href="https://lin.ee/qihwQGM" target="_blank" class="line-add-wrapper">
+                            <img src="https://scdn.line-apps.com/n/line_add_friends/btn/th.png" alt="เพิ่มเพื่อน" border="0">
                         </a>
                     </div>
                 </div>
             </div>
 
+            <!-- คอลัมน์ขวา (รายละเอียดเรทราคาทั้งหมด) -->
             <div class="right-column">
                 <div>
                     <h2 class="content-block-title">PERSONAL 🏷️</h2>
@@ -600,14 +617,15 @@
                 </div>
             </div>
 
+            <!-- [มือถือ] โซนติดต่อดึงลงมาท้ายหน้าจอสุดตามบรีฟเดิิม พร้อมปุ่ม Line ใหม่ -->
             <div class="mobile-contact-footer">
                 <h3 class="content-block-title" style="border-left:none; padding-left:0; text-align:center; margin-bottom:5px;">CONTACT 📥</h3>
                 <div class="contact-buttons-container">
                     <a href="https://www.facebook.com/profile.php?id=61554192600355" target="_blank" class="fluffy-btn btn-blue-tone">
-                        ติดต่อทาง Facebook
+                        Facebook
                     </a>
-                    <a href="https://line.me/ti/p/LfBtdhlrVa" target="_blank" class="fluffy-btn btn-gray-tone">
-                        ติดต่อทาง Line ไอดี
+                    <a href="https://lin.ee/qihwQGM" target="_blank" class="line-add-wrapper">
+                        <img src="https://scdn.line-apps.com/n/line_add_friends/btn/th.png" alt="เพิ่มเพื่อน" border="0">
                     </a>
                 </div>
             </div>
@@ -615,22 +633,21 @@
         </div>
     </section>
 
+    <!-- =========================================
+         SCRIPT ระบบสลับเพจ
+         ========================================= -->
     <script>
-        // ฟังก์ชันบังคับหน้าแรกเมื่อเปิดลิงก์เข้ามาใหม่
         window.addEventListener('DOMContentLoaded', () => {
             window.scrollTo(0, 0);
         });
 
-        // ฟังก์ชันสั่งการย้ายหน้าจอไปหน้าสองอย่างราบรื่นเมื่อกดปุ่มถัดไปเท่านั้น
         function goToPortfolioPage() {
-            // ปลดล็อกเพื่อให้หน้าต่างเลื่อนตัวไปยังโซนผลงานได้
             document.body.style.overflow = 'auto';
             document.documentElement.style.overflow = 'auto';
 
             const targetSection = document.getElementById('portfolio-page');
             targetSection.scrollIntoView({ behavior: 'smooth' });
 
-            // เมื่อย้ายหน้าเสร็จแล้ว ล็อกคุณสมบัติไม่ให้หน้าสกรอลล์รวนกลับไปหน้าแรกบน PC
             if (window.innerWidth > 768) {
                 setTimeout(() => {
                     document.body.style.overflow = 'hidden';
@@ -642,5 +659,3 @@
 
 </body>
 </html>
-
-```
