@@ -12,6 +12,8 @@
             --bg-main: #FFFDE7;
             --bg-sidebar: #38C2B3;
             --bg-card: #FFFFFF;
+            --banner-color: #B5E57A;
+            --banner-pattern: #E3F8B3;
             --text-dark: #2A4C48;
             --text-light: #6C8E8A;
             --text-white: #FFFFFF;
@@ -21,72 +23,113 @@
             --accent-teal: #38C2B3;
             --border-radius-lg: 30px;
             --border-radius-md: 20px;
+            --border-radius-sm: 12px;
             --shadow-card: 0 10px 30px rgba(56, 194, 179, 0.08);
+            --shadow-hover: 0 15px 35px rgba(56, 194, 179, 0.15);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Mitr', sans-serif; background-color: var(--bg-main); color: var(--text-dark); }
-        h1, h2, h3 { font-family: 'Fredoka', sans-serif; }
-        .app-container { max-width: 900px; margin: 40px auto; padding: 20px; }
-        .card { background: var(--bg-card); padding: 30px; border-radius: var(--border-radius-lg); box-shadow: var(--shadow-card); margin-bottom: 20px; }
-        .btn { display: inline-block; padding: 12px 25px; border-radius: 20px; text-decoration: none; font-weight: bold; margin-top: 10px; transition: 0.3s; }
-        .btn-primary { background: var(--bg-sidebar); color: white; }
-        .highlight { color: #d84b8b; font-weight: bold; }
-        .price-tag { font-size: 24px; color: var(--accent-pink); font-weight: 700; }
-        ul { margin: 15px 0; padding-left: 20px; }
-        li { margin-bottom: 10px; }
+        body { font-family: 'Mitr', sans-serif !important; background-color: var(--bg-main); color: var(--text-dark); line-height: 1.6; overflow-x: hidden; background-image: radial-gradient(var(--banner-pattern) 2px, transparent 2px); background-size: 30px 30px; }
+        h1, h2, h3, h4, h5, .english-text { font-family: 'Fredoka', 'Mitr', sans-serif !important; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        button { cursor: pointer; border: none; font-family: inherit; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--accent-pink); border-radius: 10px; }
+        .app-container { display: flex; min-height: 100vh; max-width: 1200px; margin: 0 auto; position: relative; }
+        @keyframes float { 0% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-15px) rotate(10deg); } 100% { transform: translateY(0px) rotate(0deg); } }
+        .bg-shape { position: fixed; z-index: 0; animation: float 6s ease-in-out infinite; pointer-events: none; }
+        .shape-1 { top: 10%; left: 2%; width: 80px; height: 80px; fill: var(--accent-pink); opacity: 0.5; animation-delay: 0s; }
+        .shape-2 { top: 50%; right: 2%; width: 60px; height: 60px; fill: var(--accent-yellow); opacity: 0.5; animation-delay: 1.5s; }
+        .shape-3 { bottom: 20%; left: 5%; width: 50px; height: 50px; fill: var(--accent-teal); opacity: 0.3; animation-delay: 3s; }
+        .main-content { flex: 1; padding: 40px 20px; display: flex; flex-direction: column; width: 100%; position: relative; z-index: 1; }
+        .banner { height: 250px; background-color: #F2FAEE; border-radius: var(--border-radius-lg); position: relative; overflow: hidden; display: flex; justify-content: flex-end; align-items: center; padding: 40px; }
+        .banner-svg-decor { position: absolute; animation: float 4s ease-in-out infinite; opacity: 0.6; }
+        .bsd-1 { top: 30px; left: 10%; width: 80px; height: 80px; fill: var(--accent-pink); }
+        .bsd-2 { bottom: -20px; left: 30%; width: 120px; height: 120px; fill: var(--accent-yellow); animation-delay: 1.5s; }
+        .bsd-3 { top: 50px; right: 65%; width: 50px; height: 50px; fill: var(--bg-sidebar); animation-delay: 2.5s; opacity: 0.4; }
+        .banner-text { position: relative; z-index: 1; text-align: right; color: var(--text-dark); }
+        .banner-text h1 { font-size: 48px; color: var(--bg-sidebar); text-shadow: 2px 2px 0px #fff; letter-spacing: 2px; }
+        .banner-text p { font-size: 18px; font-weight: 500; background: rgba(255,255,255,0.7); padding: 5px 15px; border-radius: 20px; display: inline-block; margin-top: 10px; }
+        .dashboard-grid { display: flex; gap: 30px; margin-top: -80px; position: relative; z-index: 10; }
+        .left-col { width: 320px; flex-shrink: 0; display: flex; flex-direction: column; gap: 20px; }
+        .profile-card { background-color: var(--bg-card); border-radius: var(--border-radius-lg); padding: 40px 20px 30px; box-shadow: var(--shadow-card); text-align: center; position: relative; }
+        .badge-premium-new { position: absolute; top: 15px; right: 15px; background-color: var(--accent-yellow); color: var(--text-dark); padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; display: flex; align-items: center; gap: 4px; box-shadow: 0 4px 10px rgba(255, 213, 79, 0.4); animation: float 4s ease-in-out infinite; }
+        .profile-avatar { width: 120px; height: 120px; border-radius: 50%; background-color: var(--text-white); border: 6px solid var(--bg-card); margin: -90px auto 15px; display: flex; justify-content: center; align-items: center; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .profile-name { font-size: 28px; color: var(--text-dark); margin-bottom: 5px; }
+        .profile-title { font-size: 14px; color: var(--text-light); margin-bottom: 20px; padding: 0 10px; }
+        .quick-nav { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 25px; padding-bottom: 25px; border-bottom: 1px dashed #eee; }
+        .quick-nav-item { padding: 8px 14px; background-color: var(--bg-main); border-radius: 20px; font-size: 13px; font-weight: 500; color: var(--text-dark); display: flex; align-items: center; gap: 6px; }
+        .contact-group { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; }
+        .btn-contact { padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 500; display: flex; align-items: center; gap: 6px; background-color: var(--bg-sidebar); color: var(--text-white); }
+        .contact-links { display: flex; flex-direction: column; gap: 10px; text-align: left; background: #f9fdfc; padding: 15px; border-radius: var(--border-radius-sm); }
+        .contact-link-item { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text-dark); }
+        .right-col { flex: 1; display: grid; grid-template-columns: repeat(2, 1fr); grid-auto-rows: min-content; gap: 25px; }
+        .content-card { background-color: var(--bg-card); border-radius: var(--border-radius-lg); padding: 30px; box-shadow: var(--shadow-card); }
+        .card-full { grid-column: span 2; }
+        .card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid var(--bg-main); }
+        .card-title { font-size: 20px; color: var(--bg-sidebar); }
+        .btn-fake { width: 100%; padding: 12px; border-radius: var(--border-radius-md); background-color: var(--accent-pink); color: white; font-weight: 600; margin-top: 15px; display: flex; justify-content: center; align-items: center; gap: 8px; }
+        .list-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; font-size: 14px; color: var(--text-dark); }
+        .list-icon { width: 20px; height: 20px; fill: var(--accent-pink); }
+        .badge-hot { background-color: #ff6b6b; color: white; font-size: 10px; padding: 2px 8px; border-radius: 10px; margin-left: 8px; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(42, 76, 72, 0.5); backdrop-filter: blur(5px); display: flex; justify-content: center; align-items: center; z-index: 1000; opacity: 0; pointer-events: none; }
+        .modal-overlay.active { opacity: 1; pointer-events: all; }
+        .modal-content { background-color: var(--bg-card); width: 90%; max-width: 500px; border-radius: var(--border-radius-lg); padding: 30px; }
+        @media (max-width: 768px) { .right-col { grid-template-columns: 1fr; } .card-full { grid-column: span 1; } }
     </style>
 </head>
 <body>
     <div class="app-container">
-        <div class="card" style="text-align: center;">
-            <img src="IMG_0545.jpeg" alt="Logo" style="width: 150px; border-radius: 50%; margin-bottom: 20px;">
-            <h1>zenithyshop</h1>
-            <p>zenithy รับทำเว็บไซต์ร้านค้าสำหรับร้านปล่อยเช่า/ร้านทำป้าย/ร้านเติมเกม identity v * รอบเก็บตัวอย่าง *</p>
-            <div class="price-tag" style="margin: 20px 0;">price 99.- เท่านั้น !</div>
-        </div>
+        <svg class="bg-shape shape-1" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+        <svg class="bg-shape shape-2" viewBox="0 0 24 24"><path d="M12 2.5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 12 2.5Zm0 17a7.5 7.5 0 1 1 7.5-7.5 7.51 7.51 0 0 1-7.5 7.5Z"/></svg>
+        <svg class="bg-shape shape-3" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        
+        <main class="main-content">
+            <div class="banner">
+                <div class="banner-text">
+                    <h1>zenithyshop</h1>
+                    <p>รับทำเว็บไซต์ร้านค้าสำหรับร้านปล่อยเช่า/ร้านทำป้าย/ร้านเติมเกม</p>
+                </div>
+            </div>
 
-        <div class="card">
-            <h3>เว็บไซต์ทำอะไรได้บ้าง ❔</h3>
-            <ul>
-                <li>สามารถใส่รวมลิงก์ผลงานป้าย/ลิงก์โพสต์รวมไอดีปล่อยเช่า/ลิงก์เช็คคิวต่างๆ ไว้ในเว็บไซต์เดียว !</li>
-                <li>ใส่เรทราคาทำป้าย/เรทดันไอดี/ อื่น ๆ</li>
-                <li>ใส่ลิงก์ช่องทางการติดต่อ ได้ทั้ง Line / Facebook / Instagram / อื่นๆ</li>
-                <li>เว็บบัญชี (สามารถคัดลอกเลขบัญชีได้) และใส่รูปสำหรับแสกนได้เช่นกัน</li>
-            </ul>
-            <p class="highlight">*️⃣ มีเทมเพลตให้เลือกถึง 50+ แบบ 🔥</p>
-        </div>
+            <div class="dashboard-grid">
+                <div class="left-col">
+                    <div class="profile-card">
+                        <div class="badge-premium-new">PREMIUM</div>
+                        <div class="profile-avatar">
+                            <img src="IMG_0545.jpeg" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">
+                        </div>
+                        <h2 class="profile-name">zenithyshop</h2>
+                        <p class="profile-title">รับทำเว็บไซต์ร้านค้าครบวงจร</p>
+                        
+                        <div class="contact-group">
+                            <a href="https://lin.ee/qihwQGM" class="btn-contact">ติดต่อสั่งทำทาง LINE</a>
+                        </div>
+                        <div class="contact-links">
+                            <a href="https://www.facebook.com/profile.php?id=61554192600355" target="_blank" class="contact-link-item">Facebook: zenithyshop</a>
+                        </div>
+                    </div>
+                </div>
 
-        <div class="card">
-            <h3>📁 ขั้นตอนการสั่งงาน</h3>
-            <ol>
-                <li>แจ้งเว็บไซต์ที่ต้องการสั่งทำ</li>
-                <li>ทางร้านจะส่งแบบฟอร์มให้กรอกรายละเอียด</li>
-                <li>ชำระเงินเพื่อจองคิว</li>
-                <li>รอรับเว็บไซต์ภายใน 24 ชม. หลังจากจองคิว</li>
-            </ol>
-        </div>
+                <div class="right-col">
+                    <section class="content-card">
+                        <div class="card-header"><h3 class="card-title">บริการทำเว็บ 99.-</h3></div>
+                        <p style="margin-bottom: 15px;">รับทำเว็บไซต์สำหรับร้านค้าปล่อยเช่า/ร้านทำป้าย/ร้านเติมเกม Identity V</p>
+                        <ul>
+                            <li class="list-item"><svg class="list-icon" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> รวมลิงก์ผลงาน ป้าย ลิงก์เช็คคิวไว้ในเว็บเดียว</li>
+                            <li class="list-item"><svg class="list-icon" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> ใส่เรทราคาและช่องทางติดต่อครบ</li>
+                            <li class="list-item"><svg class="list-icon" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> เว็บบัญชีคัดลอกเลขง่าย พร้อมรูปสแกน</li>
+                        </ul>
+                    </section>
 
-        <div class="card">
-            <h3>ชี้แจง 📍</h3>
-            <ul>
-                <li>ทางร้านทำงานตามคิวการโอนเงิน เมื่อโอนเงินเพื่อจองคิวแล้วจะแจ้งคิวและระยะเวลารองานให้ทราบ</li>
-                <li>เมื่อโอนเงินแล้วไม่สามารถยกเลิกได้ / ยกเลิกไม่คืนเงินทั้งสิ้น</li>
-                <li>เมื่อส่งเว็บไซต์ให้ลูกช้าตรวจเช็ค สามารถแจ้งแก้ไขข้อความได้บางจุด ❌ไม่รับเปลี่ยนข้อมูลใหม่ทั้งหมด ดังนั้นรบกวนลูกค้าเช็คข้อมูลที่ต้องการใส่ในตัวเว็บไซต์ให้ถูกต้อง</li>
-            </ul>
-        </div>
-
-        <div class="card">
-            <h3>ตัวอย่างงาน</h3>
-            <p>เทมเพลต: <a href="https://drive.google.com/drive/mobile/folders/1fj024BhkgC1ctJeiwyZUG3USteSdzWzr">คลิกลิงก์</a></p>
-            <p>ตัวอย่างงาน Website: <a href="https://drive.google.com/drive/folders/16FFEJUwVLDIjmbSZEPM3x_SkLzVkl4CO">คลิกลิงก์</a></p>
-            <p class="highlight" style="margin-top: 15px;">📍มีรับประกันเว็บ 1 เดือน เว็บมีปัญหาแจ้งได้ตลอดค่ะ</p>
-        </div>
-
-        <div class="card" style="text-align: center;">
-            <h3>📱 ช่องทางติดต่อ</h3>
-            <p style="margin: 15px 0;">Facebook : <a href="https://www.facebook.com/profile.php?id=61554192600355">คลิกเพื่อเข้า Facebook</a></p>
-            <p>Line : <br><br> <a href="https://lin.ee/qihwQGM"><img src="https://scdn.line-apps.com/n/line_add_friends/btn/th.png" alt="เพิ่มเพื่อน" height="36" border="0"></a></p>
-        </div>
+                    <section class="content-card">
+                        <div class="card-header"><h3 class="card-title">ขั้นตอนการสั่ง</h3></div>
+                        <p>1. แจ้งเว็บที่ต้องการสั่ง<br>2. กรอกฟอร์มรายละเอียดที่ร้านส่งให้<br>3. ชำระเงินเพื่อจองคิว<br>4. รอรับเว็บภายใน 24 ชม.</p>
+                    </section>
+                </div>
+            </div>
+        </main>
     </div>
 </body>
 </html>
