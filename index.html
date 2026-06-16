@@ -3,96 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>zenithyshop - รับทำเว็บไซต์ & Goodnote</title>
+    <title>zenithyshop</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Mitr:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: {
-                        'mitr': ['Mitr', 'sans-serif'],
-                        'fredoka': ['Fredoka', 'sans-serif'],
-                    },
                     colors: {
-                        'pj-bg': '#f9fbff',
-                        'pj-blue-light': '#bde0fe',
-                        'pj-blue-main': '#81c3fd',
-                        'pj-blue-dark': '#2b5f9e',
-                        'pj-yellow-light': '#fff3cd',
-                        'pj-yellow-main': '#ffe066',
-                        'pj-pink': '#ffb3c6',
-                        'pj-white': '#ffffff',
+                        dark: {
+                            bg: '#0a0000',
+                            card: '#140000',
+                            border: '#330000'
+                        },
+                        accent: {
+                            primary: '#2563eb',  /* Blue tone */
+                            darkred: '#1e3a8a',
+                            orange: '#60a5fa',
+                            white: '#ffffff'
+                        }
                     },
                     boxShadow: {
-                        'soft': '0 10px 40px -10px rgba(129, 195, 253, 0.3)',
-                        'hard': '4px 4px 0px 0px rgba(43, 95, 158, 0.2)',
+                        'glow-primary': '0 0 15px rgba(37, 99, 235, 0.4)',
+                        'glow-darkred': '0 0 20px rgba(30, 58, 138, 0.6)',
+                        'glow-orange': '0 0 15px rgba(96, 165, 250, 0.3)',
+                    },
+                    animation: {
+                        'float-slow': 'float 6s ease-in-out infinite',
+                        'float-med': 'float 4s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'spin-slow': 'spin 15s linear infinite',
+                        'twinkle': 'twinkle 4s ease-in-out infinite alternate',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { opacity: '0.8', filter: 'drop-shadow(0 0 6px currentColor)' },
+                            '50%': { opacity: '0.3', filter: 'drop-shadow(0 0 2px currentColor)' },
+                        },
+                        twinkle: {
+                            '0%': { opacity: '0.2', transform: 'scale(0.8)' },
+                            '100%': { opacity: '1', transform: 'scale(1.2)' },
+                        }
                     }
                 }
             }
         }
     </script>
     <style>
-        body { font-family: 'Mitr', sans-serif; background-color: #f9fbff; overflow-x: hidden; color: #2b5f9e; }
-        .font-eng { font-family: 'Fredoka', sans-serif; }
-        .shape-header { border-radius: 40px 100px 100px 40px; position: relative; }
-        .shape-info { border-radius: 20px; }
-        .shape-bubble-left { border-radius: 20px; position: relative; }
-        .shape-bubble-left::after { content: ''; position: absolute; right: -15px; top: 50%; transform: translateY(-50%); border-width: 15px 0 15px 20px; border-color: transparent transparent transparent #81c3fd; }
-        .shape-nota { border-radius: 20px; position: relative; }
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #bde0fe; border-radius: 10px; }
-        .modal { transition: opacity 0.3s ease, visibility 0.3s ease; }
+        html, body { max-width: 100vw; overflow-x: hidden; position: relative; }
+        body { font-family: 'Mitr', sans-serif !important; background-color: #0a0000; color: #ffffff; background-attachment: fixed; }
+        .eng-heading { font-family: 'Playfair Display', serif !important; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0000; }
+        ::-webkit-scrollbar-thumb { background: #1e3a8a; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #2563eb; }
+        .glass-card { background: rgba(20, 0, 0, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(37, 99, 235, 0.15); }
+        .modal { opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
         .modal.active { opacity: 1; visibility: visible; }
-        .modal.inactive { opacity: 0; visibility: hidden; }
-        .modal-content { transition: transform 0.3s ease; transform: scale(0.95); }
-        .modal.active .modal-content { transform: scale(1); }
-        .bg-shapes { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; overflow: hidden; }
+        .modal-content { transform: scale(0.95) translateY(20px); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .modal.active .modal-content { transform: scale(1) translateY(0); }
+        .text-gradient { background: linear-gradient(to right, #2563eb, #60a5fa, #2563eb); background-size: 200% auto; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; animation: gradientMove 6s linear infinite; }
+        @keyframes gradientMove { to { background-position: 200% center; } }
     </style>
 </head>
-<body class="antialiased relative selection:bg-pj-yellow-main selection:text-pj-blue-dark">
-    <!-- Background Decors (ครบทุกชิ้น) -->
-    <div class="bg-shapes">
-        <svg class="absolute top-10 -left-10 w-64 h-64 text-pj-blue-light opacity-50" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M44.7,-76.4C58.8,-69.2,71.8,-59.1,81.3,-46.3C90.8,-33.5,96.8,-18,95.5,-2.9C94.2,12.2,85.6,26.9,75.3,39.6C65,52.3,53,63.1,39.4,70.5C25.8,77.9,10.6,81.9,-4.3,81.4C-19.2,80.9,-33.7,75.9,-47.5,68.4C-61.3,60.9,-74.3,50.9,-82.4,37.6C-90.5,24.3,-93.7,7.7,-91.4,-8.2C-89.1,-24.1,-81.3,-39.3,-69.9,-51.1C-58.5,-62.9,-43.5,-71.3,-29.1,-75.7C-14.7,-80.1, -1.2,-80.5, 12.5,-78.9C26.2,-77.3, 30.6,-83.6, 44.7,-76.4Z" transform="translate(100 100) scale(1.1)" /></svg>
-        <svg class="absolute top-[40%] right-[-50px] w-72 h-72 text-pj-yellow-light opacity-60" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M51.8,-70.5C65.5,-60.8,73.9,-43.8,77.9,-26.8C81.9,-9.8,81.5,7.2,74.9,21.8C68.3,36.4,55.5,48.6,41.2,57.1C26.9,65.6,11.1,70.4,-4.1,76.3C-19.3,82.2,-33.9,89.2,-46.9,82.9C-59.9,76.6,-71.3,57,-76.3,38.2C-81.3,19.4,-79.9,1.4,-73.4,-14.2C-66.9,-29.8,-55.3,-43,-41.8,-52.5C-28.3,-62,-14.1,-67.8,1.5,-70.1C17.1,-72.4,38.1,-80.2,51.8,-70.5Z" transform="translate(100 100)" /></svg>
-        <svg class="absolute top-[20%] left-[10%] w-12 h-12 text-pj-pink opacity-40 animate-pulse" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
-        <svg class="absolute bottom-[25%] left-[-30px] w-48 h-48 text-pj-blue-main opacity-20" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M42.7,-73.4C55.9,-65.7,67.7,-54.6,76.5,-41.2C85.3,-27.8,91.1,-12.1,89.5,2.9C87.9,17.9,78.9,32.2,68.2,44.1C57.5,56,45.1,65.4,31.4,71.5C17.7,77.6,2.7,80.4,-11.9,79.5C-26.5,78.6,-40.7,74,-53.1,65.6C-65.5,57.2,-76.1,45,-81.6,30.6C-87.1,16.2,-87.5,-0.4,-82.6,-15.5C-77.7,-30.6,-67.5,-44.2,-54.6,-52.3C-41.7,-60.4,-26.1,-63,-11.5,-63.9C3.1,-64.8,17.7,-64,29.5,-71.1C41.3,-78.2,50.3,-83.2,42.7,-73.4Z" transform="translate(100 100)"/></svg>
-        <svg class="absolute bottom-[10%] right-[5%] w-16 h-16 text-pj-yellow-main opacity-50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
-    </div>
-
-    <main class="max-w-[500px] mx-auto min-h-screen px-4 py-12 relative z-10 flex flex-col gap-8">
-        <!-- Header -->
-        <section class="relative">
-            <div class="shape-header bg-pj-blue-light p-8 pr-16 shadow-soft z-10 relative mt-4 ml-[-20px] mr-4">
-                <!-- ดาวตกแต่ง -->
-                <svg class="absolute -top-4 -left-5 w-12 h-12 text-pj-yellow-main drop-shadow-md z-40" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
-                <div class="absolute -top-10 -right-4 z-30 transform rotate-3">
-                    <div class="w-32 h-36 bg-pj-white p-2.5 pb-8 rounded shadow-lg border border-pj-blue-light/50 flex flex-col items-center">
-                        <img src="IMG_0545.jpeg" alt="Logo" class="w-full h-full object-cover">
-                    </div>
-                </div>
-                <h1 class="font-eng text-5xl text-pj-white font-bold tracking-wide drop-shadow-md mb-2 relative z-10">zenithy<br><span class="text-3xl ml-4">shop</span></h1>
+<body class="antialiased min-h-screen relative overflow-x-hidden selection:bg-accent-primary selection:text-white">
+    <div class="w-full overflow-x-hidden relative flex flex-col min-h-screen">
+    <main class="max-w-3xl mx-auto px-4 py-12 relative z-10 flex flex-col gap-8">
+        <header class="text-center space-y-4 mb-4 relative flex flex-col items-center">
+            <div class="relative w-32 h-32 md:w-40 md:h-40 mb-2 group z-20">
+                <img src="https://i.postimg.cc/HLBk00nV/mi-m-ch-x-8-20260408220728.png" alt="zenithyshop Logo" class="w-full h-full object-cover rounded-full border-2 border-accent-white/40 shadow-glow-white relative z-10">
             </div>
-            <p class="mt-6 ml-6 text-sm font-medium pr-4 relative z-10">zenithy รับทำเว็บไซต์ร้านค้าสำหรับร้านปล่อยเช่า/ร้านทำป้าย/ร้านเติมเกม identity v เริ่มต้นที่ 99.- เท่านั้น!</p>
+            <h1 class="eng-heading text-6xl md:text-7xl font-bold text-gradient tracking-wider py-1">zenithyshop</h1>
+            <p class="text-lg text-accent-white italic">zenithy รับทำเว็บไซต์ร้านค้าสำหรับร้านปล่อยเช่า/ร้านทำป้าย/ร้านเติมเกม identity v</p>
+            <div class="bg-dark-card/90 backdrop-blur-md px-8 py-3.5 rounded-full border border-accent-primary/40 shadow-glow-primary">
+                <h2 class="text-2xl font-medium text-accent-white">Price 99.- เท่านั้น !</h2>
+            </div>
+            <div class="mt-6 text-accent-white/80 text-[15px] max-w-lg glass-card p-5 rounded-2xl">
+                <p class="font-bold text-accent-primary mb-2">เว็บไซต์ทำอะไรได้บ้าง ❔</p>
+                <ul class="list-disc pl-5 space-y-2">
+                    <li>รวมลิงก์ผลงาน, ป้าย, ลิงก์ปล่อยเช่า, ลิงก์เช็คคิวในที่เดียว</li>
+                    <li>ใส่เรทราคาทำป้าย, ดันไอดี</li>
+                    <li>ใส่ช่องทางติดต่อ (Line, FB, IG)</li>
+                    <li>เว็บบัญชี (คัดลอกเลขบัญชีได้)</li>
+                </ul>
+                <p class="mt-4 font-semibold text-accent-orange">* มีเทมเพลตให้เลือกถึง 50+ แบบ 🔥</p>
+            </div>
+        </header>
+
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="glass-card p-6 rounded-2xl border-t-2 border-t-accent-primary">
+                <h3 class="text-xl text-accent-primary font-bold mb-4">ขั้นตอนการสั่งงาน</h3>
+                <ol class="space-y-3 text-sm">
+                    <li>1. แจ้งเว็บไซต์ที่ต้องการสั่งทำ</li>
+                    <li>2. ทางร้านส่งแบบฟอร์มให้กรอก</li>
+                    <li>3. ชำระเงินเพื่อจองคิว</li>
+                    <li>4. รอรับเว็บภายใน 24 ชม.</li>
+                </ol>
+            </div>
+            <div class="glass-card p-6 rounded-2xl border-t-2 border-t-accent-orange">
+                <h3 class="text-xl text-accent-orange font-bold mb-4">ชี้แจง & ประกัน</h3>
+                <ul class="space-y-2 text-sm text-accent-white/80">
+                    <li>• งานตามคิวโอนเงิน</li>
+                    <li>• โอนแล้วไม่คืนเงินทุกกรณี</li>
+                    <li>• แก้ไขข้อความได้ ไม่รับเปลี่ยนข้อมูลใหม่ทั้งหมด</li>
+                    <li>• <span class="text-accent-primary font-bold">รับประกันเว็บ 1 เดือน</span></li>
+                </ul>
+            </div>
         </section>
 
-        <!-- Contact Section -->
-        <section class="mt-8 mb-12 flex flex-col items-center">
-            <h2 class="font-eng text-xl font-bold text-pj-blue-main mb-4">Contact</h2>
-            <div class="flex gap-4">
-                <!-- Facebook -->
-                <a href="https://www.facebook.com/profile.php?id=61554192600355" target="_blank" class="w-12 h-12 bg-pj-white border-2 border-pj-blue-light rounded-full flex items-center justify-center text-pj-blue-main hover:bg-pj-blue-light hover:text-pj-white transition-colors shadow-sm">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-                </a>
-                <!-- Line (ปรับดีไซน์ใหม่ให้เป็นวงกลมสไตล์เดียวกับ Facebook) -->
-                <a href="https://lin.ee/qihwQGM" target="_blank" class="w-12 h-12 bg-pj-white border-2 border-pj-blue-light rounded-full flex items-center justify-center text-pj-blue-main hover:bg-pj-blue-light hover:text-pj-white transition-colors shadow-sm font-bold text-sm">
-                    LINE
-                </a>
-            </div>
+        <section class="flex flex-wrap justify-center gap-4 mt-6">
+            <a href="https://drive.google.com/drive/mobile/folders/1fj024BhkgC1ctJeiwyZUG3USteSdzWzr" target="_blank" class="px-6 py-3 bg-accent-primary text-white rounded-full font-medium">ตัวอย่างเทมเพลต</a>
+            <a href="https://drive.google.com/drive/folders/16FFEJUwVLDIjmbSZEPM3x_SkLzVkl4CO" target="_blank" class="px-6 py-3 bg-accent-darkred text-white rounded-full font-medium">ตัวอย่างงานจริง</a>
+        </section>
+
+        <section class="flex flex-wrap justify-center gap-4 mt-6 pb-8">
+            <a href="https://www.facebook.com/profile.php?id=61554192600355" target="_blank" class="px-8 py-3 bg-black/40 border border-white/20 rounded-full text-white">Facebook</a>
+            <a href="https://lin.ee/qihwQGM" target="_blank" class="px-8 py-3 bg-accent-primary text-white rounded-full">Line Contact</a>
         </section>
     </main>
+    </div>
 </body>
 </html>
