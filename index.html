@@ -1,119 +1,193 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <title>ZenithyShop</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;700&display=swap');
-
-        /* พื้นหลัง: ฟ้าอ่อนไล่เฉด */
-        body {
-            margin: 0;
-            padding: 20px;
-            font-family: 'Kanit', sans-serif;
-            background: linear-gradient(135deg, #e0f2fe 0%, #fef3c7 100%);
-            min-height: 100vh;
-            overflow-x: hidden;
-            display: flex;
-            justify-content: center;
-        }
-
-        /* ดาวห้าแฉก */
-        .star {
-            position: absolute;
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 20px;
-            animation: twinkle 3s infinite;
-            pointer-events: none;
-        }
-        @keyframes twinkle { 0%, 100% { opacity: 0.2; } 50% { opacity: 1; } }
-
-        /* กล่องหลักแบบฟุ้งๆ (Glassmorphism) */
-        .card {
-            width: 100%;
-            max-width: 450px;
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            border-radius: 40px;
-            padding: 30px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            z-index: 1;
-        }
-
-        .header-menu {
-            display: flex;
-            justify-content: space-around;
-            background: rgba(255, 255, 255, 0.6);
-            padding: 10px;
-            border-radius: 50px;
-            margin-bottom: 20px;
-            font-size: 0.8rem;
-        }
-
-        .hero { text-align: center; }
-        .hero img { width: 100px; height: 100px; border-radius: 50%; border: 3px solid #fff; }
-
-        .price-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0; }
-        .price-item { background: rgba(255, 255, 255, 0.5); padding: 15px; border-radius: 20px; text-align: center; font-size: 0.85rem; }
-
-        a { color: #5b4636; text-decoration: none; font-weight: bold; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>zenithyshop - Official</title>
+<link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+--bg:#F0F8FF; /* ฟ้าอ่อน */
+--main:#D2B48C; /* น้ำตาลอ่อน */
+--dark:#A0522D; /* น้ำตาลเข้ม */
+--white:#FFFFFF;
+--glow:rgba(210,180,140,0.4);
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Mitr',sans-serif;}
+body{
+background:var(--bg);
+display:flex;
+justify-content:center;
+}
+.container{
+max-width:500px;
+width:100%;
+padding:20px 15px 40px;
+}
+.section{
+background:var(--white);
+border-radius:20px;
+padding:25px 20px;
+margin-bottom:20px;
+box-shadow:0 8px 20px rgba(0,0,0,0.05);
+border:2px solid var(--main);
+}
+h1,h2,h3{color:var(--dark);}
+.center{text-align:center;}
+.logo{
+width:150px;height:150px;
+border-radius:50%;
+overflow:hidden;
+margin:0 auto 20px;
+box-shadow:0 6px 20px var(--glow);
+}
+.logo img{width:100%;height:100%;object-fit:cover;}
+.badges{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:10px;
+margin-bottom:20px;
+}
+.badge{
+background:#fff;
+padding:8px 16px;
+border-radius:25px;
+box-shadow:0 4px 10px var(--glow);
+font-size:13px;
+color:var(--dark);
+}
+.btn{
+display:block;
+text-align:center;
+padding:14px;
+border-radius:25px;
+text-decoration:none;
+margin-top:15px;
+font-weight:500;
+}
+.btn-outline{
+background:#fff;
+border:2px dashed var(--main);
+color:var(--dark);
+}
+.btn-main{
+background:var(--main);
+color:#fff;
+}
+.step{
+display:flex;
+align-items:center;
+gap:12px;
+margin-bottom:12px;
+}
+.step-num{
+background:var(--main);
+color:#fff;
+width:26px;height:26px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:13px;
+}
+.price-row{
+display:flex;
+justify-content:space-between;
+margin-bottom:10px;
+background:#fffcfd;
+padding:10px 15px;
+border-radius:15px;
+}
+.price-tag{
+background:var(--main);
+color:#fff;
+padding:3px 12px;
+border-radius:20px;
+font-size:14px;
+}
+.footer{
+text-align:center;
+margin-top:30px;
+}
+.socials{
+display:flex;
+gap:8px;
+justify-content:center;
+margin-top:15px;
+}
+.socials a{
+flex:1;
+max-width:100px;
+text-align:center;
+padding:8px;
+border-radius:25px;
+background:#fff;
+text-decoration:none;
+color:var(--dark);
+font-size:13px;
+border:1px solid #ffeef5;
+}
+.small{font-size:12px;opacity:.7;margin-top:10px;}
+</style>
 </head>
 <body>
+<div class="container">
+<div class="section center" style="border:none;box-shadow:none;background:transparent;">
+<div class="logo">
+<img src="IMG_0545.jpeg" alt="logo">
+</div>
+<h1>zenithyshop</h1>
+<p style="color:var(--dark);opacity:.8;margin:10px 0 20px;">
+zenithy รับทำเว็บไซต์ร้านค้าสำหรับร้านปล่อยเช่า/ร้านทำป้าย/ร้านเติมเกม identity v * รอบเก็บตัวอย่าง *
+</p>
+<div class="badges">
+<div class="badge">🌐 เว็บไซต์ร้านค้า</div>
+<div class="badge">🔥 50+ เทมเพลต</div>
+<div class="badge">✨ ราคา 99.-</div>
+</div>
+<a href="#" class="btn btn-outline">
+เช็คคิวงาน ✨
+</a>
+</div>
 
-    <div id="star-container"></div>
+<div class="section">
+<h2>📝 ขั้นตอนการสั่งงาน</h2>
+<div class="step"><div class="step-num">1</div><div>แจ้งเว็บไซต์ที่ต้องการสั่งทำ</div></div>
+<div class="step"><div class="step-num">2</div><div>กรอกรายละเอียดตามแบบฟอร์ม</div></div>
+<div class="step"><div class="step-num">3</div><div>ชำระเงินเพื่อจองคิว</div></div>
+<div class="step"><div class="step-num">4</div><div>รอรับเว็บไซต์ภายใน 24 ชม.</div></div>
+<a href="https://lin.ee/qihwQGM" class="btn btn-main">สั่งทำเว็บไซต์คลิก</a>
+</div>
 
-    <div class="card">
-        <div class="header-menu">
-            <span>comment</span> <span>website</span> <span>download</span> <span>work</span>
-        </div>
+<div class="section">
+<h2>💰 ราคางาน</h2>
+<div class="price-row"><span>ค่าทำเว็บไซต์</span><span class="price-tag">99฿</span></div>
+<p style="font-size:13px; margin-top:10px;">* รับประกันเว็บ 1 เดือน ดูแลตลอดการใช้งาน</p>
+<a href="https://drive.google.com/drive/folders/16FFEJUwVLDIjmbSZEPM3x_SkLzVkl4CO" class="btn btn-main">ดูตัวอย่างงาน</a>
+</div>
 
-        <div class="hero">
-            <img src="IMG_0545.jpeg" alt="Logo">
-            <h2>zenithyshop</h2>
-            <p>zenithy รับทำเว็บไซต์ร้านค้าสำหรับร้านปล่อยเช่า/ร้านทำป้าย/ร้านเติมเกม identity v * รอบทดลอง *</p>
-        </div>
+<div class="section">
+<h2>💡 รายละเอียดบริการ</h2>
+<p style="font-size:14px; color:#555;">
+- รวมลิงก์ผลงาน/เช็คคิว/รวมไอดี<br>
+- ใส่เรทราคา/ช่องทางติดต่อ<br>
+- ระบบบัญชีคัดลอกเลขง่าย<br>
+- ใส่รูป QR Code แสกนได้
+</p>
+</div>
 
-        <div class="price-grid">
-            <div class="price-item">บัญชี <b>99.-</b></div>
-            <div class="price-item">รวมลิงก์ <b>129.-</b></div>
-            <div class="price-item">เรทราคา <b>129.-</b></div>
-            <div class="price-item">แพ็คคู่ <b>149.-</b></div>
-        </div>
+<div class="footer">
+<a href="https://lin.ee/qihwQGM" class="btn btn-main">ติดต่อสอบถามคลิก 🎀</a>
+<div class="socials">
+<a href="https://www.facebook.com/profile.php?id=61554192600355">Facebook</a>
+<a href="https://lin.ee/qihwQGM">LINE</a>
+</div>
+<p class="small">
+© 2026 zenithyshop
+</p>
+</div>
 
-        <div style="font-size: 0.9rem;">
-            <h3>บริการของเรา ❔</h3>
-            <ul>
-                <li>ใส่รวมลิงก์งาน/เช็คคิว</li>
-                <li>ใส่เรทราคา/ดันไอดี</li>
-                <li>ช่องทางติดต่อ (Line/FB/IG)</li>
-                <li>เว็บบัญชีคัดลอกเลขได้</li>
-            </ul>
-            <p>✨ เทมเพลต 50+ แบบ</p>
-            <p>🔗 <a href="https://drive.google.com/drive/mobile/folders/1fj024BhkgC1ctJeiwyZUG3USteSdzWzr">ตัวอย่างเทมเพลต</a></p>
-            <p>🔗 <a href="https://drive.google.com/drive/folders/16FFEJUwVLDIjmbSZEPM3x_SkLzVkl4CO">ตัวอย่างงานwebsite</a></p>
-        </div>
-
-        <div style="text-align: center; margin-top: 20px;">
-            <p>📱 ช่องทางติดต่อ</p>
-            <a href="https://www.facebook.com/profile.php?id=61554192600355">Facebook</a> | 
-            <a href="https://lin.ee/qihwQGM">Line</a>
-        </div>
-    </div>
-
-    <script>
-        // สร้างดาว 30 ดวง
-        const container = document.getElementById('star-container');
-        for(let i=0; i<30; i++) {
-            const star = document.createElement('div');
-            star.className = 'star';
-            star.innerHTML = '★';
-            star.style.left = Math.random() * 100 + 'vw';
-            star.style.top = Math.random() * 100 + 'vh';
-            star.style.fontSize = (Math.random() * 20 + 10) + 'px';
-            container.appendChild(star);
-        }
-    </script>
+</div>
 </body>
 </html>
